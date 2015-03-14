@@ -14,7 +14,11 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
+<%@page import="com.liferay.portal.model.User"%>
+<%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil"%>
+<%@page import="javax.portlet.PortletURL"%>
+<%@ include file="../../init.jsp" %>
 
 <%
 String androidApiKey = PrefsPropsUtil.getString(PortletPropsKeys.ANDROID_API_KEY, PortletPropsValues.ANDROID_API_KEY);
@@ -25,11 +29,56 @@ boolean appleSandbox = PrefsPropsUtil.getBoolean(PortletPropsKeys.APPLE_SANDBOX,
 %>
 
 <liferay-portlet:actionURL name="updatePortletPreferences" var="updatePortletPreferencesURL" />
+<%
 
+PortletURL portletURL = renderResponse.createRenderURL();
+%>
 <liferay-ui:tabs
-	names="configuration,test"
+	names="devices,configuration,test"
 	refresh="<%= false %>"
 >
+
+	<liferay-ui:section>
+		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" delta="10"
+			iteratorURL="<%= portletURL %>"
+			total="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount() %>">
+			<liferay-ui:search-container-results
+				results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(searchContainer.getStart(), searchContainer.getEnd()) %>"
+			/>
+	
+			<liferay-ui:search-container-row
+			className="com.liferay.pushnotifications.model.PushNotificationsDevice"
+			keyProperty="pushNotificationsDeviceId"
+			modelVar="device">
+			<%
+			User userToken = UserLocalServiceUtil.getUser(device.getUserId());
+			%>
+			<liferay-ui:search-container-column-text
+				name="userid"
+				value='<%= ""+userToken.getUserId() %>'
+			/>
+			<liferay-ui:search-container-column-text
+				name="fullname"
+				value='<%= ""+userToken.getFullName() %>'
+			/>
+			<liferay-ui:search-container-column-text
+				name="screename"
+				value='<%= userToken.getScreenName() %>'
+			/>
+			<liferay-ui:search-container-column-text
+				name="platform"
+				value="<%= device.getPlatform() %>"
+			/>
+			
+			<liferay-ui:search-container-column-text
+				name="token"
+				value="<%= device.getToken() %>"
+			/>
+		</liferay-ui:search-container-row>
+	
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>	
+	</liferay-ui:section>
 	<liferay-ui:section>
 		<aui:form action="<%= updatePortletPreferencesURL %>" method="post" name="configurationFm">
 			<aui:fieldset label="android">
@@ -76,6 +125,7 @@ boolean appleSandbox = PrefsPropsUtil.getBoolean(PortletPropsKeys.APPLE_SANDBOX,
 			<p></p>
 		</div>
 	</liferay-ui:section>
+	
 </liferay-ui:tabs>
 
 <aui:script use="aui-base">

@@ -7,12 +7,13 @@
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/view.jsp</value>
+			<value>/html/admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>push-notifications</title>
 			<short-title>push-notifications</short-title>
@@ -31,4 +32,6 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
+	
 </portlet-app>
