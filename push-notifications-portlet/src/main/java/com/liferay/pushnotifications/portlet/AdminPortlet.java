@@ -14,6 +14,7 @@
 
 package com.liferay.pushnotifications.portlet;
 
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
@@ -68,7 +69,22 @@ public class AdminPortlet extends MVCPortlet {
 
 		portletPreferences.store();
 
-		//PushNotificationsDeviceLocalServiceUtil.resetPushNotificationSenders();
+		PushNotificationsDeviceLocalServiceUtil.resetPushNotificationSenders();
 	}
 
+	
+	public void deleteDevice(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+		
+		long pushid = ParamUtil.getLong(
+				actionRequest, "pushId");
+		try{
+			PushNotificationsDeviceLocalServiceUtil.deletePushNotificationsDevice(pushid);
+			SessionMessages.add(actionRequest, "success");
+		}catch(Exception e){
+			
+		}
+		
+	}
 }

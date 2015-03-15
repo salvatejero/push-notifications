@@ -39,6 +39,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 >
 
 	<liferay-ui:section>
+	
+		<liferay-ui:success key="success" message="device-delete-successfull"/>	
 		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" delta="10"
 			iteratorURL="<%= portletURL %>"
 			total="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount() %>">
@@ -74,6 +76,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				name="token"
 				value="<%= device.getToken() %>"
 			/>
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				path="/html/admin/devices_action.jsp" />
 		</liferay-ui:search-container-row>
 	
 			<liferay-ui:search-iterator />
