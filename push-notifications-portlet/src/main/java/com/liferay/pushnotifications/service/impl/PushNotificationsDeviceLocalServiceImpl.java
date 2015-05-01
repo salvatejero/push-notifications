@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.pushnotifications.PushNotificationsException;
 import com.liferay.pushnotifications.model.PushNotificationsDevice;
 import com.liferay.pushnotifications.sender.PushNotificationsSender;
@@ -27,6 +28,7 @@ import java.util.Map;
  * </p>
  *
  * @author Bruno Farache
+ * @author Salva Tejero
  * @see com.liferay.pushnotifications.service.base.PushNotificationsDeviceLocalServiceBaseImpl
  * @see com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil
  */
@@ -66,6 +68,79 @@ public class PushNotificationsDeviceLocalServiceImpl
 	}
 
 	@Override
+	public List<PushNotificationsDevice> getPushNotificationsDeviceByComparator(int start, int end, OrderByComparator orderByComparator){
+		
+		try {
+			return pushNotificationsDevicePersistence.findAll(start, end, orderByComparator);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ArrayList<PushNotificationsDevice>();
+	}
+	
+	@Override
+	public List<PushNotificationsDevice> getUserDevices(long userId, int start, int end){
+		
+		try {
+			return pushNotificationsDevicePersistence.findByU(userId, start, end);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ArrayList<PushNotificationsDevice>();
+	}
+	
+	@Override
+	public int getUserDevicesCount(long userId){
+		
+		try {
+			return pushNotificationsDevicePersistence.countByU(userId);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public PushNotificationsDevice addPushNotificationsDevice(
+		long userId, String platform, String token, String model, String version, String appVersion) {
+
+		long pushNotificationsDeviceId = 0;
+		try {
+			pushNotificationsDeviceId = counterLocalService.increment();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		PushNotificationsDevice pushNotificationsDevice =
+			pushNotificationsDevicePersistence.create(
+				pushNotificationsDeviceId);
+
+		pushNotificationsDevice.setUserId(userId);
+		pushNotificationsDevice.setCreateDate(new Date());
+		pushNotificationsDevice.setPlatform(platform);
+		pushNotificationsDevice.setToken(token);
+		pushNotificationsDevice.setModel(model);
+		pushNotificationsDevice.setOSVersion(version);
+		pushNotificationsDevice.setAppVersion(appVersion);
+		
+		try {
+			pushNotificationsDevicePersistence.update(pushNotificationsDevice);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return pushNotificationsDevice;
+	}
+	
+	@Override
 	public PushNotificationsDevice deletePushNotificationsDevice(String token)
 		throws PortalException {
 
@@ -94,6 +169,8 @@ public class PushNotificationsDeviceLocalServiceImpl
 		}
 	}
 
+	
+	
 	@Override
 	public void sendPushNotification(
 			long[] toUserIds, JSONObject payloadJSONObject)

@@ -56,6 +56,16 @@ public class PushNotificationsDeviceServiceWrapper
     }
 
     @Override
+    public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+        java.lang.String token, java.lang.String platform,
+        java.lang.String model, java.lang.String osVersion,
+        java.lang.String appVersion)
+        throws com.liferay.portal.kernel.exception.PortalException {
+        return _pushNotificationsDeviceService.addPushNotificationsDevice(token,
+            platform, model, osVersion, appVersion);
+    }
+
+    @Override
     public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
         java.lang.String token)
         throws com.liferay.portal.kernel.exception.PortalException {

@@ -12,5 +12,8 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="platform" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="token" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="model" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="OSVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="appVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

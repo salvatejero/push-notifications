@@ -14,6 +14,13 @@
  */
 --%>
 
+<%@page import="com.liferay.pushnotifications.util.PushNotificationsDeviceComparatorUtil"%>
+<%@page import="com.liferay.portal.kernel.util.StringUtil"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="com.liferay.portal.kernel.util.OrderByComparator"%>
+<%@page import="com.liferay.pushnotifications.service.persistence.PushNotificationsDeviceUtil"%>
+<%@page import="java.util.Random"%>
+<%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceServiceUtil"%>
 <%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
 <%@page import="com.liferay.portal.model.User"%>
 <%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil"%>
@@ -26,12 +33,18 @@ int androidRetries = PrefsPropsUtil.getInteger(PortletPropsKeys.ANDROID_RETRIES,
 String appleCertificatePassword = PrefsPropsUtil.getString(PortletPropsKeys.APPLE_CERTIFICATE_PASSWORD, PortletPropsValues.APPLE_CERTIFICATE_PASSWORD);
 String appleCertificatePath = PrefsPropsUtil.getString(PortletPropsKeys.APPLE_CERTIFICATE_PATH, PortletPropsValues.APPLE_CERTIFICATE_PATH);
 boolean appleSandbox = PrefsPropsUtil.getBoolean(PortletPropsKeys.APPLE_SANDBOX, PortletPropsValues.APPLE_SANDBOX);
+
 %>
 
 <liferay-portlet:actionURL name="updatePortletPreferences" var="updatePortletPreferencesURL" />
 <%
 
 PortletURL portletURL = renderResponse.createRenderURL();
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "platform");
+String orderByType = ParamUtil.getString(request, "orderByType","ASC");
+
+OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getPushNotificationOrderByComparator(orderByCol, orderByType);
 %>
 <liferay-ui:tabs
 	names="devices,configuration,test"
@@ -43,9 +56,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<liferay-ui:success key="success" message="device-delete-successfull"/>	
 		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" delta="10"
 			iteratorURL="<%= portletURL %>"
+			orderByCol="<%= orderByCol %>"
+			orderByComparator="<%= orderByComparator %>"
+			orderByType="<%= orderByType %>"
 			total="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount() %>">
 			<liferay-ui:search-container-results
-				results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDeviceByComparator(searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
 			/>
 	
 			<liferay-ui:search-container-row
@@ -69,9 +85,27 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 			<liferay-ui:search-container-column-text
 				name="platform"
+				orderable="<%= true %>"
+      			orderableProperty="platform"
 				value="<%= device.getPlatform() %>"
 			/>
-			
+			<liferay-ui:search-container-column-text
+				name="model"
+				orderable="<%= true %>"
+      			orderableProperty="model"
+				value="<%= device.getModel() %>"
+			/>
+			<liferay-ui:search-container-column-text
+				name="osversion"
+				orderable="<%= true %>"
+      			orderableProperty="OSVersion"
+				value="<%= device.getOSVersion() %>"
+			/>
+			<liferay-ui:search-container-column-text
+				name="appversion" orderable="<%= true %>"
+      			orderableProperty="appVersion"
+				value="<%= device.getAppVersion() %>"
+			/>
 			<liferay-ui:search-container-column-text
 				name="token"
 				value="<%= device.getToken() %>"

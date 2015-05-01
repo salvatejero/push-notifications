@@ -273,6 +273,32 @@ public class PushNotificationsDeviceLocalServiceUtil {
         return getService().addPushNotificationsDevice(userId, platform, token);
     }
 
+    public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDeviceByComparator(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return getService()
+                   .getPushNotificationsDeviceByComparator(start, end,
+            orderByComparator);
+    }
+
+    public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getUserDevices(
+        long userId, int start, int end) {
+        return getService().getUserDevices(userId, start, end);
+    }
+
+    public static int getUserDevicesCount(long userId) {
+        return getService().getUserDevicesCount(userId);
+    }
+
+    public static com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+        long userId, java.lang.String platform, java.lang.String token,
+        java.lang.String model, java.lang.String version,
+        java.lang.String appVersion) {
+        return getService()
+                   .addPushNotificationsDevice(userId, platform, token, model,
+            version, appVersion);
+    }
+
     public static com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
         java.lang.String token)
         throws com.liferay.portal.kernel.exception.PortalException {

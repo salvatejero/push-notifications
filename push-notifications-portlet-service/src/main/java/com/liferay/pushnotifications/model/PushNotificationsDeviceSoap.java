@@ -19,6 +19,9 @@ public class PushNotificationsDeviceSoap implements Serializable {
     private Date _createDate;
     private String _platform;
     private String _token;
+    private String _model;
+    private String _OSVersion;
+    private String _appVersion;
 
     public PushNotificationsDeviceSoap() {
     }
@@ -32,6 +35,9 @@ public class PushNotificationsDeviceSoap implements Serializable {
         soapModel.setCreateDate(model.getCreateDate());
         soapModel.setPlatform(model.getPlatform());
         soapModel.setToken(model.getToken());
+        soapModel.setModel(model.getModel());
+        soapModel.setOSVersion(model.getOSVersion());
+        soapModel.setAppVersion(model.getAppVersion());
 
         return soapModel;
     }
@@ -121,5 +127,29 @@ public class PushNotificationsDeviceSoap implements Serializable {
 
     public void setToken(String token) {
         _token = token;
+    }
+
+    public String getModel() {
+        return _model;
+    }
+
+    public void setModel(String model) {
+        _model = model;
+    }
+
+    public String getOSVersion() {
+        return _OSVersion;
+    }
+
+    public void setOSVersion(String OSVersion) {
+        _OSVersion = OSVersion;
+    }
+
+    public String getAppVersion() {
+        return _appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        _appVersion = appVersion;
     }
 }

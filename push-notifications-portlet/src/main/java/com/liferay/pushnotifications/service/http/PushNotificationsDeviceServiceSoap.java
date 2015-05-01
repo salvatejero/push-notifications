@@ -66,6 +66,23 @@ public class PushNotificationsDeviceServiceSoap {
         }
     }
 
+    public static com.liferay.pushnotifications.model.PushNotificationsDeviceSoap addPushNotificationsDevice(
+        java.lang.String token, java.lang.String platform,
+        java.lang.String model, java.lang.String osVersion,
+        java.lang.String appVersion) throws RemoteException {
+        try {
+            com.liferay.pushnotifications.model.PushNotificationsDevice returnValue =
+                PushNotificationsDeviceServiceUtil.addPushNotificationsDevice(token,
+                    platform, model, osVersion, appVersion);
+
+            return com.liferay.pushnotifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
+        } catch (Exception e) {
+            _log.error(e, e);
+
+            throw new RemoteException(e.getMessage());
+        }
+    }
+
     public static com.liferay.pushnotifications.model.PushNotificationsDeviceSoap deletePushNotificationsDevice(
         java.lang.String token) throws RemoteException {
         try {

@@ -19,7 +19,9 @@
 
 		<column name="platform" type="String" />
 		<column name="token" type="String" />
-
+		<column name="model" type="String" />
+		<column name="OSVersion" type="String" />
+		<column name="appVersion" type="String" />
 		<!-- Finder methods -->
 
 		<finder name="Token" return-type="Device" unique="true">
@@ -29,5 +31,23 @@
 			<finder-column name="userId" arrayable-operator="OR" />
 			<finder-column name="platform" />
 		</finder>
+		<finder name="U" return-type="Collection">
+			<finder-column name="userId" arrayable-operator="OR" />
+		</finder>
+		<finder name="U_AV" return-type="Collection">
+			<finder-column name="userId" arrayable-operator="OR" />
+			<finder-column name="appVersion" />
+		</finder>
+		<finder name="AppVersion" return-type="Collection">
+			<finder-column name="appVersion" />
+		</finder>
+		<finder name="Platform" return-type="Collection">
+			<finder-column name="platform"/>
+		</finder>
+		<finder name="P_OSV" return-type="Collection">
+			<finder-column name="platform"/>
+			<finder-column name="OSVersion" />
+		</finder>
+		
 	</entity>
 </service-builder>

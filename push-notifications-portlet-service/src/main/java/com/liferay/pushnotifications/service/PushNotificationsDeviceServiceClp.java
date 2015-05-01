@@ -21,6 +21,8 @@ public class PushNotificationsDeviceServiceClp
     private String[] _methodParameterTypes5;
     private String _methodName6;
     private String[] _methodParameterTypes6;
+    private String _methodName7;
+    private String[] _methodParameterTypes7;
 
     public PushNotificationsDeviceServiceClp(InvokableService invokableService) {
         _invokableService = invokableService;
@@ -39,17 +41,24 @@ public class PushNotificationsDeviceServiceClp
                 "java.lang.String", "java.lang.String"
             };
 
-        _methodName4 = "deletePushNotificationsDevice";
+        _methodName4 = "addPushNotificationsDevice";
 
-        _methodParameterTypes4 = new String[] { "java.lang.String" };
+        _methodParameterTypes4 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String"
+            };
 
-        _methodName5 = "sendPushNotification";
+        _methodName5 = "deletePushNotificationsDevice";
 
-        _methodParameterTypes5 = new String[] { "long[][]", "java.lang.String" };
+        _methodParameterTypes5 = new String[] { "java.lang.String" };
 
         _methodName6 = "sendPushNotification";
 
-        _methodParameterTypes6 = new String[] {
+        _methodParameterTypes6 = new String[] { "long[][]", "java.lang.String" };
+
+        _methodName7 = "sendPushNotification";
+
+        _methodParameterTypes7 = new String[] {
                 "java.lang.String", "java.util.List", "java.lang.String"
             };
     }
@@ -133,14 +142,54 @@ public class PushNotificationsDeviceServiceClp
     }
 
     @Override
-    public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-        java.lang.String token)
+    public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+        java.lang.String token, java.lang.String platform,
+        java.lang.String model, java.lang.String osVersion,
+        java.lang.String appVersion)
         throws com.liferay.portal.kernel.exception.PortalException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableService.invokeMethod(_methodName4,
                     _methodParameterTypes4,
+                    new Object[] {
+                        ClpSerializer.translateInput(token),
+                        
+                    ClpSerializer.translateInput(platform),
+                        
+                    ClpSerializer.translateInput(model),
+                        
+                    ClpSerializer.translateInput(osVersion),
+                        
+                    ClpSerializer.translateInput(appVersion)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (com.liferay.pushnotifications.model.PushNotificationsDevice) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+        java.lang.String token)
+        throws com.liferay.portal.kernel.exception.PortalException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableService.invokeMethod(_methodName5,
+                    _methodParameterTypes5,
                     new Object[] { ClpSerializer.translateInput(token) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -164,8 +213,8 @@ public class PushNotificationsDeviceServiceClp
     public void sendPushNotification(long[] toUserIds, java.lang.String payload)
         throws com.liferay.portal.kernel.exception.PortalException {
         try {
-            _invokableService.invokeMethod(_methodName5,
-                _methodParameterTypes5,
+            _invokableService.invokeMethod(_methodName6,
+                _methodParameterTypes6,
                 new Object[] {
                     ClpSerializer.translateInput(toUserIds),
                     
@@ -192,8 +241,8 @@ public class PushNotificationsDeviceServiceClp
         java.util.List<java.lang.String> tokens, java.lang.String payload)
         throws com.liferay.portal.kernel.exception.PortalException {
         try {
-            _invokableService.invokeMethod(_methodName6,
-                _methodParameterTypes6,
+            _invokableService.invokeMethod(_methodName7,
+                _methodParameterTypes7,
                 new Object[] {
                     ClpSerializer.translateInput(platform),
                     

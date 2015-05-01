@@ -133,6 +133,51 @@ public interface PushNotificationsDeviceModel extends BaseModel<PushNotification
      */
     public void setToken(String token);
 
+    /**
+     * Returns the model of this push notifications device.
+     *
+     * @return the model of this push notifications device
+     */
+    @AutoEscape
+    public String getModel();
+
+    /**
+     * Sets the model of this push notifications device.
+     *
+     * @param model the model of this push notifications device
+     */
+    public void setModel(String model);
+
+    /**
+     * Returns the o s version of this push notifications device.
+     *
+     * @return the o s version of this push notifications device
+     */
+    @AutoEscape
+    public String getOSVersion();
+
+    /**
+     * Sets the o s version of this push notifications device.
+     *
+     * @param OSVersion the o s version of this push notifications device
+     */
+    public void setOSVersion(String OSVersion);
+
+    /**
+     * Returns the app version of this push notifications device.
+     *
+     * @return the app version of this push notifications device
+     */
+    @AutoEscape
+    public String getAppVersion();
+
+    /**
+     * Sets the app version of this push notifications device.
+     *
+     * @param appVersion the app version of this push notifications device
+     */
+    public void setAppVersion(String appVersion);
+
     @Override
     public boolean isNew();
 

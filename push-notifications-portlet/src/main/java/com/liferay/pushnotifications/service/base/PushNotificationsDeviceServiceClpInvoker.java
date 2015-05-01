@@ -21,6 +21,8 @@ public class PushNotificationsDeviceServiceClpInvoker {
     private String[] _methodParameterTypes26;
     private String _methodName27;
     private String[] _methodParameterTypes27;
+    private String _methodName28;
+    private String[] _methodParameterTypes28;
 
     public PushNotificationsDeviceServiceClpInvoker() {
         _methodName18 = "getBeanIdentifier";
@@ -37,17 +39,24 @@ public class PushNotificationsDeviceServiceClpInvoker {
                 "java.lang.String", "java.lang.String"
             };
 
-        _methodName25 = "deletePushNotificationsDevice";
+        _methodName25 = "addPushNotificationsDevice";
 
-        _methodParameterTypes25 = new String[] { "java.lang.String" };
+        _methodParameterTypes25 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String"
+            };
 
-        _methodName26 = "sendPushNotification";
+        _methodName26 = "deletePushNotificationsDevice";
 
-        _methodParameterTypes26 = new String[] { "long[][]", "java.lang.String" };
+        _methodParameterTypes26 = new String[] { "java.lang.String" };
 
         _methodName27 = "sendPushNotification";
 
-        _methodParameterTypes27 = new String[] {
+        _methodParameterTypes27 = new String[] { "long[][]", "java.lang.String" };
+
+        _methodName28 = "sendPushNotification";
+
+        _methodParameterTypes28 = new String[] {
                 "java.lang.String", "java.util.List", "java.lang.String"
             };
     }
@@ -74,19 +83,27 @@ public class PushNotificationsDeviceServiceClpInvoker {
 
         if (_methodName25.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
-            return PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice((java.lang.String) arguments[0]);
+            return PushNotificationsDeviceServiceUtil.addPushNotificationsDevice((java.lang.String) arguments[0],
+                (java.lang.String) arguments[1],
+                (java.lang.String) arguments[2],
+                (java.lang.String) arguments[3], (java.lang.String) arguments[4]);
         }
 
         if (_methodName26.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
+            return PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice((java.lang.String) arguments[0]);
+        }
+
+        if (_methodName27.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes27, parameterTypes)) {
             PushNotificationsDeviceServiceUtil.sendPushNotification((long[]) arguments[0],
                 (java.lang.String) arguments[1]);
 
             return null;
         }
 
-        if (_methodName27.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes27, parameterTypes)) {
+        if (_methodName28.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes28, parameterTypes)) {
             PushNotificationsDeviceServiceUtil.sendPushNotification((java.lang.String) arguments[0],
                 (java.util.List<java.lang.String>) arguments[1],
                 (java.lang.String) arguments[2]);

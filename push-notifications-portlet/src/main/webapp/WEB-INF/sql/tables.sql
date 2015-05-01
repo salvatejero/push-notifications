@@ -3,5 +3,8 @@ create table PushNotificationsDevice (
 	userId LONG,
 	createDate DATE null,
 	platform VARCHAR(75) null,
-	token STRING null
+	token STRING null,
+	model VARCHAR(75) null,
+	OSVersion VARCHAR(75) null,
+	appVersion VARCHAR(75) null
 );

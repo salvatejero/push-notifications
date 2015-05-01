@@ -244,6 +244,23 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
     public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         long userId, java.lang.String platform, java.lang.String token);
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDeviceByComparator(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getUserDevices(
+        long userId, int start, int end);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getUserDevicesCount(long userId);
+
+    public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+        long userId, java.lang.String platform, java.lang.String token,
+        java.lang.String model, java.lang.String version,
+        java.lang.String appVersion);
+
     public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
         java.lang.String token)
         throws com.liferay.portal.kernel.exception.PortalException;

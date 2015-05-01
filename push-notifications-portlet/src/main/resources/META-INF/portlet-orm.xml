@@ -16,6 +16,9 @@
 			</basic>
 			<basic name="platform" />
 			<basic name="token" />
+			<basic name="model" />
+			<basic name="OSVersion" />
+			<basic name="appVersion" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

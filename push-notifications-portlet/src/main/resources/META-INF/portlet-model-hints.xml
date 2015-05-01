@@ -9,5 +9,8 @@
 		<field name="token" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="model" type="String" />
+		<field name="OSVersion" type="String" />
+		<field name="appVersion" type="String" />
 	</model>
 </model-hints>

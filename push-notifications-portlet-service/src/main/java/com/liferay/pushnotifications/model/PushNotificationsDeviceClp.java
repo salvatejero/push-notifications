@@ -28,6 +28,9 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
     private Date _createDate;
     private String _platform;
     private String _token;
+    private String _model;
+    private String _OSVersion;
+    private String _appVersion;
     private BaseModel<?> _pushNotificationsDeviceRemoteModel;
     private Class<?> _clpSerializerClass = com.liferay.pushnotifications.service.ClpSerializer.class;
 
@@ -74,6 +77,9 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         attributes.put("createDate", getCreateDate());
         attributes.put("platform", getPlatform());
         attributes.put("token", getToken());
+        attributes.put("model", getModel());
+        attributes.put("OSVersion", getOSVersion());
+        attributes.put("appVersion", getAppVersion());
 
         return attributes;
     }
@@ -109,6 +115,24 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
 
         if (token != null) {
             setToken(token);
+        }
+
+        String model = (String) attributes.get("model");
+
+        if (model != null) {
+            setModel(model);
+        }
+
+        String OSVersion = (String) attributes.get("OSVersion");
+
+        if (OSVersion != null) {
+            setOSVersion(OSVersion);
+        }
+
+        String appVersion = (String) attributes.get("appVersion");
+
+        if (appVersion != null) {
+            setAppVersion(appVersion);
         }
     }
 
@@ -234,6 +258,72 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         }
     }
 
+    @Override
+    public String getModel() {
+        return _model;
+    }
+
+    @Override
+    public void setModel(String model) {
+        _model = model;
+
+        if (_pushNotificationsDeviceRemoteModel != null) {
+            try {
+                Class<?> clazz = _pushNotificationsDeviceRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setModel", String.class);
+
+                method.invoke(_pushNotificationsDeviceRemoteModel, model);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getOSVersion() {
+        return _OSVersion;
+    }
+
+    @Override
+    public void setOSVersion(String OSVersion) {
+        _OSVersion = OSVersion;
+
+        if (_pushNotificationsDeviceRemoteModel != null) {
+            try {
+                Class<?> clazz = _pushNotificationsDeviceRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setOSVersion", String.class);
+
+                method.invoke(_pushNotificationsDeviceRemoteModel, OSVersion);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getAppVersion() {
+        return _appVersion;
+    }
+
+    @Override
+    public void setAppVersion(String appVersion) {
+        _appVersion = appVersion;
+
+        if (_pushNotificationsDeviceRemoteModel != null) {
+            try {
+                Class<?> clazz = _pushNotificationsDeviceRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setAppVersion", String.class);
+
+                method.invoke(_pushNotificationsDeviceRemoteModel, appVersion);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
     public BaseModel<?> getPushNotificationsDeviceRemoteModel() {
         return _pushNotificationsDeviceRemoteModel;
     }
@@ -308,6 +398,9 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         clone.setCreateDate(getCreateDate());
         clone.setPlatform(getPlatform());
         clone.setToken(getToken());
+        clone.setModel(getModel());
+        clone.setOSVersion(getOSVersion());
+        clone.setAppVersion(getAppVersion());
 
         return clone;
     }
@@ -357,7 +450,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(11);
+        StringBundler sb = new StringBundler(17);
 
         sb.append("{pushNotificationsDeviceId=");
         sb.append(getPushNotificationsDeviceId());
@@ -369,6 +462,12 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         sb.append(getPlatform());
         sb.append(", token=");
         sb.append(getToken());
+        sb.append(", model=");
+        sb.append(getModel());
+        sb.append(", OSVersion=");
+        sb.append(getOSVersion());
+        sb.append(", appVersion=");
+        sb.append(getAppVersion());
         sb.append("}");
 
         return sb.toString();
@@ -376,7 +475,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(19);
+        StringBundler sb = new StringBundler(28);
 
         sb.append("<model><model-name>");
         sb.append("com.liferay.pushnotifications.model.PushNotificationsDevice");
@@ -401,6 +500,18 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         sb.append(
             "<column><column-name>token</column-name><column-value><![CDATA[");
         sb.append(getToken());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>model</column-name><column-value><![CDATA[");
+        sb.append(getModel());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>OSVersion</column-name><column-value><![CDATA[");
+        sb.append(getOSVersion());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>appVersion</column-name><column-value><![CDATA[");
+        sb.append(getAppVersion());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

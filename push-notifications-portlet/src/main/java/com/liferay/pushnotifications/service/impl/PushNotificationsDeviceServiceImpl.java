@@ -31,6 +31,7 @@ import java.util.List;
 /**
  * @author Silvio Santos
  * @author Bruno Farache
+ * @author Salva Tejero
  */
 public class PushNotificationsDeviceServiceImpl
 	extends PushNotificationsDeviceServiceBaseImpl {
@@ -74,6 +75,45 @@ public class PushNotificationsDeviceServiceImpl
 		return pushNotificationsDevice;
 	}
 
+	@AccessControlled(guestAccessEnabled = true)
+	@Override
+	public PushNotificationsDevice addPushNotificationsDevice(
+			String token, String platform, String model, String osVersion, String appVersion)
+		throws PortalException {
+
+		PushNotificationsPermission.check(
+			getPermissionChecker(), ActionKeys.MANAGE_DEVICES);
+
+		PushNotificationsDevice pushNotificationsDevice = null;
+		try {
+			pushNotificationsDevice = pushNotificationsDevicePersistence.fetchByToken(token);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (pushNotificationsDevice == null) {
+			pushNotificationsDevice =
+				pushNotificationsDeviceLocalService.addPushNotificationsDevice(
+					getGuestOrUserId(), platform, token, model, osVersion, appVersion);
+		}
+		else {
+			long userId = getGuestOrUserId();
+
+			if (pushNotificationsDevice.getUserId() != userId) {
+				pushNotificationsDevice = null;
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Device found with token " + token +
+							" does not belong to user " + userId);
+				}
+			}
+		}
+
+		return pushNotificationsDevice;
+	}
+	
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public PushNotificationsDevice deletePushNotificationsDevice(String token)

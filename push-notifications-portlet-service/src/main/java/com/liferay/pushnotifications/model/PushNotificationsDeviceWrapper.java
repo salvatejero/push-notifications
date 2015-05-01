@@ -45,6 +45,9 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
         attributes.put("createDate", getCreateDate());
         attributes.put("platform", getPlatform());
         attributes.put("token", getToken());
+        attributes.put("model", getModel());
+        attributes.put("OSVersion", getOSVersion());
+        attributes.put("appVersion", getAppVersion());
 
         return attributes;
     }
@@ -80,6 +83,24 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 
         if (token != null) {
             setToken(token);
+        }
+
+        String model = (String) attributes.get("model");
+
+        if (model != null) {
+            setModel(model);
+        }
+
+        String OSVersion = (String) attributes.get("OSVersion");
+
+        if (OSVersion != null) {
+            setOSVersion(OSVersion);
+        }
+
+        String appVersion = (String) attributes.get("appVersion");
+
+        if (appVersion != null) {
+            setAppVersion(appVersion);
         }
     }
 
@@ -223,6 +244,66 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
     @Override
     public void setToken(java.lang.String token) {
         _pushNotificationsDevice.setToken(token);
+    }
+
+    /**
+    * Returns the model of this push notifications device.
+    *
+    * @return the model of this push notifications device
+    */
+    @Override
+    public java.lang.String getModel() {
+        return _pushNotificationsDevice.getModel();
+    }
+
+    /**
+    * Sets the model of this push notifications device.
+    *
+    * @param model the model of this push notifications device
+    */
+    @Override
+    public void setModel(java.lang.String model) {
+        _pushNotificationsDevice.setModel(model);
+    }
+
+    /**
+    * Returns the o s version of this push notifications device.
+    *
+    * @return the o s version of this push notifications device
+    */
+    @Override
+    public java.lang.String getOSVersion() {
+        return _pushNotificationsDevice.getOSVersion();
+    }
+
+    /**
+    * Sets the o s version of this push notifications device.
+    *
+    * @param OSVersion the o s version of this push notifications device
+    */
+    @Override
+    public void setOSVersion(java.lang.String OSVersion) {
+        _pushNotificationsDevice.setOSVersion(OSVersion);
+    }
+
+    /**
+    * Returns the app version of this push notifications device.
+    *
+    * @return the app version of this push notifications device
+    */
+    @Override
+    public java.lang.String getAppVersion() {
+        return _pushNotificationsDevice.getAppVersion();
+    }
+
+    /**
+    * Sets the app version of this push notifications device.
+    *
+    * @param appVersion the app version of this push notifications device
+    */
+    @Override
+    public void setAppVersion(java.lang.String appVersion) {
+        _pushNotificationsDevice.setAppVersion(appVersion);
     }
 
     @Override

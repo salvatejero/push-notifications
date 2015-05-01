@@ -58,6 +58,13 @@ public interface PushNotificationsDeviceService extends BaseService,
         throws com.liferay.portal.kernel.exception.PortalException;
 
     @com.liferay.portal.security.ac.AccessControlled(guestAccessEnabled = true)
+    public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+        java.lang.String token, java.lang.String platform,
+        java.lang.String model, java.lang.String osVersion,
+        java.lang.String appVersion)
+        throws com.liferay.portal.kernel.exception.PortalException;
+
+    @com.liferay.portal.security.ac.AccessControlled(guestAccessEnabled = true)
     public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
         java.lang.String token)
         throws com.liferay.portal.kernel.exception.PortalException;

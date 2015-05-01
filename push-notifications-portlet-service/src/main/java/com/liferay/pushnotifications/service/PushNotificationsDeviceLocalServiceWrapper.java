@@ -286,6 +286,35 @@ public class PushNotificationsDeviceLocalServiceWrapper
     }
 
     @Override
+    public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDeviceByComparator(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return _pushNotificationsDeviceLocalService.getPushNotificationsDeviceByComparator(start,
+            end, orderByComparator);
+    }
+
+    @Override
+    public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getUserDevices(
+        long userId, int start, int end) {
+        return _pushNotificationsDeviceLocalService.getUserDevices(userId,
+            start, end);
+    }
+
+    @Override
+    public int getUserDevicesCount(long userId) {
+        return _pushNotificationsDeviceLocalService.getUserDevicesCount(userId);
+    }
+
+    @Override
+    public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
+        long userId, java.lang.String platform, java.lang.String token,
+        java.lang.String model, java.lang.String version,
+        java.lang.String appVersion) {
+        return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
+            platform, token, model, version, appVersion);
+    }
+
+    @Override
     public com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(
         java.lang.String token)
         throws com.liferay.portal.kernel.exception.PortalException {
