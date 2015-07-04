@@ -4,3 +4,5 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
+push-notifications-portlet/src/main/java/it/tref/liferay/mapit/map/hook/listener/ExpandoValueListener.java
+push-notifications-portlet/src/main/java/it/tref/liferay/mapit/util/MapItUtil.java
