@@ -30,6 +30,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
     private String _token;
     private String _model;
     private String _OSVersion;
+    private long _appId;
     private String _appVersion;
     private BaseModel<?> _pushNotificationsDeviceRemoteModel;
     private Class<?> _clpSerializerClass = com.liferay.pushnotifications.service.ClpSerializer.class;
@@ -79,6 +80,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         attributes.put("token", getToken());
         attributes.put("model", getModel());
         attributes.put("OSVersion", getOSVersion());
+        attributes.put("appId", getAppId());
         attributes.put("appVersion", getAppVersion());
 
         return attributes;
@@ -127,6 +129,12 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
 
         if (OSVersion != null) {
             setOSVersion(OSVersion);
+        }
+
+        Long appId = (Long) attributes.get("appId");
+
+        if (appId != null) {
+            setAppId(appId);
         }
 
         String appVersion = (String) attributes.get("appVersion");
@@ -303,6 +311,28 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
     }
 
     @Override
+    public long getAppId() {
+        return _appId;
+    }
+
+    @Override
+    public void setAppId(long appId) {
+        _appId = appId;
+
+        if (_pushNotificationsDeviceRemoteModel != null) {
+            try {
+                Class<?> clazz = _pushNotificationsDeviceRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setAppId", long.class);
+
+                method.invoke(_pushNotificationsDeviceRemoteModel, appId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public String getAppVersion() {
         return _appVersion;
     }
@@ -400,6 +430,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         clone.setToken(getToken());
         clone.setModel(getModel());
         clone.setOSVersion(getOSVersion());
+        clone.setAppId(getAppId());
         clone.setAppVersion(getAppVersion());
 
         return clone;
@@ -450,7 +481,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(19);
 
         sb.append("{pushNotificationsDeviceId=");
         sb.append(getPushNotificationsDeviceId());
@@ -466,6 +497,8 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         sb.append(getModel());
         sb.append(", OSVersion=");
         sb.append(getOSVersion());
+        sb.append(", appId=");
+        sb.append(getAppId());
         sb.append(", appVersion=");
         sb.append(getAppVersion());
         sb.append("}");
@@ -475,7 +508,7 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(28);
+        StringBundler sb = new StringBundler(31);
 
         sb.append("<model><model-name>");
         sb.append("com.liferay.pushnotifications.model.PushNotificationsDevice");
@@ -508,6 +541,10 @@ public class PushNotificationsDeviceClp extends BaseModelImpl<PushNotificationsD
         sb.append(
             "<column><column-name>OSVersion</column-name><column-value><![CDATA[");
         sb.append(getOSVersion());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>appId</column-name><column-value><![CDATA[");
+        sb.append(getAppId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>appVersion</column-name><column-value><![CDATA[");

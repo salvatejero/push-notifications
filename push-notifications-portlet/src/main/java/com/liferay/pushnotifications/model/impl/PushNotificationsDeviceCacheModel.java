@@ -29,11 +29,12 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
     public String token;
     public String model;
     public String OSVersion;
+    public long appId;
     public String appVersion;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(19);
 
         sb.append("{pushNotificationsDeviceId=");
         sb.append(pushNotificationsDeviceId);
@@ -49,6 +50,8 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
         sb.append(model);
         sb.append(", OSVersion=");
         sb.append(OSVersion);
+        sb.append(", appId=");
+        sb.append(appId);
         sb.append(", appVersion=");
         sb.append(appVersion);
         sb.append("}");
@@ -93,6 +96,8 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
             pushNotificationsDeviceImpl.setOSVersion(OSVersion);
         }
 
+        pushNotificationsDeviceImpl.setAppId(appId);
+
         if (appVersion == null) {
             pushNotificationsDeviceImpl.setAppVersion(StringPool.BLANK);
         } else {
@@ -113,6 +118,7 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
         token = objectInput.readUTF();
         model = objectInput.readUTF();
         OSVersion = objectInput.readUTF();
+        appId = objectInput.readLong();
         appVersion = objectInput.readUTF();
     }
 
@@ -146,6 +152,8 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
         } else {
             objectOutput.writeUTF(OSVersion);
         }
+
+        objectOutput.writeLong(appId);
 
         if (appVersion == null) {
             objectOutput.writeUTF(StringPool.BLANK);

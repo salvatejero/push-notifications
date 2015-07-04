@@ -182,7 +182,8 @@ public class PushNotificationsDeviceLocalServiceClp
 
         _methodParameterTypes23 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
-                "java.lang.String", "java.lang.String", "java.lang.String"
+                "java.lang.String", "java.lang.String", "long",
+                "java.lang.String"
             };
 
         _methodName24 = "deletePushNotificationsDevice";
@@ -836,7 +837,7 @@ public class PushNotificationsDeviceLocalServiceClp
     @Override
     public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         long userId, java.lang.String platform, java.lang.String token,
-        java.lang.String model, java.lang.String version,
+        java.lang.String model, java.lang.String version, long appId,
         java.lang.String appVersion) {
         Object returnObj = null;
 
@@ -853,6 +854,8 @@ public class PushNotificationsDeviceLocalServiceClp
                     ClpSerializer.translateInput(model),
                         
                     ClpSerializer.translateInput(version),
+                        
+                    appId,
                         
                     ClpSerializer.translateInput(appVersion)
                     });

@@ -164,6 +164,20 @@ public interface PushNotificationsDeviceModel extends BaseModel<PushNotification
     public void setOSVersion(String OSVersion);
 
     /**
+     * Returns the app ID of this push notifications device.
+     *
+     * @return the app ID of this push notifications device
+     */
+    public long getAppId();
+
+    /**
+     * Sets the app ID of this push notifications device.
+     *
+     * @param appId the app ID of this push notifications device
+     */
+    public void setAppId(long appId);
+
+    /**
      * Returns the app version of this push notifications device.
      *
      * @return the app version of this push notifications device

@@ -47,6 +47,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
         attributes.put("token", getToken());
         attributes.put("model", getModel());
         attributes.put("OSVersion", getOSVersion());
+        attributes.put("appId", getAppId());
         attributes.put("appVersion", getAppVersion());
 
         return attributes;
@@ -95,6 +96,12 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 
         if (OSVersion != null) {
             setOSVersion(OSVersion);
+        }
+
+        Long appId = (Long) attributes.get("appId");
+
+        if (appId != null) {
+            setAppId(appId);
         }
 
         String appVersion = (String) attributes.get("appVersion");
@@ -284,6 +291,26 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
     @Override
     public void setOSVersion(java.lang.String OSVersion) {
         _pushNotificationsDevice.setOSVersion(OSVersion);
+    }
+
+    /**
+    * Returns the app ID of this push notifications device.
+    *
+    * @return the app ID of this push notifications device
+    */
+    @Override
+    public long getAppId() {
+        return _pushNotificationsDevice.getAppId();
+    }
+
+    /**
+    * Sets the app ID of this push notifications device.
+    *
+    * @param appId the app ID of this push notifications device
+    */
+    @Override
+    public void setAppId(long appId) {
+        _pushNotificationsDevice.setAppId(appId);
     }
 
     /**

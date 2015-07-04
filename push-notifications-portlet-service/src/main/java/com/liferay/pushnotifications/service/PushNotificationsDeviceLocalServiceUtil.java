@@ -292,11 +292,11 @@ public class PushNotificationsDeviceLocalServiceUtil {
 
     public static com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         long userId, java.lang.String platform, java.lang.String token,
-        java.lang.String model, java.lang.String version,
+        java.lang.String model, java.lang.String version, long appId,
         java.lang.String appVersion) {
         return getService()
                    .addPushNotificationsDevice(userId, platform, token, model,
-            version, appVersion);
+            version, appId, appVersion);
     }
 
     public static com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(

@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
+import com.liferay.pushnotifications.model.AppVersionClp;
+import com.liferay.pushnotifications.model.ApplicationClp;
 import com.liferay.pushnotifications.model.PushNotificationsDeviceClp;
 
 import java.io.ObjectInputStream;
@@ -88,6 +90,14 @@ public class ClpSerializer {
 
         String oldModelClassName = oldModelClass.getName();
 
+        if (oldModelClassName.equals(ApplicationClp.class.getName())) {
+            return translateInputApplication(oldModel);
+        }
+
+        if (oldModelClassName.equals(AppVersionClp.class.getName())) {
+            return translateInputAppVersion(oldModel);
+        }
+
         if (oldModelClassName.equals(PushNotificationsDeviceClp.class.getName())) {
             return translateInputPushNotificationsDevice(oldModel);
         }
@@ -105,6 +115,26 @@ public class ClpSerializer {
         }
 
         return newList;
+    }
+
+    public static Object translateInputApplication(BaseModel<?> oldModel) {
+        ApplicationClp oldClpModel = (ApplicationClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getApplicationRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
+    public static Object translateInputAppVersion(BaseModel<?> oldModel) {
+        AppVersionClp oldClpModel = (AppVersionClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getAppVersionRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
     }
 
     public static Object translateInputPushNotificationsDevice(
@@ -132,6 +162,76 @@ public class ClpSerializer {
         Class<?> oldModelClass = oldModel.getClass();
 
         String oldModelClassName = oldModelClass.getName();
+
+        if (oldModelClassName.equals(
+                    "com.liferay.pushnotifications.model.impl.ApplicationImpl")) {
+            return translateOutputApplication(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
+                    "com.liferay.pushnotifications.model.impl.AppVersionImpl")) {
+            return translateOutputAppVersion(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
 
         if (oldModelClassName.equals(
                     "com.liferay.pushnotifications.model.impl.PushNotificationsDeviceImpl")) {
@@ -245,11 +345,41 @@ public class ClpSerializer {
         }
 
         if (className.equals(
+                    "com.liferay.pushnotifications.NoSuchApplicationException")) {
+            return new com.liferay.pushnotifications.NoSuchApplicationException();
+        }
+
+        if (className.equals(
+                    "com.liferay.pushnotifications.NoSuchAppVersionException")) {
+            return new com.liferay.pushnotifications.NoSuchAppVersionException();
+        }
+
+        if (className.equals(
                     "com.liferay.pushnotifications.NoSuchDeviceException")) {
             return new com.liferay.pushnotifications.NoSuchDeviceException();
         }
 
         return throwable;
+    }
+
+    public static Object translateOutputApplication(BaseModel<?> oldModel) {
+        ApplicationClp newModel = new ApplicationClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setApplicationRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputAppVersion(BaseModel<?> oldModel) {
+        AppVersionClp newModel = new AppVersionClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setAppVersionRemoteModel(oldModel);
+
+        return newModel;
     }
 
     public static Object translateOutputPushNotificationsDevice(

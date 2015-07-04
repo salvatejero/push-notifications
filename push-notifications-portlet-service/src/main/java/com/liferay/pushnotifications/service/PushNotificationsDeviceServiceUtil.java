@@ -59,12 +59,12 @@ public class PushNotificationsDeviceServiceUtil {
 
     public static com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         java.lang.String token, java.lang.String platform,
-        java.lang.String model, java.lang.String osVersion,
+        java.lang.String model, java.lang.String osVersion, long appId,
         java.lang.String appVersion)
         throws com.liferay.portal.kernel.exception.PortalException {
         return getService()
                    .addPushNotificationsDevice(token, platform, model,
-            osVersion, appVersion);
+            osVersion, appId, appVersion);
     }
 
     public static com.liferay.pushnotifications.model.PushNotificationsDevice deletePushNotificationsDevice(

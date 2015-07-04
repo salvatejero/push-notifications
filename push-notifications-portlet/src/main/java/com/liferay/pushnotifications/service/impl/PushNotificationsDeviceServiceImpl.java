@@ -78,7 +78,7 @@ public class PushNotificationsDeviceServiceImpl
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public PushNotificationsDevice addPushNotificationsDevice(
-			String token, String platform, String model, String osVersion, String appVersion)
+			String token, String platform, String model, String osVersion, long appId, String appVersion)
 		throws PortalException {
 
 		PushNotificationsPermission.check(
@@ -95,7 +95,7 @@ public class PushNotificationsDeviceServiceImpl
 		if (pushNotificationsDevice == null) {
 			pushNotificationsDevice =
 				pushNotificationsDeviceLocalService.addPushNotificationsDevice(
-					getGuestOrUserId(), platform, token, model, osVersion, appVersion);
+					getGuestOrUserId(), platform, token, model, osVersion, appId, appVersion);
 		}
 		else {
 			long userId = getGuestOrUserId();

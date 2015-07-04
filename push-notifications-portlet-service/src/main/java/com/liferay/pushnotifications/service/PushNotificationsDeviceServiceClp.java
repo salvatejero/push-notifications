@@ -45,7 +45,7 @@ public class PushNotificationsDeviceServiceClp
 
         _methodParameterTypes4 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
-                "java.lang.String", "java.lang.String"
+                "java.lang.String", "long", "java.lang.String"
             };
 
         _methodName5 = "deletePushNotificationsDevice";
@@ -144,7 +144,7 @@ public class PushNotificationsDeviceServiceClp
     @Override
     public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         java.lang.String token, java.lang.String platform,
-        java.lang.String model, java.lang.String osVersion,
+        java.lang.String model, java.lang.String osVersion, long appId,
         java.lang.String appVersion)
         throws com.liferay.portal.kernel.exception.PortalException {
         Object returnObj = null;
@@ -160,6 +160,8 @@ public class PushNotificationsDeviceServiceClp
                     ClpSerializer.translateInput(model),
                         
                     ClpSerializer.translateInput(osVersion),
+                        
+                    appId,
                         
                     ClpSerializer.translateInput(appVersion)
                     });

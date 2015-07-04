@@ -308,10 +308,10 @@ public class PushNotificationsDeviceLocalServiceWrapper
     @Override
     public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         long userId, java.lang.String platform, java.lang.String token,
-        java.lang.String model, java.lang.String version,
+        java.lang.String model, java.lang.String version, long appId,
         java.lang.String appVersion) {
         return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
-            platform, token, model, version, appVersion);
+            platform, token, model, version, appId, appVersion);
     }
 
     @Override

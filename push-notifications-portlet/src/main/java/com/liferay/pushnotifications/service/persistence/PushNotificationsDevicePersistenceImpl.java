@@ -4805,6 +4805,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
         pushNotificationsDeviceImpl.setToken(pushNotificationsDevice.getToken());
         pushNotificationsDeviceImpl.setModel(pushNotificationsDevice.getModel());
         pushNotificationsDeviceImpl.setOSVersion(pushNotificationsDevice.getOSVersion());
+        pushNotificationsDeviceImpl.setAppId(pushNotificationsDevice.getAppId());
         pushNotificationsDeviceImpl.setAppVersion(pushNotificationsDevice.getAppVersion());
 
         return pushNotificationsDeviceImpl;

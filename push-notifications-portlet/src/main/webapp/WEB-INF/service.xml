@@ -21,6 +21,7 @@
 		<column name="token" type="String" />
 		<column name="model" type="String" />
 		<column name="OSVersion" type="String" />
+		<column name="appId" type="long" />
 		<column name="appVersion" type="String" />
 		<!-- Finder methods -->
 
@@ -50,4 +51,38 @@
 		</finder>
 		
 	</entity>
+	
+	<entity name="AppVersion" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="appVersionId" type="long" primary="true" />
+
+		<column name="appVersionKey" type="String"/>
+
+		<column name="structure" type="String" />
+		<column name="createdDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<column name="userId" type="long"></column>
+		
+		<column name="applicationId" type="long" />
+		
+		<finder name="ApplicationId" return-type="Collection">
+			<finder-column name="applicationId" />
+		</finder>
+		
+	</entity>
+	
+	<entity name="Application" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="applicationId" type="long" primary="true" />
+
+		<column name="applicationName" type="String" />
+		<column name="createdDate" type="Date" />
+		<column name="modificatedDate" type="Date" />
+		<column name="userId" type="long"></column>		
+	</entity>
+	
 </service-builder>

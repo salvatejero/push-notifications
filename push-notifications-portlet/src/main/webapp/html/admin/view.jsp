@@ -14,6 +14,10 @@
  */
 --%>
 
+<%@page import="com.liferay.pushnotifications.service.AppVersionLocalServiceUtil"%>
+<%@page import="com.liferay.pushnotifications.service.ApplicationLocalServiceUtil"%>
+<%@page import="com.liferay.pushnotifications.model.AppVersion"%>
+<%@page import="java.util.List"%>
 <%@page import="com.liferay.pushnotifications.util.PushNotificationsDeviceComparatorUtil"%>
 <%@page import="com.liferay.portal.kernel.util.StringUtil"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
@@ -47,7 +51,7 @@ String orderByType = ParamUtil.getString(request, "orderByType","ASC");
 OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getPushNotificationOrderByComparator(orderByCol, orderByType);
 %>
 <liferay-ui:tabs
-	names="devices,configuration,test"
+	names="devices,configuration,applications,test"
 	refresh="<%= false %>"
 >
 
@@ -65,55 +69,47 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 			/>
 	
 			<liferay-ui:search-container-row
-			className="com.liferay.pushnotifications.model.PushNotificationsDevice"
-			keyProperty="pushNotificationsDeviceId"
-			modelVar="device">
-			<%
-			User userToken = UserLocalServiceUtil.getUser(device.getUserId());
-			%>
-			<liferay-ui:search-container-column-text
-				name="userid"
-				value='<%= ""+userToken.getUserId() %>'
-			/>
-			<liferay-ui:search-container-column-text
-				name="fullname"
-				value='<%= ""+userToken.getFullName() %>'
-			/>
-			<liferay-ui:search-container-column-text
-				name="screename"
-				value='<%= userToken.getScreenName() %>'
-			/>
-			<liferay-ui:search-container-column-text
-				name="platform"
-				orderable="<%= true %>"
-      			orderableProperty="platform"
-				value="<%= device.getPlatform() %>"
-			/>
-			<liferay-ui:search-container-column-text
-				name="model"
-				orderable="<%= true %>"
-      			orderableProperty="model"
-				value="<%= device.getModel() %>"
-			/>
-			<liferay-ui:search-container-column-text
-				name="osversion"
-				orderable="<%= true %>"
-      			orderableProperty="OSVersion"
-				value="<%= device.getOSVersion() %>"
-			/>
-			<liferay-ui:search-container-column-text
-				name="appversion" orderable="<%= true %>"
-      			orderableProperty="appVersion"
-				value="<%= device.getAppVersion() %>"
-			/>
-			<liferay-ui:search-container-column-text
-				name="token"
-				value="<%= device.getToken() %>"
-			/>
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/html/admin/devices_action.jsp" />
-		</liferay-ui:search-container-row>
+				className="com.liferay.pushnotifications.model.PushNotificationsDevice"
+				keyProperty="pushNotificationsDeviceId"
+				modelVar="device">
+				<%
+				User userToken = UserLocalServiceUtil.getUser(device.getUserId());
+				%>
+				<liferay-ui:search-container-column-text
+					name="userid"
+					value='<%= ""+userToken.getUserId() %>'	/>
+				<liferay-ui:search-container-column-text
+					name="fullname"
+					value='<%= ""+userToken.getFullName() %>'/>
+				<liferay-ui:search-container-column-text 
+					name="screename"
+					value='<%= userToken.getScreenName() %>'/>
+				<liferay-ui:search-container-column-text
+					name="platform"
+					orderable="<%= true %>"
+      				orderableProperty="platform"
+					value="<%= device.getPlatform() %>"/>
+				<liferay-ui:search-container-column-text
+					name="model"
+					orderable="<%= true %>"
+      				orderableProperty="model"
+					value="<%= device.getModel() %>" />
+				<liferay-ui:search-container-column-text
+					name="osversion"
+					orderable="<%= true %>"
+      				orderableProperty="OSVersion"
+					value="<%= device.getOSVersion() %>"/>
+				<liferay-ui:search-container-column-text
+					name="appversion" orderable="<%= true %>"
+      				orderableProperty="appVersion"
+					value="<%= device.getAppVersion() %>" />
+				<liferay-ui:search-container-column-text
+					name="token"
+					value="<%= device.getToken() %>"/>
+				<liferay-ui:search-container-column-jsp
+					align="right"
+					path="/html/admin/devices_action.jsp" />
+				</liferay-ui:search-container-row>
 	
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>	
@@ -143,6 +139,45 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 				<aui:button type="submit" />
 			</aui:button-row>
 		</aui:form>
+	</liferay-ui:section>
+<%
+%>
+	<liferay-ui:section>
+		<liferay-ui:success key="success" message="device-delete-successfull"/>	
+		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" delta="10"
+			iteratorURL="<%= portletURL %>"
+			total="<%= ApplicationLocalServiceUtil.getApplicationsCount() %>">
+			<liferay-ui:search-container-results
+				results="<%= ApplicationLocalServiceUtil.getApplications(searchContainer.getStart(), searchContainer.getEnd()) %>"
+			/>
+	
+			<liferay-ui:search-container-row
+				className="com.liferay.pushnotifications.model.Application"
+				keyProperty="applicationId"
+				modelVar="app">
+				<%
+				List<AppVersion> versions = AppVersionLocalServiceUtil.findAppVerionByAppId(app.getApplicationId());
+				String appVersions = "";
+				String sep = "";
+				for(AppVersion version: versions){
+					appVersions += sep + version.getAppVersionKey();
+					sep = ", ";
+				}
+				%>
+				<liferay-ui:search-container-column-text
+					name="userid"
+					value='<%= ""+app.getApplicationName() %>'	/>
+				<liferay-ui:search-container-column-text
+					name="Versions"
+					value='<%=appVersions %>'/>
+				
+				<liferay-ui:search-container-column-jsp
+					align="right"
+					path="/html/admin/appVerions_action.jsp" />
+				</liferay-ui:search-container-row>
+	
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>
 	</liferay-ui:section>
 
 	<liferay-ui:section>

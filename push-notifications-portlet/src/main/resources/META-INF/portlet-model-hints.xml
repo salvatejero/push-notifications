@@ -1,6 +1,22 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.pushnotifications.model.Application">
+		<field name="applicationId" type="long" />
+		<field name="applicationName" type="String" />
+		<field name="createdDate" type="Date" />
+		<field name="modificatedDate" type="Date" />
+		<field name="userId" type="long" />
+	</model>
+	<model name="com.liferay.pushnotifications.model.AppVersion">
+		<field name="appVersionId" type="long" />
+		<field name="appVersionKey" type="String" />
+		<field name="structure" type="String" />
+		<field name="createdDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="applicationId" type="long" />
+	</model>
 	<model name="com.liferay.pushnotifications.model.PushNotificationsDevice">
 		<field name="pushNotificationsDeviceId" type="long" />
 		<field name="userId" type="long" />
@@ -11,6 +27,7 @@
 		</field>
 		<field name="model" type="String" />
 		<field name="OSVersion" type="String" />
+		<field name="appId" type="long" />
 		<field name="appVersion" type="String" />
 	</model>
 </model-hints>

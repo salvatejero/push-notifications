@@ -21,6 +21,7 @@ public class PushNotificationsDeviceSoap implements Serializable {
     private String _token;
     private String _model;
     private String _OSVersion;
+    private long _appId;
     private String _appVersion;
 
     public PushNotificationsDeviceSoap() {
@@ -37,6 +38,7 @@ public class PushNotificationsDeviceSoap implements Serializable {
         soapModel.setToken(model.getToken());
         soapModel.setModel(model.getModel());
         soapModel.setOSVersion(model.getOSVersion());
+        soapModel.setAppId(model.getAppId());
         soapModel.setAppVersion(model.getAppVersion());
 
         return soapModel;
@@ -143,6 +145,14 @@ public class PushNotificationsDeviceSoap implements Serializable {
 
     public void setOSVersion(String OSVersion) {
         _OSVersion = OSVersion;
+    }
+
+    public long getAppId() {
+        return _appId;
+    }
+
+    public void setAppId(long appId) {
+        _appId = appId;
     }
 
     public String getAppVersion() {

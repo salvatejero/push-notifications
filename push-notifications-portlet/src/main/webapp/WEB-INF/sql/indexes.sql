@@ -1,3 +1,8 @@
+create index IX_5EC0953E on AppVersion (applicationId);
+
+create index IX_5A58906C on Applications_AppVersions (appVersionId);
+create index IX_6D6D6D35 on Applications_AppVersions (applicationId);
+
 create index IX_D66BFB5 on PushNotificationsDevice (appVersion);
 create index IX_7758D8B1 on PushNotificationsDevice (platform);
 create index IX_7CC663B3 on PushNotificationsDevice (platform, OSVersion);

@@ -108,7 +108,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 	
 	@Override
 	public PushNotificationsDevice addPushNotificationsDevice(
-		long userId, String platform, String token, String model, String version, String appVersion) {
+		long userId, String platform, String token, String model, String version, long appId, String appVersion) {
 
 		long pushNotificationsDeviceId = 0;
 		try {
@@ -128,6 +128,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 		pushNotificationsDevice.setToken(token);
 		pushNotificationsDevice.setModel(model);
 		pushNotificationsDevice.setOSVersion(version);
+		pushNotificationsDevice.setAppId(appId);
 		pushNotificationsDevice.setAppVersion(appVersion);
 		
 		try {

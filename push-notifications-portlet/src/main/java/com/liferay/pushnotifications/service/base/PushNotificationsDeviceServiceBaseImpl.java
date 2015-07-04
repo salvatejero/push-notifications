@@ -10,6 +10,8 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.pushnotifications.model.PushNotificationsDevice;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceService;
+import com.liferay.pushnotifications.service.persistence.AppVersionPersistence;
+import com.liferay.pushnotifications.service.persistence.ApplicationPersistence;
 import com.liferay.pushnotifications.service.persistence.PushNotificationsDevicePersistence;
 
 import javax.sql.DataSource;
@@ -29,6 +31,14 @@ import javax.sql.DataSource;
 public abstract class PushNotificationsDeviceServiceBaseImpl
     extends BaseServiceImpl implements PushNotificationsDeviceService,
         IdentifiableBean {
+    @BeanReference(type = com.liferay.pushnotifications.service.ApplicationLocalService.class)
+    protected com.liferay.pushnotifications.service.ApplicationLocalService applicationLocalService;
+    @BeanReference(type = ApplicationPersistence.class)
+    protected ApplicationPersistence applicationPersistence;
+    @BeanReference(type = com.liferay.pushnotifications.service.AppVersionLocalService.class)
+    protected com.liferay.pushnotifications.service.AppVersionLocalService appVersionLocalService;
+    @BeanReference(type = AppVersionPersistence.class)
+    protected AppVersionPersistence appVersionPersistence;
     @BeanReference(type = com.liferay.pushnotifications.service.PushNotificationsDeviceLocalService.class)
     protected com.liferay.pushnotifications.service.PushNotificationsDeviceLocalService pushNotificationsDeviceLocalService;
     @BeanReference(type = com.liferay.pushnotifications.service.PushNotificationsDeviceService.class)
@@ -54,6 +64,82 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
      *
      * Never modify or reference this class directly. Always use {@link com.liferay.pushnotifications.service.PushNotificationsDeviceServiceUtil} to access the push notifications device remote service.
      */
+
+    /**
+     * Returns the application local service.
+     *
+     * @return the application local service
+     */
+    public com.liferay.pushnotifications.service.ApplicationLocalService getApplicationLocalService() {
+        return applicationLocalService;
+    }
+
+    /**
+     * Sets the application local service.
+     *
+     * @param applicationLocalService the application local service
+     */
+    public void setApplicationLocalService(
+        com.liferay.pushnotifications.service.ApplicationLocalService applicationLocalService) {
+        this.applicationLocalService = applicationLocalService;
+    }
+
+    /**
+     * Returns the application persistence.
+     *
+     * @return the application persistence
+     */
+    public ApplicationPersistence getApplicationPersistence() {
+        return applicationPersistence;
+    }
+
+    /**
+     * Sets the application persistence.
+     *
+     * @param applicationPersistence the application persistence
+     */
+    public void setApplicationPersistence(
+        ApplicationPersistence applicationPersistence) {
+        this.applicationPersistence = applicationPersistence;
+    }
+
+    /**
+     * Returns the app version local service.
+     *
+     * @return the app version local service
+     */
+    public com.liferay.pushnotifications.service.AppVersionLocalService getAppVersionLocalService() {
+        return appVersionLocalService;
+    }
+
+    /**
+     * Sets the app version local service.
+     *
+     * @param appVersionLocalService the app version local service
+     */
+    public void setAppVersionLocalService(
+        com.liferay.pushnotifications.service.AppVersionLocalService appVersionLocalService) {
+        this.appVersionLocalService = appVersionLocalService;
+    }
+
+    /**
+     * Returns the app version persistence.
+     *
+     * @return the app version persistence
+     */
+    public AppVersionPersistence getAppVersionPersistence() {
+        return appVersionPersistence;
+    }
+
+    /**
+     * Sets the app version persistence.
+     *
+     * @param appVersionPersistence the app version persistence
+     */
+    public void setAppVersionPersistence(
+        AppVersionPersistence appVersionPersistence) {
+        this.appVersionPersistence = appVersionPersistence;
+    }
 
     /**
      * Returns the push notifications device local service.

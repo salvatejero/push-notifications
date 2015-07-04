@@ -68,12 +68,12 @@ public class PushNotificationsDeviceServiceSoap {
 
     public static com.liferay.pushnotifications.model.PushNotificationsDeviceSoap addPushNotificationsDevice(
         java.lang.String token, java.lang.String platform,
-        java.lang.String model, java.lang.String osVersion,
+        java.lang.String model, java.lang.String osVersion, long appId,
         java.lang.String appVersion) throws RemoteException {
         try {
             com.liferay.pushnotifications.model.PushNotificationsDevice returnValue =
                 PushNotificationsDeviceServiceUtil.addPushNotificationsDevice(token,
-                    platform, model, osVersion, appVersion);
+                    platform, model, osVersion, appId, appVersion);
 
             return com.liferay.pushnotifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
         } catch (Exception e) {
