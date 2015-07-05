@@ -44,6 +44,8 @@ public class ApplicationLocalServiceClp implements ApplicationLocalService {
     private String[] _methodParameterTypes16;
     private String _methodName17;
     private String[] _methodParameterTypes17;
+    private String _methodName19;
+    private String[] _methodParameterTypes19;
 
     public ApplicationLocalServiceClp(
         InvokableLocalService invokableLocalService) {
@@ -138,6 +140,12 @@ public class ApplicationLocalServiceClp implements ApplicationLocalService {
         _methodName17 = "setBeanIdentifier";
 
         _methodParameterTypes17 = new String[] { "java.lang.String" };
+
+        _methodName19 = "updateApplication";
+
+        _methodParameterTypes19 = new String[] {
+                "java.lang.String", "com.liferay.portal.model.User"
+            };
     }
 
     @Override
@@ -652,5 +660,32 @@ public class ApplicationLocalServiceClp implements ApplicationLocalService {
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public com.liferay.pushnotifications.model.Application updateApplication(
+        java.lang.String appName, com.liferay.portal.model.User user) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName19,
+                    _methodParameterTypes19,
+                    new Object[] {
+                        ClpSerializer.translateInput(appName),
+                        
+                    ClpSerializer.translateInput(user)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (com.liferay.pushnotifications.model.Application) ClpSerializer.translateOutput(returnObj);
     }
 }

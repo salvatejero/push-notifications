@@ -1,5 +1,11 @@
 package com.liferay.pushnotifications.service.impl;
 
+import java.util.Date;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.pushnotifications.model.Application;
+import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
 import com.liferay.pushnotifications.service.base.ApplicationLocalServiceBaseImpl;
 
 /**
@@ -22,4 +28,31 @@ public class ApplicationLocalServiceImpl extends ApplicationLocalServiceBaseImpl
      *
      * Never reference this interface directly. Always use {@link com.liferay.pushnotifications.service.ApplicationLocalServiceUtil} to access the application local service.
      */
+	
+	
+	public Application updateApplication(String appName, User user){
+		
+		long appId = 0;
+		try {
+			appId = counterLocalService.increment();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		Application app = applicationLocalService.createApplication(appId);
+		app.setApplicationName(appName);
+		app.setUserId(user.getUserId());
+		try {
+			app.setUserUuid(user.getUserUuid());
+		
+			app.setCreatedDate(new Date());
+			app.setModificatedDate(new Date());
+		
+			app = applicationLocalService.addApplication(app);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return app;
+	}
 }

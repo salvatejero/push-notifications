@@ -162,15 +162,15 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 				}
 				%>
 				<liferay-ui:search-container-column-text
-					name="userid"
+					name="applicationName"
 					value='<%= ""+app.getApplicationName() %>'	/>
 				<liferay-ui:search-container-column-text
-					name="Versions"
+					name="versions"
 					value='<%=appVersions %>'/>
 				
 				<liferay-ui:search-container-column-jsp
 					align="right"
-					path="/html/admin/appVerions_action.jsp" />
+					path="/html/admin/appVersions_action.jsp" />
 				</liferay-ui:search-container-row>
 	
 			<liferay-ui:search-iterator />
@@ -206,6 +206,9 @@ addAppUrl.setPortletMode(PortletMode.VIEW);
 addAppUrl.setParameter(Constants.CMD, Constants.ADD);
 addAppUrl.setParameter("type", "app");
 addAppUrl.setWindowState(LiferayWindowState.POP_UP);
+
+
+
 %>
 <aui:script use="aui-base,aui-dialog">
 	var form = A.one('#<portlet:namespace />fm');
@@ -258,7 +261,7 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 				{
 					dialog: {
 						height: 460,
-						width: 770
+						width: 870
 					},
 					id: '<portlet:namespace />addAppDialog',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "new-app") %>',
@@ -267,5 +270,19 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 			);
 		});
 	
-	
+		Liferay.provide(window, 'editApp', function(url) {
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						height: 600,
+						width: 1070
+					},
+					id: '<portlet:namespace />addAppDialog',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "edit-app") %>',
+					uri: url
+				}
+			);
+		});
+		
 </aui:script>

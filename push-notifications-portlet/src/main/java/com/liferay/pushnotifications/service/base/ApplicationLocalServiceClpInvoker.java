@@ -45,6 +45,8 @@ public class ApplicationLocalServiceClpInvoker {
     private String[] _methodParameterTypes42;
     private String _methodName43;
     private String[] _methodParameterTypes43;
+    private String _methodName48;
+    private String[] _methodParameterTypes48;
 
     public ApplicationLocalServiceClpInvoker() {
         _methodName0 = "addApplication";
@@ -136,6 +138,12 @@ public class ApplicationLocalServiceClpInvoker {
         _methodName43 = "setBeanIdentifier";
 
         _methodParameterTypes43 = new String[] { "java.lang.String" };
+
+        _methodName48 = "updateApplication";
+
+        _methodParameterTypes48 = new String[] {
+                "java.lang.String", "com.liferay.portal.model.User"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -237,6 +245,12 @@ public class ApplicationLocalServiceClpInvoker {
             ApplicationLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
+        }
+
+        if (_methodName48.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+            return ApplicationLocalServiceUtil.updateApplication((java.lang.String) arguments[0],
+                (com.liferay.portal.model.User) arguments[1]);
         }
 
         throw new UnsupportedOperationException();

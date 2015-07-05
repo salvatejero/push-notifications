@@ -14,19 +14,27 @@ Application app = (Application)row.getObject();
 long appId = app.getApplicationId();
 
 long userId = (Long)request.getAttribute(WebKeys.USER_ID);
+
+
+PortletURL editAppUrl = renderResponse.createRenderURL();
+
+editAppUrl.setPortletMode(PortletMode.VIEW);
+editAppUrl.setParameter("appId", ""+appId);
+editAppUrl.setParameter(Constants.CMD, Constants.ADD);
+editAppUrl.setParameter("type", "app");
+editAppUrl.setWindowState(LiferayWindowState.POP_UP);
+
+
+String method = "editApp('"+editAppUrl.toString() +"')";
 %>
 
 <liferay-ui:icon-menu>
 	
-		<liferay-portlet:actionURL name="deleteApp" var="deleteApplicationUrl">
-			<portlet:param name="appId" value="<%= String.valueOf(appId) %>" />
-		</liferay-portlet:actionURL>
+	<liferay-portlet:actionURL name="deleteApp" var="deleteApplicationUrl">
+		<portlet:param name="appId" value="<%= String.valueOf(appId) %>" />
+	</liferay-portlet:actionURL>
 
-		<liferay-portlet:renderURL var="editAppUrl">
-			<portlet:param name="appId" value="<%= String.valueOf(appId) %>" />
-		</liferay-portlet:renderURL>
-
-	<liferay-ui:icon image="edit" url="<%= editAppUrl %>" />
+	<liferay-ui:icon image="edit" onClick="<%=method %>" url="#" />
 	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.DELETE) %>">
 		<liferay-ui:icon-delete url="<%= deleteApplicationUrl %>" />
 	</c:if>

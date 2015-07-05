@@ -240,4 +240,7 @@ public interface ApplicationLocalService extends BaseLocalService,
     public java.lang.Object invokeMethod(java.lang.String name,
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable;
+
+    public com.liferay.pushnotifications.model.Application updateApplication(
+        java.lang.String appName, com.liferay.portal.model.User user);
 }

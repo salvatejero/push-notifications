@@ -275,6 +275,12 @@ public class ApplicationLocalServiceWrapper implements ApplicationLocalService,
             arguments);
     }
 
+    @Override
+    public com.liferay.pushnotifications.model.Application updateApplication(
+        java.lang.String appName, com.liferay.portal.model.User user) {
+        return _applicationLocalService.updateApplication(appName, user);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

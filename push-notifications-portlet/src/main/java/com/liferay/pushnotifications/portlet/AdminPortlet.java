@@ -15,11 +15,19 @@
 package com.liferay.pushnotifications.portlet;
 
 import java.io.IOException;
+import java.util.Date;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
+import com.liferay.pushnotifications.model.Application;
+import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
 import com.liferay.pushnotifications.util.PortletPropsKeys;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -46,6 +54,10 @@ public class AdminPortlet extends MVCPortlet {
 		String type = ParamUtil.getString(
 				renderRequest,  "type", "");
 		if(cmd.equals(Constants.ADD) && type.equals("app")){
+			Long appId = ParamUtil.getLong(
+					renderRequest,  "appId", 0);
+			
+			renderRequest.setAttribute("appId", appId);
 			super.viewTemplate = "/html/admin/editApp.jsp";
 		}else{
 			super.viewTemplate = "/html/admin/view.jsp";
@@ -53,7 +65,39 @@ public class AdminPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 
+	public void updateApplication(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+	
+		
+		Long appId = ParamUtil.getLong(
+				actionRequest, "appId", 0);
+		
+		String appName = ParamUtil.getString(actionRequest, "applicationName", "");
+		
+		Application app = null;
+		if(appId == 0){
+			app = addApplication(actionRequest, appName);
+		}
+		
+		actionResponse.setRenderParameter("appId", ""+app.getApplicationId());
+		actionResponse.setRenderParameter(Constants.CMD, Constants.ADD);
+		actionResponse.setRenderParameter("type", "app");
+	}
+	
+	private Application addApplication(ActionRequest actionRequest, String appName){
 
+		User u = (User)actionRequest.getAttribute(WebKeys.USER);
+		return ApplicationLocalServiceUtil.updateApplication(appName, u);
+		
+		
+	}
+	
+	
+	private void updateApplication(){
+		
+	}
+	
 	public void updatePortletPreferences(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
