@@ -25,6 +25,28 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.pushnotifications.util.PortletPropsKeys" %><%@
 page import="com.liferay.pushnotifications.util.PortletPropsValues" %>
 
+
+<%@page import="com.liferay.portal.kernel.util.Constants"%>
+<%@page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil"%>
+<%@page import="javax.portlet.PortletRequest"%>
+<%@page import="javax.portlet.PortletMode"%>
+<%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
+<%@page import="com.liferay.pushnotifications.service.AppVersionLocalServiceUtil"%>
+<%@page import="com.liferay.pushnotifications.service.ApplicationLocalServiceUtil"%>
+<%@page import="com.liferay.pushnotifications.model.AppVersion"%>
+<%@page import="java.util.List"%>
+<%@page import="com.liferay.pushnotifications.util.PushNotificationsDeviceComparatorUtil"%>
+<%@page import="com.liferay.portal.kernel.util.StringUtil"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="com.liferay.portal.kernel.util.OrderByComparator"%>
+<%@page import="com.liferay.pushnotifications.service.persistence.PushNotificationsDeviceUtil"%>
+<%@page import="java.util.Random"%>
+<%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceServiceUtil"%>
+<%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
+<%@page import="com.liferay.portal.model.User"%>
+<%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil"%>
+<%@page import="javax.portlet.PortletURL"%>
+
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />

@@ -14,7 +14,10 @@
 
 package com.liferay.pushnotifications.portlet;
 
+import java.io.IOException;
+
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
@@ -23,12 +26,33 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Bruno Farache
  */
 public class AdminPortlet extends MVCPortlet {
+
+	@Override
+	public void doView(RenderRequest renderRequest,
+			RenderResponse renderResponse) throws IOException, PortletException {
+		// TODO Auto-generated method stub
+		
+		String cmd = ParamUtil.getString(
+				renderRequest,  Constants.CMD, "");
+		String type = ParamUtil.getString(
+				renderRequest,  "type", "");
+		if(cmd.equals(Constants.ADD) && type.equals("app")){
+			super.viewTemplate = "/html/admin/editApp.jsp";
+		}else{
+			super.viewTemplate = "/html/admin/view.jsp";
+		}
+		super.doView(renderRequest, renderResponse);
+	}
+
 
 	public void updatePortletPreferences(
 			ActionRequest actionRequest, ActionResponse actionResponse)

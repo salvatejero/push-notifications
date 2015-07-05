@@ -13,22 +13,6 @@
  * details.
  */
 --%>
-
-<%@page import="com.liferay.pushnotifications.service.AppVersionLocalServiceUtil"%>
-<%@page import="com.liferay.pushnotifications.service.ApplicationLocalServiceUtil"%>
-<%@page import="com.liferay.pushnotifications.model.AppVersion"%>
-<%@page import="java.util.List"%>
-<%@page import="com.liferay.pushnotifications.util.PushNotificationsDeviceComparatorUtil"%>
-<%@page import="com.liferay.portal.kernel.util.StringUtil"%>
-<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@page import="com.liferay.portal.kernel.util.OrderByComparator"%>
-<%@page import="com.liferay.pushnotifications.service.persistence.PushNotificationsDeviceUtil"%>
-<%@page import="java.util.Random"%>
-<%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceServiceUtil"%>
-<%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
-<%@page import="com.liferay.portal.model.User"%>
-<%@page import="com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil"%>
-<%@page import="javax.portlet.PortletURL"%>
 <%@ include file="../../init.jsp" %>
 
 <%
@@ -143,10 +127,23 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 <%
 %>
 	<liferay-ui:section>
-		<liferay-ui:success key="success" message="device-delete-successfull"/>	
-		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" delta="10"
+	
+		<div></div>
+	
+		<liferay-ui:success key="success" message="app-delete-successfull"/>	
+		<liferay-ui:search-container emptyResultsMessage="no-apps-were-found" delta="10"
 			iteratorURL="<%= portletURL %>"
 			total="<%= ApplicationLocalServiceUtil.getApplicationsCount() %>">
+			
+			
+			<aui:nav-bar>
+				<aui:nav>
+					<aui:nav-item iconCssClass="icon-plus" href="#" onClick='addApp()' id="addApp" label="add" />
+				</aui:nav>
+
+			</aui:nav-bar>
+			
+			
 			<liferay-ui:search-container-results
 				results="<%= ApplicationLocalServiceUtil.getApplications(searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
@@ -202,7 +199,15 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 	
 </liferay-ui:tabs>
 
-<aui:script use="aui-base">
+<%
+PortletURL addAppUrl = renderResponse.createRenderURL();
+
+addAppUrl.setPortletMode(PortletMode.VIEW);
+addAppUrl.setParameter(Constants.CMD, Constants.ADD);
+addAppUrl.setParameter("type", "app");
+addAppUrl.setWindowState(LiferayWindowState.POP_UP);
+%>
+<aui:script use="aui-base,aui-dialog">
 	var form = A.one('#<portlet:namespace />fm');
 
 	form.on(
@@ -245,4 +250,22 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 			success.show();
 		}
 	}
+	
+	
+		Liferay.provide(window, 'addApp', function() {
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						height: 460,
+						width: 770
+					},
+					id: '<portlet:namespace />addAppDialog',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "new-app") %>',
+					uri: '<%= addAppUrl.toString() %>'
+				}
+			);
+		});
+	
+	
 </aui:script>
