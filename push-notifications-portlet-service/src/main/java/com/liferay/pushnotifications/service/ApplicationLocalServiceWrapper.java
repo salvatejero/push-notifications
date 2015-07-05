@@ -276,9 +276,9 @@ public class ApplicationLocalServiceWrapper implements ApplicationLocalService,
     }
 
     @Override
-    public com.liferay.pushnotifications.model.Application updateApplication(
+    public com.liferay.pushnotifications.model.Application addApplication(
         java.lang.String appName, com.liferay.portal.model.User user) {
-        return _applicationLocalService.updateApplication(appName, user);
+        return _applicationLocalService.addApplication(appName, user);
     }
 
     /**

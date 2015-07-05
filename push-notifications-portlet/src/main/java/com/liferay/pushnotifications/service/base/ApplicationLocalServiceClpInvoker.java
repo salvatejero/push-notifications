@@ -139,7 +139,7 @@ public class ApplicationLocalServiceClpInvoker {
 
         _methodParameterTypes43 = new String[] { "java.lang.String" };
 
-        _methodName48 = "updateApplication";
+        _methodName48 = "addApplication";
 
         _methodParameterTypes48 = new String[] {
                 "java.lang.String", "com.liferay.portal.model.User"
@@ -249,7 +249,7 @@ public class ApplicationLocalServiceClpInvoker {
 
         if (_methodName48.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-            return ApplicationLocalServiceUtil.updateApplication((java.lang.String) arguments[0],
+            return ApplicationLocalServiceUtil.addApplication((java.lang.String) arguments[0],
                 (com.liferay.portal.model.User) arguments[1]);
         }
 

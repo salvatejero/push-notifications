@@ -263,9 +263,9 @@ public class ApplicationLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
-    public static com.liferay.pushnotifications.model.Application updateApplication(
+    public static com.liferay.pushnotifications.model.Application addApplication(
         java.lang.String appName, com.liferay.portal.model.User user) {
-        return getService().updateApplication(appName, user);
+        return getService().addApplication(appName, user);
     }
 
     public static void clearService() {

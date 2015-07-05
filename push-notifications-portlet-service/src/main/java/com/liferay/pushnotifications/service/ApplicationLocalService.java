@@ -241,6 +241,6 @@ public interface ApplicationLocalService extends BaseLocalService,
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable;
 
-    public com.liferay.pushnotifications.model.Application updateApplication(
+    public com.liferay.pushnotifications.model.Application addApplication(
         java.lang.String appName, com.liferay.portal.model.User user);
 }

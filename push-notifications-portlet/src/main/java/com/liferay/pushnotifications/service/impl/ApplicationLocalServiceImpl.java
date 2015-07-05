@@ -30,7 +30,7 @@ public class ApplicationLocalServiceImpl extends ApplicationLocalServiceBaseImpl
      */
 	
 	
-	public Application updateApplication(String appName, User user){
+	public Application addApplication(String appName, User user){
 		
 		long appId = 0;
 		try {

@@ -141,7 +141,7 @@ public class ApplicationLocalServiceClp implements ApplicationLocalService {
 
         _methodParameterTypes17 = new String[] { "java.lang.String" };
 
-        _methodName19 = "updateApplication";
+        _methodName19 = "addApplication";
 
         _methodParameterTypes19 = new String[] {
                 "java.lang.String", "com.liferay.portal.model.User"
@@ -663,7 +663,7 @@ public class ApplicationLocalServiceClp implements ApplicationLocalService {
     }
 
     @Override
-    public com.liferay.pushnotifications.model.Application updateApplication(
+    public com.liferay.pushnotifications.model.Application addApplication(
         java.lang.String appName, com.liferay.portal.model.User user) {
         Object returnObj = null;
 

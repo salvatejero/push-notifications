@@ -288,6 +288,14 @@ public class AppVersionLocalServiceWrapper implements AppVersionLocalService,
             start, end);
     }
 
+    @Override
+    public com.liferay.pushnotifications.model.AppVersion addAppVersion(
+        java.lang.String versionKey, java.lang.String structure,
+        com.liferay.portal.model.User user, java.lang.Long appId) {
+        return _appVersionLocalService.addAppVersion(versionKey, structure,
+            user, appId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

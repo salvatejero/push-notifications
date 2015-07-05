@@ -15,6 +15,7 @@
 package com.liferay.pushnotifications.portlet;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -24,6 +25,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,19 +55,62 @@ public class AdminPortlet extends MVCPortlet {
 		String cmd = ParamUtil.getString(renderRequest,  Constants.CMD, "");
 		String type = ParamUtil.getString(renderRequest,  "type", "");
 		
-		
+		Long appId = ParamUtil.getLong(
+				renderRequest,  "appId", 0);
 		if(cmd.equals(Constants.ADD) && type.equals("app")){
-			Long appId = ParamUtil.getLong(
-					renderRequest,  "appId", 0);
-			
 			renderRequest.setAttribute("appId", appId);
 			super.viewTemplate = "/html/admin/editApp.jsp";
+		}else if(cmd.equals(Constants.ADD) && type.equals("version")){
+			renderRequest.setAttribute("appId", appId);
+			super.viewTemplate = "/html/admin/editVersion.jsp";
 		}else{
 			super.viewTemplate = "/html/admin/view.jsp";
 		}
 		super.doView(renderRequest, renderResponse);
 	}
 
+	
+	public void editVersionApplication(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+		
+		
+		Long appId = ParamUtil.getLong(
+				actionRequest, "appId", 0);
+		
+		Long appVersionId = ParamUtil.getLong(
+				actionRequest, "versionId", 0);
+		
+		
+		String appVersionKey = ParamUtil.getString(actionRequest, "appVersionKey", "");
+		String structure = ParamUtil.getString(actionRequest, "structure", "").replaceAll("\\n", "");
+		AppVersion appVersion = null;
+		try {
+			JSONFactoryUtil.createJSONObject(structure);
+		
+			User u = (User)actionRequest.getAttribute(WebKeys.USER);
+			
+			if(appVersionId == null || appVersionId == 0){
+				appVersion = AppVersionLocalServiceUtil.addAppVersion(appVersionKey, structure, u, appId);
+			}else{
+				appVersion = AppVersionLocalServiceUtil.getAppVersion(appVersionId);
+				appVersion.setModifiedDate(new Date());
+				appVersion.setStructure(structure);
+				appVersion.setAppVersionKey(appVersionKey);
+				appVersion = AppVersionLocalServiceUtil.updateAppVersion(appVersion);
+			}
+			SessionMessages.add(actionRequest, "success-appversion");
+		} catch (JSONException ex) {
+	        // edited, to include @Arthur's comment
+	        // e.g. in case JSONArray is valid as well...
+			SessionErrors.add(actionRequest, "error-json");
+	    }
+		
+		actionResponse.setRenderParameter("appId", ""+appId);
+		actionResponse.setRenderParameter(Constants.CMD, Constants.ADD);
+		actionResponse.setRenderParameter("type", "app");
+	}
+	
 	public void updateApplication(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -80,6 +127,7 @@ public class AdminPortlet extends MVCPortlet {
 		}else{
 			app = ApplicationLocalServiceUtil.getApplication(appId);
 			app.setApplicationName(appName);
+			app.setModificatedDate(new Date());
 			app = ApplicationLocalServiceUtil.updateApplication(app);
 		}
 		
@@ -91,14 +139,7 @@ public class AdminPortlet extends MVCPortlet {
 	private Application addApplication(ActionRequest actionRequest, String appName){
 
 		User u = (User)actionRequest.getAttribute(WebKeys.USER);
-		return ApplicationLocalServiceUtil.updateApplication(appName, u);
-		
-		
-	}
-	
-	
-	private void updateApplication(){
-		
+		return ApplicationLocalServiceUtil.addApplication(appName, u);
 	}
 	
 	public void updatePortletPreferences(

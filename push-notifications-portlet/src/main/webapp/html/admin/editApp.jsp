@@ -15,6 +15,11 @@ if(appId != null && appId > 0){
 
 <portlet:actionURL  var="updateAppURL" name="updateApplication">
 </portlet:actionURL>
+
+
+<liferay-ui:error key="error-json" message="structure-no-json"/>
+
+
 <aui:form action="<%= updateAppURL %>"  cssClass="sign-in-form" method="post" name="fm">
 	<aui:input name="appId"  value="<%= (appId != null)?appId:0 %>" type="hidden"/>
 	<aui:input name="cmd"  value='<%= (app != null)? "update":"add" %>' type="hidden"/>
@@ -22,7 +27,7 @@ if(appId != null && appId > 0){
 		<aui:input autoFocus="true" cssClass="clearable" label="applicationName" name="applicationName" showRequiredLabel="<%= true %>" type="text" value='<%= (app != null)?app.getApplicationName(): "" %>'>
 			<aui:validator name="required" />
 		</aui:input>
-
+		
 		<%
 		
 		String buttonLabel = "add";
@@ -42,17 +47,19 @@ if(appId != null && appId > 0){
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
 	
-	
+	PortletURL editVersionURL = renderResponse.createRenderURL();
+	editVersionURL.setParameter("appId", ""+((appId != null)?appId:0));
+	editVersionURL.setParameter(Constants.CMD, Constants.ADD);
+	editVersionURL.setParameter("type", "version");
 	%>
 
-	<liferay-ui:search-container emptyResultsMessage="no-versions-were-found" delta="10"
+	<liferay-ui:search-container emptyResultsMessage="no-versions-were-found" delta="20"
 			iteratorURL="<%= portletURL %>"
 			total="<%= AppVersionLocalServiceUtil.findAppVerionByAppId(appId).size() %>">
 			
-			
 			<aui:nav-bar>
 				<aui:nav>
-					<aui:nav-item iconCssClass="icon-plus" href="#" onClick='addVersion()' id="addApp" label="add" />
+					<aui:nav-item iconCssClass="icon-plus" anchorCssClass="staging-link" href="<%=editVersionURL.toString() %>" id="editApp" label="add" />
 				</aui:nav>
 
 			</aui:nav-bar>
@@ -68,9 +75,6 @@ if(appId != null && appId > 0){
 				modelVar="appVerion">
 				
 				<liferay-ui:search-container-column-text
-					name="id"
-					value='<%= ""+appVerion.getAppVersionId() %>'	/>
-				<liferay-ui:search-container-column-text
 					name="key"
 					value='<%=appVerion.getAppVersionKey() %>'/>
 				<liferay-ui:search-container-column-text
@@ -79,7 +83,7 @@ if(appId != null && appId > 0){
 				
 				<liferay-ui:search-container-column-jsp
 					align="right"
-					path="/html/admin/appVerions_action.jsp" />
+					path="/html/admin/appVersion_action.jsp" />
 				</liferay-ui:search-container-row>
 	
 			<liferay-ui:search-iterator />

@@ -81,7 +81,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
       				orderableProperty="model"
 					value="<%= device.getModel() %>" />
 				<liferay-ui:search-container-column-text
-					name="osversion"
+					name="osversion" 
 					orderable="<%= true %>"
       				orderableProperty="OSVersion"
 					value="<%= device.getOSVersion() %>"/>
@@ -93,7 +93,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 					name="token"
 					value="<%= device.getToken() %>"/>
 				<liferay-ui:search-container-column-jsp
-					align="right"
+					align="right" cssClass="actionColumn" 
 					path="/html/admin/devices_action.jsp" />
 				</liferay-ui:search-container-row>
 	
@@ -138,7 +138,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 			
 			<aui:nav-bar>
 				<aui:nav>
-					<aui:nav-item iconCssClass="icon-plus" href="#" onClick='addApp()' id="addApp" label="add" />
+					<aui:nav-item anchorCssClass="addApp-link" iconCssClass="icon-plus" href="#" onClick='addApp()' id="addApp" label="add" />
 				</aui:nav>
 
 			</aui:nav-bar>

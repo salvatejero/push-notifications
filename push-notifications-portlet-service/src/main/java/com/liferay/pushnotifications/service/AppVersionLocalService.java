@@ -246,4 +246,8 @@ public interface AppVersionLocalService extends BaseLocalService,
 
     public java.util.List<com.liferay.pushnotifications.model.AppVersion> findAppVerionByAppId(
         long applicationId, int start, int end);
+
+    public com.liferay.pushnotifications.model.AppVersion addAppVersion(
+        java.lang.String versionKey, java.lang.String structure,
+        com.liferay.portal.model.User user, java.lang.Long appId);
 }

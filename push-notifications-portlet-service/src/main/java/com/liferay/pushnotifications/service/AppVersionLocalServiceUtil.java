@@ -273,6 +273,12 @@ public class AppVersionLocalServiceUtil {
         return getService().findAppVerionByAppId(applicationId, start, end);
     }
 
+    public static com.liferay.pushnotifications.model.AppVersion addAppVersion(
+        java.lang.String versionKey, java.lang.String structure,
+        com.liferay.portal.model.User user, java.lang.Long appId) {
+        return getService().addAppVersion(versionKey, structure, user, appId);
+    }
+
     public static void clearService() {
         _service = null;
     }

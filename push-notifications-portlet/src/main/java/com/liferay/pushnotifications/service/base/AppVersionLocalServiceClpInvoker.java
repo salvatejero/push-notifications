@@ -49,6 +49,8 @@ public class AppVersionLocalServiceClpInvoker {
     private String[] _methodParameterTypes48;
     private String _methodName49;
     private String[] _methodParameterTypes49;
+    private String _methodName50;
+    private String[] _methodParameterTypes50;
 
     public AppVersionLocalServiceClpInvoker() {
         _methodName0 = "addAppVersion";
@@ -148,6 +150,13 @@ public class AppVersionLocalServiceClpInvoker {
         _methodName49 = "findAppVerionByAppId";
 
         _methodParameterTypes49 = new String[] { "long", "int", "int" };
+
+        _methodName50 = "addAppVersion";
+
+        _methodParameterTypes50 = new String[] {
+                "java.lang.String", "java.lang.String",
+                "com.liferay.portal.model.User", "java.lang.Long"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -261,6 +270,14 @@ public class AppVersionLocalServiceClpInvoker {
             return AppVersionLocalServiceUtil.findAppVerionByAppId(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
+        }
+
+        if (_methodName50.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+            return AppVersionLocalServiceUtil.addAppVersion((java.lang.String) arguments[0],
+                (java.lang.String) arguments[1],
+                (com.liferay.portal.model.User) arguments[2],
+                (java.lang.Long) arguments[3]);
         }
 
         throw new UnsupportedOperationException();

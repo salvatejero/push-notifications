@@ -1,10 +1,13 @@
 package com.liferay.pushnotifications.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
 import com.liferay.pushnotifications.model.AppVersion;
+import com.liferay.pushnotifications.model.Application;
 import com.liferay.pushnotifications.service.base.AppVersionLocalServiceBaseImpl;
 
 /**
@@ -46,6 +49,34 @@ public class AppVersionLocalServiceImpl extends AppVersionLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 		return new ArrayList<AppVersion>();
+	}
+	
+	public AppVersion addAppVersion(String versionKey, String structure, User user, Long appId){
+		
+		long appVersionId = 0;
+		try {
+			appVersionId = counterLocalService.increment();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		AppVersion appVersion = appVersionLocalService.createAppVersion(appVersionId);
+		appVersion.setAppVersionKey(versionKey);
+		appVersion.setStructure(structure);
+		appVersion.setApplicationId(appId);
+		appVersion.setUserId(user.getUserId());
+		try {
+			appVersion.setUserUuid(user.getUserUuid());
+		
+			appVersion.setCreatedDate(new Date());
+			appVersion.setModifiedDate(new Date());
+		
+			appVersion = appVersionLocalService.addAppVersion(appVersion);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return appVersion;
 	}
 	
 }
