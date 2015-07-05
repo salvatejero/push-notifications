@@ -32,12 +32,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 String orderByCol = ParamUtil.getString(request, "orderByCol", "platform");
 String orderByType = ParamUtil.getString(request, "orderByType","ASC");
 
+
+String tabSelected = (String)ParamUtil.getString(request, "tabSelected", "");
 OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getPushNotificationOrderByComparator(orderByCol, orderByType);
 %>
 <liferay-ui:tabs
 	names="devices,configuration,applications,test"
 	refresh="<%= false %>"
->
+	value="<%=tabSelected %>">
 
 	<liferay-ui:section>
 	
@@ -128,9 +130,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 %>
 	<liferay-ui:section>
 	
-		<div></div>
-	
-		<liferay-ui:success key="success" message="app-delete-successfull"/>	
+		<liferay-ui:success key="success-app-version" message="app-delete-successfull"/>	
 		<liferay-ui:search-container emptyResultsMessage="no-apps-were-found" delta="10"
 			iteratorURL="<%= portletURL %>"
 			total="<%= ApplicationLocalServiceUtil.getApplicationsCount() %>">
@@ -260,8 +260,8 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 			Liferay.Util.openWindow(
 				{
 					dialog: {
-						height: 460,
-						width: 870
+						height: 600,
+						width: 1070
 					},
 					id: '<portlet:namespace />addAppDialog',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "new-app") %>',
@@ -284,5 +284,11 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 				}
 			);
 		});
+		
+		
+		Liferay.provide(window, 'refreshPortlet', function(data) {
+	        var curPortlet = '#p_p_id<portlet:namespace/>';
+	        	Liferay.Portlet.refresh(curPortlet, data);
+	    	}, ['aui-dialog','aui-dialog-iframe'] );
 		
 </aui:script>

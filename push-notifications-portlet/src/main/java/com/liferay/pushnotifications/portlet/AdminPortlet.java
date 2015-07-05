@@ -15,22 +15,7 @@
 package com.liferay.pushnotifications.portlet;
 
 import java.io.IOException;
-import java.util.Date;
-
-import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
-import com.liferay.pushnotifications.model.Application;
-import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
-import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
-import com.liferay.pushnotifications.util.PortletPropsKeys;
-import com.liferay.util.bridges.mvc.MVCPortlet;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,6 +23,20 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
+import com.liferay.pushnotifications.model.AppVersion;
+import com.liferay.pushnotifications.model.Application;
+import com.liferay.pushnotifications.service.AppVersionLocalServiceUtil;
+import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
+import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
+import com.liferay.pushnotifications.util.PortletPropsKeys;
+import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
  * @author Bruno Farache
@@ -49,10 +48,10 @@ public class AdminPortlet extends MVCPortlet {
 			RenderResponse renderResponse) throws IOException, PortletException {
 		// TODO Auto-generated method stub
 		
-		String cmd = ParamUtil.getString(
-				renderRequest,  Constants.CMD, "");
-		String type = ParamUtil.getString(
-				renderRequest,  "type", "");
+		String cmd = ParamUtil.getString(renderRequest,  Constants.CMD, "");
+		String type = ParamUtil.getString(renderRequest,  "type", "");
+		
+		
 		if(cmd.equals(Constants.ADD) && type.equals("app")){
 			Long appId = ParamUtil.getLong(
 					renderRequest,  "appId", 0);
@@ -78,6 +77,10 @@ public class AdminPortlet extends MVCPortlet {
 		Application app = null;
 		if(appId == 0){
 			app = addApplication(actionRequest, appName);
+		}else{
+			app = ApplicationLocalServiceUtil.getApplication(appId);
+			app.setApplicationName(appName);
+			app = ApplicationLocalServiceUtil.updateApplication(app);
 		}
 		
 		actionResponse.setRenderParameter("appId", ""+app.getApplicationId());
@@ -155,4 +158,26 @@ public class AdminPortlet extends MVCPortlet {
 		}
 		
 	}
+	
+	
+	public void deleteApp(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+		
+		long appId = ParamUtil.getLong(actionRequest, "appId");
+		try{
+			List<AppVersion> versions =  AppVersionLocalServiceUtil.findAppVerionByAppId(appId);
+			for(AppVersion version : versions){
+				AppVersionLocalServiceUtil.deleteAppVersion(version.getAppVersionId());
+			}
+			ApplicationLocalServiceUtil.deleteApplication(appId);
+			
+			SessionMessages.add(actionRequest, "success-app-version");
+			actionResponse.setRenderParameter("tabSelected", "applications");
+		}catch(Exception e){
+			
+		}
+		
+	}
+	
 }

@@ -86,3 +86,14 @@ if(appId != null && appId > 0){
 		</liferay-ui:search-container>
 
 </aui:form>
+
+<aui:script use="aui-base">
+
+var form = A.one('#<portlet:namespace />fm');
+
+if(form){
+	form.on('submit', function(event) {
+		setTimeout(	Liferay.Util.getOpener().refreshPortlet({<portlet:namespace />tabSelected: 'applications'}), 3000);	
+	});
+}
+</aui:script>
