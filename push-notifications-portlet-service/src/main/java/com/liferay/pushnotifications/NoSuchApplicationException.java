@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchModelException;
 /**
  * @author Bruno Farache
  */
+@SuppressWarnings("serial")
 public class NoSuchApplicationException extends NoSuchModelException {
 
 	public NoSuchApplicationException() {

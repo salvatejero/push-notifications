@@ -91,6 +91,27 @@ public interface AppVersionModel extends BaseModel<AppVersion> {
     public void setStructure(String structure);
 
     /**
+     * Returns the sandbox of this app version.
+     *
+     * @return the sandbox of this app version
+     */
+    public boolean getSandbox();
+
+    /**
+     * Returns <code>true</code> if this app version is sandbox.
+     *
+     * @return <code>true</code> if this app version is sandbox; <code>false</code> otherwise
+     */
+    public boolean isSandbox();
+
+    /**
+     * Sets whether this app version is sandbox.
+     *
+     * @param sandbox the sandbox of this app version
+     */
+    public void setSandbox(boolean sandbox);
+
+    /**
      * Returns the created date of this app version.
      *
      * @return the created date of this app version

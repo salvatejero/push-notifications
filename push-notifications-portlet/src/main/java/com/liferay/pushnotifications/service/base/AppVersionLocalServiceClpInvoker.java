@@ -41,16 +41,16 @@ public class AppVersionLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName42;
-    private String[] _methodParameterTypes42;
-    private String _methodName43;
-    private String[] _methodParameterTypes43;
-    private String _methodName48;
-    private String[] _methodParameterTypes48;
-    private String _methodName49;
-    private String[] _methodParameterTypes49;
-    private String _methodName50;
-    private String[] _methodParameterTypes50;
+    private String _methodName46;
+    private String[] _methodParameterTypes46;
+    private String _methodName47;
+    private String[] _methodParameterTypes47;
+    private String _methodName52;
+    private String[] _methodParameterTypes52;
+    private String _methodName53;
+    private String[] _methodParameterTypes53;
+    private String _methodName54;
+    private String[] _methodParameterTypes54;
 
     public AppVersionLocalServiceClpInvoker() {
         _methodName0 = "addAppVersion";
@@ -135,25 +135,25 @@ public class AppVersionLocalServiceClpInvoker {
                 "com.liferay.pushnotifications.model.AppVersion"
             };
 
-        _methodName42 = "getBeanIdentifier";
+        _methodName46 = "getBeanIdentifier";
 
-        _methodParameterTypes42 = new String[] {  };
+        _methodParameterTypes46 = new String[] {  };
 
-        _methodName43 = "setBeanIdentifier";
+        _methodName47 = "setBeanIdentifier";
 
-        _methodParameterTypes43 = new String[] { "java.lang.String" };
+        _methodParameterTypes47 = new String[] { "java.lang.String" };
 
-        _methodName48 = "findAppVerionByAppId";
+        _methodName52 = "findAppVerionByAppId";
 
-        _methodParameterTypes48 = new String[] { "long" };
+        _methodParameterTypes52 = new String[] { "long" };
 
-        _methodName49 = "findAppVerionByAppId";
+        _methodName53 = "findAppVerionByAppId";
 
-        _methodParameterTypes49 = new String[] { "long", "int", "int" };
+        _methodParameterTypes53 = new String[] { "long", "int", "int" };
 
-        _methodName50 = "addAppVersion";
+        _methodName54 = "addAppVersion";
 
-        _methodParameterTypes50 = new String[] {
+        _methodParameterTypes54 = new String[] {
                 "java.lang.String", "java.lang.String",
                 "com.liferay.portal.model.User", "java.lang.Long"
             };
@@ -248,32 +248,32 @@ public class AppVersionLocalServiceClpInvoker {
             return AppVersionLocalServiceUtil.updateAppVersion((com.liferay.pushnotifications.model.AppVersion) arguments[0]);
         }
 
-        if (_methodName42.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+        if (_methodName46.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
             return AppVersionLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName43.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
+        if (_methodName47.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
             AppVersionLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName48.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+        if (_methodName52.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
             return AppVersionLocalServiceUtil.findAppVerionByAppId(((Long) arguments[0]).longValue());
         }
 
-        if (_methodName49.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+        if (_methodName53.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
             return AppVersionLocalServiceUtil.findAppVerionByAppId(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
-        if (_methodName50.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+        if (_methodName54.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
             return AppVersionLocalServiceUtil.addAppVersion((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (com.liferay.portal.model.User) arguments[2],

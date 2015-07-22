@@ -25,6 +25,7 @@ public class AppVersionCacheModel implements CacheModel<AppVersion>,
     public long appVersionId;
     public String appVersionKey;
     public String structure;
+    public boolean sandbox;
     public long createdDate;
     public long modifiedDate;
     public long userId;
@@ -32,7 +33,7 @@ public class AppVersionCacheModel implements CacheModel<AppVersion>,
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(15);
+        StringBundler sb = new StringBundler(17);
 
         sb.append("{appVersionId=");
         sb.append(appVersionId);
@@ -40,6 +41,8 @@ public class AppVersionCacheModel implements CacheModel<AppVersion>,
         sb.append(appVersionKey);
         sb.append(", structure=");
         sb.append(structure);
+        sb.append(", sandbox=");
+        sb.append(sandbox);
         sb.append(", createdDate=");
         sb.append(createdDate);
         sb.append(", modifiedDate=");
@@ -71,6 +74,8 @@ public class AppVersionCacheModel implements CacheModel<AppVersion>,
             appVersionImpl.setStructure(structure);
         }
 
+        appVersionImpl.setSandbox(sandbox);
+
         if (createdDate == Long.MIN_VALUE) {
             appVersionImpl.setCreatedDate(null);
         } else {
@@ -96,6 +101,7 @@ public class AppVersionCacheModel implements CacheModel<AppVersion>,
         appVersionId = objectInput.readLong();
         appVersionKey = objectInput.readUTF();
         structure = objectInput.readUTF();
+        sandbox = objectInput.readBoolean();
         createdDate = objectInput.readLong();
         modifiedDate = objectInput.readLong();
         userId = objectInput.readLong();
@@ -119,6 +125,7 @@ public class AppVersionCacheModel implements CacheModel<AppVersion>,
             objectOutput.writeUTF(structure);
         }
 
+        objectOutput.writeBoolean(sandbox);
         objectOutput.writeLong(createdDate);
         objectOutput.writeLong(modifiedDate);
         objectOutput.writeLong(userId);

@@ -830,6 +830,7 @@ public class AppVersionPersistenceImpl extends BasePersistenceImpl<AppVersion>
         appVersionImpl.setAppVersionId(appVersion.getAppVersionId());
         appVersionImpl.setAppVersionKey(appVersion.getAppVersionKey());
         appVersionImpl.setStructure(appVersion.getStructure());
+        appVersionImpl.setSandbox(appVersion.isSandbox());
         appVersionImpl.setCreatedDate(appVersion.getCreatedDate());
         appVersionImpl.setModifiedDate(appVersion.getModifiedDate());
         appVersionImpl.setUserId(appVersion.getUserId());

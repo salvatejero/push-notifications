@@ -32,4 +32,24 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.pushnotifications.apps</model-name>
+		<portlet-ref>
+			<portlet-name>push-notifications</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_APPS</action-key>
+				<action-key>DELETE_APPS</action-key>
+				<action-key>MANAGE_APPS_VERSIONS</action-key>
+				<action-key>DELETE_APPS_VERSIONS</action-key>
+				<action-key>MANAGE_APPS_PREFERENCES</action-key>
+				<action-key>VIEW_APPS_PREFERENCES</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported/>
+		</permissions>
+	</model-resource>
+	
 </resource-action-mapping>

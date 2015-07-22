@@ -24,11 +24,36 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.pushnotifications.model.impl.ApplicationPreferencesModelImpl">
+		<id-class class="com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK" />
+		<attributes>
+			<id name="applicationPreferenceId" />
+			<id name="applicationId" />
+			<basic name="androidApiKey" />
+			<basic name="androidRetries" />
+			<basic name="iosPasswordCertificated" />
+			<basic name="iosPasswordSandBoxCertificated" />
+			<basic name="iosSandBoxCert" />
+			<basic name="iosProdCert" />
+			<basic name="createdDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modificatedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.pushnotifications.model.impl.AppVersionModelImpl">
 		<attributes>
 			<id name="appVersionId" />
 			<basic name="appVersionKey" />
 			<basic name="structure" />
+			<basic name="sandbox" />
 			<basic name="createdDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -64,6 +89,10 @@
 	</mapped-superclass>
 	<entity class="com.liferay.pushnotifications.model.impl.ApplicationImpl" name="Application">
 		<table name="Application" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.pushnotifications.model.impl.ApplicationPreferencesImpl" name="ApplicationPreferences">
+		<table name="ApplicationPreferences" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.pushnotifications.model.impl.AppVersionImpl" name="AppVersion">

@@ -1,6 +1,7 @@
+<%@page import="com.liferay.pushnotifications.util.ActionKeys"%>
+<%@page import="com.liferay.pushnotifications.service.permission.PushAppsNotificationsPermission"%>
 <%@page import="com.liferay.pushnotifications.model.Application"%>
 <%@page import="com.liferay.pushnotifications.model.PushNotificationsDevice"%>
-<%@page import="com.liferay.portal.security.permission.ActionKeys"%>
 <%@page import="com.liferay.portal.service.permission.UserPermissionUtil"%>
 <%@page import="com.liferay.portal.model.User"%>
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
@@ -34,8 +35,18 @@ String method = "editApp('"+editAppUrl.toString() +"')";
 		<portlet:param name="appId" value="<%= String.valueOf(appId) %>" />
 	</liferay-portlet:actionURL>
 
-	<liferay-ui:icon image="edit" url="<%=editAppUrl.toString() %>" />
-	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.DELETE) %>">
+<% 	
+String label = "edit";
+if(PushAppsNotificationsPermission.contains(permissionChecker, ActionKeys.MANAGE_APPS_VERSIONS)){%>
+		
+
+
+	<liferay-ui:icon image="<%=label %>" url="<%=editAppUrl.toString() %>" />
+<%}%>
+	<% 	if(PushAppsNotificationsPermission.contains(permissionChecker, ActionKeys.DELETE_APPS)){
+		
+		%>
 		<liferay-ui:icon-delete url="<%= deleteApplicationUrl %>" />
-	</c:if>
+		
+	<%} %>	
 </liferay-ui:icon-menu>

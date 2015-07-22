@@ -13,6 +13,8 @@
  * details.
  */
 --%>
+<%@page import="com.liferay.pushnotifications.util.ActionKeys"%>
+<%@page import="com.liferay.pushnotifications.service.permission.PushAppsNotificationsPermission"%>
 <%@ include file="../../init.jsp" %>
 
 <%
@@ -135,7 +137,9 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 			iteratorURL="<%= portletURL %>"
 			total="<%= ApplicationLocalServiceUtil.getApplicationsCount() %>">
 			
-			
+		<% 	if(PushAppsNotificationsPermission.contains(permissionChecker, ActionKeys.MANAGE_APPS)){;
+		
+		%>
 			<aui:nav-bar>
 				<aui:nav>
 					<aui:nav-item anchorCssClass="addApp-link" iconCssClass="icon-plus" href="#" onClick='addApp()' id="addApp" label="add" />
@@ -143,7 +147,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 
 			</aui:nav-bar>
 			
-			
+		<%} %>	
 			<liferay-ui:search-container-results
 				results="<%= ApplicationLocalServiceUtil.getApplications(searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
@@ -170,7 +174,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 				
 				<liferay-ui:search-container-column-jsp
 					align="right"
-					path="/html/admin/appVersions_action.jsp" />
+					path="/html/admin/apps_action.jsp" />
 				</liferay-ui:search-container-row>
 	
 			<liferay-ui:search-iterator />

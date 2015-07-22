@@ -21,8 +21,19 @@ public class ActionKeys
 	extends com.liferay.portal.security.permission.ActionKeys {
 
 	public static final String MANAGE_DEVICES = "MANAGE_DEVICES";
+	
+	public static final String MANAGE_APPS = "MANAGE_APPS";
+	
+	public static final String DELETE_APPS = "DELETE_APPS";
+	
+	public static final String MANAGE_APPS_VERSIONS = "MANAGE_APPS_VERSIONS";
+	
+	public static final String DELETE_APPS_VERSIONS = "DELETE_APPS_VERSIONS";
 
-	public static final String SEND_PUSH_NOTIFICATION =
-		"SEND_PUSH_NOTIFICATION";
+	public static final String SEND_PUSH_NOTIFICATION = "SEND_PUSH_NOTIFICATION";
+	
+	public static final String MANAGE_APPS_PREFERENCES = "MANAGE_APPS_PREFERENCES";
+	
+	public static final String VIEW_APPS_PREFERENCES = "VIEW_APPS_PREFERENCES";
 
 }

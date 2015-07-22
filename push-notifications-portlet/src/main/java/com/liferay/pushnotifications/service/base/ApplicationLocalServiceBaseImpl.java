@@ -21,6 +21,7 @@ import com.liferay.pushnotifications.model.Application;
 import com.liferay.pushnotifications.service.ApplicationLocalService;
 import com.liferay.pushnotifications.service.persistence.AppVersionPersistence;
 import com.liferay.pushnotifications.service.persistence.ApplicationPersistence;
+import com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPersistence;
 import com.liferay.pushnotifications.service.persistence.PushNotificationsDevicePersistence;
 
 import java.io.Serializable;
@@ -48,6 +49,10 @@ public abstract class ApplicationLocalServiceBaseImpl
     protected com.liferay.pushnotifications.service.ApplicationLocalService applicationLocalService;
     @BeanReference(type = ApplicationPersistence.class)
     protected ApplicationPersistence applicationPersistence;
+    @BeanReference(type = com.liferay.pushnotifications.service.ApplicationPreferencesLocalService.class)
+    protected com.liferay.pushnotifications.service.ApplicationPreferencesLocalService applicationPreferencesLocalService;
+    @BeanReference(type = ApplicationPreferencesPersistence.class)
+    protected ApplicationPreferencesPersistence applicationPreferencesPersistence;
     @BeanReference(type = com.liferay.pushnotifications.service.AppVersionLocalService.class)
     protected com.liferay.pushnotifications.service.AppVersionLocalService appVersionLocalService;
     @BeanReference(type = AppVersionPersistence.class)
@@ -332,6 +337,44 @@ public abstract class ApplicationLocalServiceBaseImpl
     public void setApplicationPersistence(
         ApplicationPersistence applicationPersistence) {
         this.applicationPersistence = applicationPersistence;
+    }
+
+    /**
+     * Returns the application preferences local service.
+     *
+     * @return the application preferences local service
+     */
+    public com.liferay.pushnotifications.service.ApplicationPreferencesLocalService getApplicationPreferencesLocalService() {
+        return applicationPreferencesLocalService;
+    }
+
+    /**
+     * Sets the application preferences local service.
+     *
+     * @param applicationPreferencesLocalService the application preferences local service
+     */
+    public void setApplicationPreferencesLocalService(
+        com.liferay.pushnotifications.service.ApplicationPreferencesLocalService applicationPreferencesLocalService) {
+        this.applicationPreferencesLocalService = applicationPreferencesLocalService;
+    }
+
+    /**
+     * Returns the application preferences persistence.
+     *
+     * @return the application preferences persistence
+     */
+    public ApplicationPreferencesPersistence getApplicationPreferencesPersistence() {
+        return applicationPreferencesPersistence;
+    }
+
+    /**
+     * Sets the application preferences persistence.
+     *
+     * @param applicationPreferencesPersistence the application preferences persistence
+     */
+    public void setApplicationPreferencesPersistence(
+        ApplicationPreferencesPersistence applicationPreferencesPersistence) {
+        this.applicationPreferencesPersistence = applicationPreferencesPersistence;
     }
 
     /**

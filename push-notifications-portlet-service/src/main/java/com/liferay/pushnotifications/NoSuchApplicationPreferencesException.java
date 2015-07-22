@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,23 +17,24 @@ package com.liferay.pushnotifications;
 import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Silvio Santos
+ * @author Bruno Farache
  */
 @SuppressWarnings("serial")
-public class NoSuchDeviceException extends NoSuchModelException {
+public class NoSuchApplicationPreferencesException extends NoSuchModelException {
 
-	public NoSuchDeviceException() {
+	public NoSuchApplicationPreferencesException() {
+		super();
 	}
 
-	public NoSuchDeviceException(String msg) {
+	public NoSuchApplicationPreferencesException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchDeviceException(String msg, Throwable cause) {
+	public NoSuchApplicationPreferencesException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchDeviceException(Throwable cause) {
+	public NoSuchApplicationPreferencesException(Throwable cause) {
 		super(cause);
 	}
 

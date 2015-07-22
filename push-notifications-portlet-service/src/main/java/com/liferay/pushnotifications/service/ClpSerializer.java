@@ -13,6 +13,7 @@ import com.liferay.portal.model.BaseModel;
 
 import com.liferay.pushnotifications.model.AppVersionClp;
 import com.liferay.pushnotifications.model.ApplicationClp;
+import com.liferay.pushnotifications.model.ApplicationPreferencesClp;
 import com.liferay.pushnotifications.model.PushNotificationsDeviceClp;
 
 import java.io.ObjectInputStream;
@@ -94,6 +95,10 @@ public class ClpSerializer {
             return translateInputApplication(oldModel);
         }
 
+        if (oldModelClassName.equals(ApplicationPreferencesClp.class.getName())) {
+            return translateInputApplicationPreferences(oldModel);
+        }
+
         if (oldModelClassName.equals(AppVersionClp.class.getName())) {
             return translateInputAppVersion(oldModel);
         }
@@ -121,6 +126,17 @@ public class ClpSerializer {
         ApplicationClp oldClpModel = (ApplicationClp) oldModel;
 
         BaseModel<?> newModel = oldClpModel.getApplicationRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
+    public static Object translateInputApplicationPreferences(
+        BaseModel<?> oldModel) {
+        ApplicationPreferencesClp oldClpModel = (ApplicationPreferencesClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getApplicationPreferencesRemoteModel();
 
         newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -166,6 +182,41 @@ public class ClpSerializer {
         if (oldModelClassName.equals(
                     "com.liferay.pushnotifications.model.impl.ApplicationImpl")) {
             return translateOutputApplication(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
+                    "com.liferay.pushnotifications.model.impl.ApplicationPreferencesImpl")) {
+            return translateOutputApplicationPreferences(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
             try {
                 ClassLoader classLoader = ClpSerializer.class.getClassLoader();
@@ -350,6 +401,11 @@ public class ClpSerializer {
         }
 
         if (className.equals(
+                    "com.liferay.pushnotifications.NoSuchApplicationPreferencesException")) {
+            return new com.liferay.pushnotifications.NoSuchApplicationPreferencesException();
+        }
+
+        if (className.equals(
                     "com.liferay.pushnotifications.NoSuchAppVersionException")) {
             return new com.liferay.pushnotifications.NoSuchAppVersionException();
         }
@@ -368,6 +424,17 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setApplicationRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputApplicationPreferences(
+        BaseModel<?> oldModel) {
+        ApplicationPreferencesClp newModel = new ApplicationPreferencesClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setApplicationPreferencesRemoteModel(oldModel);
 
         return newModel;
     }

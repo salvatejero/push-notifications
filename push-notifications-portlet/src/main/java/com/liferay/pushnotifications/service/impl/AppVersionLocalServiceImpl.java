@@ -7,7 +7,6 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.pushnotifications.model.AppVersion;
-import com.liferay.pushnotifications.model.Application;
 import com.liferay.pushnotifications.service.base.AppVersionLocalServiceBaseImpl;
 
 /**

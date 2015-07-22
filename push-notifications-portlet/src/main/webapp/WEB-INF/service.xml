@@ -60,6 +60,7 @@
 		<column name="appVersionKey" type="String"/>
 
 		<column name="structure" type="String" />
+		<column name="sandbox" type="boolean" />
 		<column name="createdDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		
@@ -83,6 +84,27 @@
 		<column name="createdDate" type="Date" />
 		<column name="modificatedDate" type="Date" />
 		<column name="userId" type="long"></column>		
+	</entity>
+	
+	<entity name="ApplicationPreferences" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="applicationPreferenceId" type="long" primary="true" />
+		<column name="applicationId" type="long" primary="true" />
+
+		<column name="androidApiKey" type="String" />
+		<column name="androidRetries" type="long" />
+		<column name="iosPasswordCertificated" type="String" />
+		<column name="iosPasswordSandBoxCertificated" type="String" />
+		<column name="iosSandBoxCert" type="long" />
+		<column name="iosProdCert" type="long" />
+		<column name="createdDate" type="Date" />
+		<column name="modificatedDate" type="Date" />
+		<column name="userId" type="long"></column>	
+		
+		<finder name="ApplicationId" return-type="Collection">
+			<finder-column name="applicationId" />
+		</finder>	
 	</entity>
 	
 </service-builder>

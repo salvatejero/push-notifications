@@ -50,12 +50,13 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
             { "appVersionId", Types.BIGINT },
             { "appVersionKey", Types.VARCHAR },
             { "structure", Types.VARCHAR },
+            { "sandbox", Types.BOOLEAN },
             { "createdDate", Types.TIMESTAMP },
             { "modifiedDate", Types.TIMESTAMP },
             { "userId", Types.BIGINT },
             { "applicationId", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table AppVersion (appVersionId LONG not null primary key,appVersionKey VARCHAR(75) null,structure VARCHAR(75) null,createdDate DATE null,modifiedDate DATE null,userId LONG,applicationId LONG)";
+    public static final String TABLE_SQL_CREATE = "create table AppVersion (appVersionId LONG not null primary key,appVersionKey VARCHAR(75) null,structure VARCHAR(75) null,sandbox BOOLEAN,createdDate DATE null,modifiedDate DATE null,userId LONG,applicationId LONG)";
     public static final String TABLE_SQL_DROP = "drop table AppVersion";
     public static final String ORDER_BY_JPQL = " ORDER BY appVersion.appVersionId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY AppVersion.appVersionId ASC";
@@ -82,6 +83,7 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
     private long _appVersionId;
     private String _appVersionKey;
     private String _structure;
+    private boolean _sandbox;
     private Date _createdDate;
     private Date _modifiedDate;
     private long _userId;
@@ -132,6 +134,7 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
         attributes.put("appVersionId", getAppVersionId());
         attributes.put("appVersionKey", getAppVersionKey());
         attributes.put("structure", getStructure());
+        attributes.put("sandbox", getSandbox());
         attributes.put("createdDate", getCreatedDate());
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("userId", getUserId());
@@ -158,6 +161,12 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
 
         if (structure != null) {
             setStructure(structure);
+        }
+
+        Boolean sandbox = (Boolean) attributes.get("sandbox");
+
+        if (sandbox != null) {
+            setSandbox(sandbox);
         }
 
         Date createdDate = (Date) attributes.get("createdDate");
@@ -221,6 +230,21 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
     @Override
     public void setStructure(String structure) {
         _structure = structure;
+    }
+
+    @Override
+    public boolean getSandbox() {
+        return _sandbox;
+    }
+
+    @Override
+    public boolean isSandbox() {
+        return _sandbox;
+    }
+
+    @Override
+    public void setSandbox(boolean sandbox) {
+        _sandbox = sandbox;
     }
 
     @Override
@@ -319,6 +343,7 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
         appVersionImpl.setAppVersionId(getAppVersionId());
         appVersionImpl.setAppVersionKey(getAppVersionKey());
         appVersionImpl.setStructure(getStructure());
+        appVersionImpl.setSandbox(getSandbox());
         appVersionImpl.setCreatedDate(getCreatedDate());
         appVersionImpl.setModifiedDate(getModifiedDate());
         appVersionImpl.setUserId(getUserId());
@@ -401,6 +426,8 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
             appVersionCacheModel.structure = null;
         }
 
+        appVersionCacheModel.sandbox = getSandbox();
+
         Date createdDate = getCreatedDate();
 
         if (createdDate != null) {
@@ -426,7 +453,7 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(15);
+        StringBundler sb = new StringBundler(17);
 
         sb.append("{appVersionId=");
         sb.append(getAppVersionId());
@@ -434,6 +461,8 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
         sb.append(getAppVersionKey());
         sb.append(", structure=");
         sb.append(getStructure());
+        sb.append(", sandbox=");
+        sb.append(getSandbox());
         sb.append(", createdDate=");
         sb.append(getCreatedDate());
         sb.append(", modifiedDate=");
@@ -449,7 +478,7 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(28);
 
         sb.append("<model><model-name>");
         sb.append("com.liferay.pushnotifications.model.AppVersion");
@@ -466,6 +495,10 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
         sb.append(
             "<column><column-name>structure</column-name><column-value><![CDATA[");
         sb.append(getStructure());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>sandbox</column-name><column-value><![CDATA[");
+        sb.append(getSandbox());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>createdDate</column-name><column-value><![CDATA[");

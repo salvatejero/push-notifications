@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.pushnotifications.model.Application" />
+	<import class="com.liferay.pushnotifications.model.ApplicationPreferences" />
 	<import class="com.liferay.pushnotifications.model.AppVersion" />
 	<import class="com.liferay.pushnotifications.model.PushNotificationsDevice" />
 	<class name="com.liferay.pushnotifications.model.impl.ApplicationImpl" table="Application">
@@ -15,6 +16,22 @@
 		<property name="modificatedDate" type="org.hibernate.type.TimestampType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
+	<class name="com.liferay.pushnotifications.model.impl.ApplicationPreferencesImpl" table="ApplicationPreferences">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK">
+			<key-property name="applicationPreferenceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="applicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="androidApiKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="androidRetries" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="iosPasswordCertificated" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="iosPasswordSandBoxCertificated" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="iosSandBoxCert" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="iosProdCert" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createdDate" type="org.hibernate.type.TimestampType" />
+		<property name="modificatedDate" type="org.hibernate.type.TimestampType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
 	<class name="com.liferay.pushnotifications.model.impl.AppVersionImpl" table="AppVersion">
 		<cache usage="read-write" />
 		<id name="appVersionId" type="long">
@@ -22,6 +39,7 @@
 		</id>
 		<property name="appVersionKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="structure" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sandbox" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="createdDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

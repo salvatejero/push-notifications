@@ -25,6 +25,7 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
     private long _appVersionId;
     private String _appVersionKey;
     private String _structure;
+    private boolean _sandbox;
     private Date _createdDate;
     private Date _modifiedDate;
     private long _userId;
@@ -73,6 +74,7 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
         attributes.put("appVersionId", getAppVersionId());
         attributes.put("appVersionKey", getAppVersionKey());
         attributes.put("structure", getStructure());
+        attributes.put("sandbox", getSandbox());
         attributes.put("createdDate", getCreatedDate());
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("userId", getUserId());
@@ -99,6 +101,12 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
 
         if (structure != null) {
             setStructure(structure);
+        }
+
+        Boolean sandbox = (Boolean) attributes.get("sandbox");
+
+        if (sandbox != null) {
+            setSandbox(sandbox);
         }
 
         Date createdDate = (Date) attributes.get("createdDate");
@@ -186,6 +194,33 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
                 Method method = clazz.getMethod("setStructure", String.class);
 
                 method.invoke(_appVersionRemoteModel, structure);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public boolean getSandbox() {
+        return _sandbox;
+    }
+
+    @Override
+    public boolean isSandbox() {
+        return _sandbox;
+    }
+
+    @Override
+    public void setSandbox(boolean sandbox) {
+        _sandbox = sandbox;
+
+        if (_appVersionRemoteModel != null) {
+            try {
+                Class<?> clazz = _appVersionRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setSandbox", boolean.class);
+
+                method.invoke(_appVersionRemoteModel, sandbox);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -360,6 +395,7 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
         clone.setAppVersionId(getAppVersionId());
         clone.setAppVersionKey(getAppVersionKey());
         clone.setStructure(getStructure());
+        clone.setSandbox(getSandbox());
         clone.setCreatedDate(getCreatedDate());
         clone.setModifiedDate(getModifiedDate());
         clone.setUserId(getUserId());
@@ -413,7 +449,7 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(15);
+        StringBundler sb = new StringBundler(17);
 
         sb.append("{appVersionId=");
         sb.append(getAppVersionId());
@@ -421,6 +457,8 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
         sb.append(getAppVersionKey());
         sb.append(", structure=");
         sb.append(getStructure());
+        sb.append(", sandbox=");
+        sb.append(getSandbox());
         sb.append(", createdDate=");
         sb.append(getCreatedDate());
         sb.append(", modifiedDate=");
@@ -436,7 +474,7 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(28);
 
         sb.append("<model><model-name>");
         sb.append("com.liferay.pushnotifications.model.AppVersion");
@@ -453,6 +491,10 @@ public class AppVersionClp extends BaseModelImpl<AppVersion>
         sb.append(
             "<column><column-name>structure</column-name><column-value><![CDATA[");
         sb.append(getStructure());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>sandbox</column-name><column-value><![CDATA[");
+        sb.append(getSandbox());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>createdDate</column-name><column-value><![CDATA[");

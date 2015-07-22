@@ -5,7 +5,6 @@ import java.util.Date;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.pushnotifications.model.Application;
-import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
 import com.liferay.pushnotifications.service.base.ApplicationLocalServiceBaseImpl;
 
 /**

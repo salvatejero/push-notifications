@@ -12,29 +12,32 @@
  * details.
  */
 
-package com.liferay.pushnotifications;
+package com.liferay.pushnotifications.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Bruno Farache
  */
-@SuppressWarnings("serial")
-public class PushNotificationsException extends PortalException {
+public class PushAppsNotificationsPermission {
 
-	public PushNotificationsException() {
+	public static final String RESOURCE_NAME = "com.liferay.pushnotifications.apps";
+
+	public static void check(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException();
+		}
 	}
 
-	public PushNotificationsException(String msg) {
-		super(msg);
-	}
+	public static boolean contains(
+		PermissionChecker permissionChecker, String actionId) {
 
-	public PushNotificationsException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public PushNotificationsException(Throwable cause) {
-		super(cause);
+		return permissionChecker.hasPermission(0, RESOURCE_NAME, 0, actionId);
 	}
 
 }

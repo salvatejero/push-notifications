@@ -34,11 +34,18 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.pushnotifications.IOSValidationApplicationPreferencesException;
+import com.liferay.pushnotifications.ValidationApplicationPreferencesException;
 import com.liferay.pushnotifications.model.AppVersion;
 import com.liferay.pushnotifications.model.Application;
+import com.liferay.pushnotifications.model.ApplicationPreferences;
 import com.liferay.pushnotifications.service.AppVersionLocalServiceUtil;
 import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
+import com.liferay.pushnotifications.service.ApplicationPreferencesLocalServiceUtil;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
+import com.liferay.pushnotifications.service.permission.PushAppsNotificationsPermission;
+import com.liferay.pushnotifications.util.ActionKeys;
 import com.liferay.pushnotifications.util.PortletPropsKeys;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -115,23 +122,68 @@ public class AdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 	
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
-		Long appId = ParamUtil.getLong(
-				actionRequest, "appId", 0);
+		boolean manageApps = PushAppsNotificationsPermission.contains(themeDisplay.getPermissionChecker(), ActionKeys.MANAGE_APPS);
+		boolean manageAppPreferences = PushAppsNotificationsPermission.contains(themeDisplay.getPermissionChecker(), ActionKeys.MANAGE_APPS_PREFERENCES);
 		
-		String appName = ParamUtil.getString(actionRequest, "applicationName", "");
-		
-		Application app = null;
-		if(appId == 0){
-			app = addApplication(actionRequest, appName);
-		}else{
-			app = ApplicationLocalServiceUtil.getApplication(appId);
-			app.setApplicationName(appName);
-			app.setModificatedDate(new Date());
-			app = ApplicationLocalServiceUtil.updateApplication(app);
+		if(!manageApps){
+			PushAppsNotificationsPermission.check(themeDisplay.getPermissionChecker(), ActionKeys.MANAGE_APPS);
 		}
+		Long appId = ParamUtil.getLong(actionRequest, "appId", 0);
 		
-		actionResponse.setRenderParameter("appId", ""+app.getApplicationId());
+		if(manageApps){
+		
+			String appName = ParamUtil.getString(actionRequest, "applicationName", "");
+			
+			Application app = null;
+			if(appId == 0){
+				app = addApplication(actionRequest, appName);
+			}else{
+				app = ApplicationLocalServiceUtil.getApplication(appId);
+				app.setApplicationName(appName);
+				app.setModificatedDate(new Date());
+				app = ApplicationLocalServiceUtil.updateApplication(app);
+			}
+		
+			if(manageAppPreferences){
+				
+				String androidApiKey = ParamUtil.getString(actionRequest, "androidApiKey", null);
+				Long androidRetries = ParamUtil.getLong(actionRequest, "androidRetries", 0);
+				String iosPasswordCertificated = ParamUtil.getString(actionRequest, "appleCertificatePassword", null);
+				Long iosProdCert = ParamUtil.getLong(actionRequest, "appleCertificateFile", 0);
+				Long iosSandBoxCert = ParamUtil.getLong(actionRequest, "appleCertificateSandBoxFile", 0);
+				String iosPasswordSandBoxCertificated = ParamUtil.getString(actionRequest, "appleCertificateSandBoxPassword", null);
+				
+				if(androidApiKey == null || androidApiKey.equals("") || androidRetries == 0){
+					throw new ValidationApplicationPreferencesException();
+				}
+				
+				if((iosPasswordCertificated == null || iosPasswordCertificated.equals("") || iosProdCert == 0)  
+						&& (iosSandBoxCert == 0 || iosPasswordSandBoxCertificated == null || iosPasswordSandBoxCertificated.equals(""))){
+					throw new IOSValidationApplicationPreferencesException();
+				}
+				
+				ApplicationPreferences appPreferences = ApplicationPreferencesLocalServiceUtil.findApplicationPreferenceByApplicationId(appId);
+				if(appPreferences == null){
+					addApplicationPreference(actionRequest, appId, androidApiKey, androidRetries, iosPasswordCertificated, iosProdCert, iosSandBoxCert, iosPasswordSandBoxCertificated);
+				}else{
+					User u = (User)actionRequest.getAttribute(WebKeys.USER);
+					appPreferences.setAndroidApiKey(androidApiKey);
+					appPreferences.setAndroidRetries(androidRetries);
+					appPreferences.setApplicationId(appId);
+					appPreferences.setIosPasswordCertificated(iosPasswordCertificated);
+					appPreferences.setIosPasswordSandBoxCertificated(iosPasswordSandBoxCertificated);
+					appPreferences.setIosProdCert(iosProdCert);
+					appPreferences.setIosSandBoxCert(iosSandBoxCert);
+					appPreferences.setModificatedDate(new Date());
+					appPreferences.setUserId(u.getUserId());
+					appPreferences.setUserUuid(u.getUserUuid());
+					ApplicationPreferencesLocalServiceUtil.updateApplicationPreferences(appPreferences);
+				}
+			}
+		}
+		actionResponse.setRenderParameter("appId", ""+appId);
 		actionResponse.setRenderParameter(Constants.CMD, Constants.ADD);
 		actionResponse.setRenderParameter("type", "app");
 	}
@@ -140,6 +192,13 @@ public class AdminPortlet extends MVCPortlet {
 
 		User u = (User)actionRequest.getAttribute(WebKeys.USER);
 		return ApplicationLocalServiceUtil.addApplication(appName, u);
+	}
+	
+	private ApplicationPreferences addApplicationPreference(ActionRequest actionRequest, Long appId, String androidApiKey, Long androidRetries,
+			String iosPasswordCertificated, Long iosProdCert, Long iosSandBoxCert, String iosPasswordSandBoxCertificated){
+
+		User u = (User)actionRequest.getAttribute(WebKeys.USER);
+		return ApplicationPreferencesLocalServiceUtil.addApplicationPreferences(appId, u, androidApiKey, androidRetries, iosPasswordCertificated, iosProdCert, iosSandBoxCert, iosPasswordSandBoxCertificated);
 	}
 	
 	public void updatePortletPreferences(

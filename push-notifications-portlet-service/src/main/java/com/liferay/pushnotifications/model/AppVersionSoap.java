@@ -16,6 +16,7 @@ public class AppVersionSoap implements Serializable {
     private long _appVersionId;
     private String _appVersionKey;
     private String _structure;
+    private boolean _sandbox;
     private Date _createdDate;
     private Date _modifiedDate;
     private long _userId;
@@ -30,6 +31,7 @@ public class AppVersionSoap implements Serializable {
         soapModel.setAppVersionId(model.getAppVersionId());
         soapModel.setAppVersionKey(model.getAppVersionKey());
         soapModel.setStructure(model.getStructure());
+        soapModel.setSandbox(model.getSandbox());
         soapModel.setCreatedDate(model.getCreatedDate());
         soapModel.setModifiedDate(model.getModifiedDate());
         soapModel.setUserId(model.getUserId());
@@ -104,6 +106,18 @@ public class AppVersionSoap implements Serializable {
 
     public void setStructure(String structure) {
         _structure = structure;
+    }
+
+    public boolean getSandbox() {
+        return _sandbox;
+    }
+
+    public boolean isSandbox() {
+        return _sandbox;
+    }
+
+    public void setSandbox(boolean sandbox) {
+        _sandbox = sandbox;
     }
 
     public Date getCreatedDate() {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,23 +17,29 @@ package com.liferay.pushnotifications;
 import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Silvio Santos
+ * @author Bruno Farache
+ * @author Salva Tejero
  */
-@SuppressWarnings("serial")
-public class NoSuchDeviceException extends NoSuchModelException {
+public class ValidationApplicationPreferencesException extends NoSuchModelException {
 
-	public NoSuchDeviceException() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ValidationApplicationPreferencesException() {
+		super();
 	}
 
-	public NoSuchDeviceException(String msg) {
+	public ValidationApplicationPreferencesException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchDeviceException(String msg, Throwable cause) {
+	public ValidationApplicationPreferencesException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchDeviceException(Throwable cause) {
+	public ValidationApplicationPreferencesException(Throwable cause) {
 		super(cause);
 	}
 

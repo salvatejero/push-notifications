@@ -40,6 +40,7 @@ public class AppVersionWrapper implements AppVersion, ModelWrapper<AppVersion> {
         attributes.put("appVersionId", getAppVersionId());
         attributes.put("appVersionKey", getAppVersionKey());
         attributes.put("structure", getStructure());
+        attributes.put("sandbox", getSandbox());
         attributes.put("createdDate", getCreatedDate());
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("userId", getUserId());
@@ -66,6 +67,12 @@ public class AppVersionWrapper implements AppVersion, ModelWrapper<AppVersion> {
 
         if (structure != null) {
             setStructure(structure);
+        }
+
+        Boolean sandbox = (Boolean) attributes.get("sandbox");
+
+        if (sandbox != null) {
+            setSandbox(sandbox);
         }
 
         Date createdDate = (Date) attributes.get("createdDate");
@@ -171,6 +178,36 @@ public class AppVersionWrapper implements AppVersion, ModelWrapper<AppVersion> {
     @Override
     public void setStructure(java.lang.String structure) {
         _appVersion.setStructure(structure);
+    }
+
+    /**
+    * Returns the sandbox of this app version.
+    *
+    * @return the sandbox of this app version
+    */
+    @Override
+    public boolean getSandbox() {
+        return _appVersion.getSandbox();
+    }
+
+    /**
+    * Returns <code>true</code> if this app version is sandbox.
+    *
+    * @return <code>true</code> if this app version is sandbox; <code>false</code> otherwise
+    */
+    @Override
+    public boolean isSandbox() {
+        return _appVersion.isSandbox();
+    }
+
+    /**
+    * Sets whether this app version is sandbox.
+    *
+    * @param sandbox the sandbox of this app version
+    */
+    @Override
+    public void setSandbox(boolean sandbox) {
+        _appVersion.setSandbox(sandbox);
     }
 
     /**

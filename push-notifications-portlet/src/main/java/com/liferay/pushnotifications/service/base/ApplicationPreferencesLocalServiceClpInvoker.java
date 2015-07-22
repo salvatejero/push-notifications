@@ -1,6 +1,6 @@
 package com.liferay.pushnotifications.service.base;
 
-import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
+import com.liferay.pushnotifications.service.ApplicationPreferencesLocalServiceUtil;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Bruno Farache
  * @generated
  */
-public class ApplicationLocalServiceClpInvoker {
+public class ApplicationPreferencesLocalServiceClpInvoker {
     private String _methodName0;
     private String[] _methodParameterTypes0;
     private String _methodName1;
@@ -47,26 +47,32 @@ public class ApplicationLocalServiceClpInvoker {
     private String[] _methodParameterTypes47;
     private String _methodName52;
     private String[] _methodParameterTypes52;
+    private String _methodName53;
+    private String[] _methodParameterTypes53;
 
-    public ApplicationLocalServiceClpInvoker() {
-        _methodName0 = "addApplication";
+    public ApplicationPreferencesLocalServiceClpInvoker() {
+        _methodName0 = "addApplicationPreferences";
 
         _methodParameterTypes0 = new String[] {
-                "com.liferay.pushnotifications.model.Application"
+                "com.liferay.pushnotifications.model.ApplicationPreferences"
             };
 
-        _methodName1 = "createApplication";
+        _methodName1 = "createApplicationPreferences";
 
-        _methodParameterTypes1 = new String[] { "long" };
+        _methodParameterTypes1 = new String[] {
+                "com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK"
+            };
 
-        _methodName2 = "deleteApplication";
+        _methodName2 = "deleteApplicationPreferences";
 
-        _methodParameterTypes2 = new String[] { "long" };
+        _methodParameterTypes2 = new String[] {
+                "com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK"
+            };
 
-        _methodName3 = "deleteApplication";
+        _methodName3 = "deleteApplicationPreferences";
 
         _methodParameterTypes3 = new String[] {
-                "com.liferay.pushnotifications.model.Application"
+                "com.liferay.pushnotifications.model.ApplicationPreferences"
             };
 
         _methodName4 = "dynamicQuery";
@@ -105,30 +111,34 @@ public class ApplicationLocalServiceClpInvoker {
                 "com.liferay.portal.kernel.dao.orm.Projection"
             };
 
-        _methodName10 = "fetchApplication";
+        _methodName10 = "fetchApplicationPreferences";
 
-        _methodParameterTypes10 = new String[] { "long" };
+        _methodParameterTypes10 = new String[] {
+                "com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK"
+            };
 
-        _methodName11 = "getApplication";
+        _methodName11 = "getApplicationPreferences";
 
-        _methodParameterTypes11 = new String[] { "long" };
+        _methodParameterTypes11 = new String[] {
+                "com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK"
+            };
 
         _methodName12 = "getPersistedModel";
 
         _methodParameterTypes12 = new String[] { "java.io.Serializable" };
 
-        _methodName13 = "getApplications";
+        _methodName13 = "getApplicationPreferenceses";
 
         _methodParameterTypes13 = new String[] { "int", "int" };
 
-        _methodName14 = "getApplicationsCount";
+        _methodName14 = "getApplicationPreferencesesCount";
 
         _methodParameterTypes14 = new String[] {  };
 
-        _methodName15 = "updateApplication";
+        _methodName15 = "updateApplicationPreferences";
 
         _methodParameterTypes15 = new String[] {
-                "com.liferay.pushnotifications.model.Application"
+                "com.liferay.pushnotifications.model.ApplicationPreferences"
             };
 
         _methodName46 = "getBeanIdentifier";
@@ -139,10 +149,15 @@ public class ApplicationLocalServiceClpInvoker {
 
         _methodParameterTypes47 = new String[] { "java.lang.String" };
 
-        _methodName52 = "addApplication";
+        _methodName52 = "findApplicationPreferenceByApplicationId";
 
-        _methodParameterTypes52 = new String[] {
-                "java.lang.String", "com.liferay.portal.model.User"
+        _methodParameterTypes52 = new String[] { "long" };
+
+        _methodName53 = "addApplicationPreferences";
+
+        _methodParameterTypes53 = new String[] {
+                "long", "com.liferay.portal.model.User", "java.lang.String",
+                "long", "java.lang.String", "long", "long", "java.lang.String"
             };
     }
 
@@ -150,44 +165,44 @@ public class ApplicationLocalServiceClpInvoker {
         Object[] arguments) throws Throwable {
         if (_methodName0.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-            return ApplicationLocalServiceUtil.addApplication((com.liferay.pushnotifications.model.Application) arguments[0]);
+            return ApplicationPreferencesLocalServiceUtil.addApplicationPreferences((com.liferay.pushnotifications.model.ApplicationPreferences) arguments[0]);
         }
 
         if (_methodName1.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-            return ApplicationLocalServiceUtil.createApplication(((Long) arguments[0]).longValue());
+            return ApplicationPreferencesLocalServiceUtil.createApplicationPreferences((com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK) arguments[0]);
         }
 
         if (_methodName2.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-            return ApplicationLocalServiceUtil.deleteApplication(((Long) arguments[0]).longValue());
+            return ApplicationPreferencesLocalServiceUtil.deleteApplicationPreferences((com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK) arguments[0]);
         }
 
         if (_methodName3.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-            return ApplicationLocalServiceUtil.deleteApplication((com.liferay.pushnotifications.model.Application) arguments[0]);
+            return ApplicationPreferencesLocalServiceUtil.deleteApplicationPreferences((com.liferay.pushnotifications.model.ApplicationPreferences) arguments[0]);
         }
 
         if (_methodName4.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-            return ApplicationLocalServiceUtil.dynamicQuery();
+            return ApplicationPreferencesLocalServiceUtil.dynamicQuery();
         }
 
         if (_methodName5.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-            return ApplicationLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
+            return ApplicationPreferencesLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
         }
 
         if (_methodName6.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-            return ApplicationLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
+            return ApplicationPreferencesLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName7.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-            return ApplicationLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
+            return ApplicationPreferencesLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[3]);
@@ -195,62 +210,73 @@ public class ApplicationLocalServiceClpInvoker {
 
         if (_methodName8.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-            return ApplicationLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
+            return ApplicationPreferencesLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
         }
 
         if (_methodName9.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-            return ApplicationLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
+            return ApplicationPreferencesLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
                 (com.liferay.portal.kernel.dao.orm.Projection) arguments[1]);
         }
 
         if (_methodName10.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-            return ApplicationLocalServiceUtil.fetchApplication(((Long) arguments[0]).longValue());
+            return ApplicationPreferencesLocalServiceUtil.fetchApplicationPreferences((com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK) arguments[0]);
         }
 
         if (_methodName11.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-            return ApplicationLocalServiceUtil.getApplication(((Long) arguments[0]).longValue());
+            return ApplicationPreferencesLocalServiceUtil.getApplicationPreferences((com.liferay.pushnotifications.service.persistence.ApplicationPreferencesPK) arguments[0]);
         }
 
         if (_methodName12.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-            return ApplicationLocalServiceUtil.getPersistedModel((java.io.Serializable) arguments[0]);
+            return ApplicationPreferencesLocalServiceUtil.getPersistedModel((java.io.Serializable) arguments[0]);
         }
 
         if (_methodName13.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-            return ApplicationLocalServiceUtil.getApplications(((Integer) arguments[0]).intValue(),
+            return ApplicationPreferencesLocalServiceUtil.getApplicationPreferenceses(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName14.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-            return ApplicationLocalServiceUtil.getApplicationsCount();
+            return ApplicationPreferencesLocalServiceUtil.getApplicationPreferencesesCount();
         }
 
         if (_methodName15.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-            return ApplicationLocalServiceUtil.updateApplication((com.liferay.pushnotifications.model.Application) arguments[0]);
+            return ApplicationPreferencesLocalServiceUtil.updateApplicationPreferences((com.liferay.pushnotifications.model.ApplicationPreferences) arguments[0]);
         }
 
         if (_methodName46.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-            return ApplicationLocalServiceUtil.getBeanIdentifier();
+            return ApplicationPreferencesLocalServiceUtil.getBeanIdentifier();
         }
 
         if (_methodName47.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
-            ApplicationLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
+            ApplicationPreferencesLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
         if (_methodName52.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
-            return ApplicationLocalServiceUtil.addApplication((java.lang.String) arguments[0],
-                (com.liferay.portal.model.User) arguments[1]);
+            return ApplicationPreferencesLocalServiceUtil.findApplicationPreferenceByApplicationId(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName53.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+            return ApplicationPreferencesLocalServiceUtil.addApplicationPreferences(((Long) arguments[0]).longValue(),
+                (com.liferay.portal.model.User) arguments[1],
+                (java.lang.String) arguments[2],
+                ((Long) arguments[3]).longValue(),
+                (java.lang.String) arguments[4],
+                ((Long) arguments[5]).longValue(),
+                ((Long) arguments[6]).longValue(),
+                (java.lang.String) arguments[7]);
         }
 
         throw new UnsupportedOperationException();

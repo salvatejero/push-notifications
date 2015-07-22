@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.messaging.Message;
 
 import com.liferay.pushnotifications.service.AppVersionLocalServiceUtil;
 import com.liferay.pushnotifications.service.ApplicationLocalServiceUtil;
+import com.liferay.pushnotifications.service.ApplicationPreferencesLocalServiceUtil;
 import com.liferay.pushnotifications.service.ClpSerializer;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceLocalServiceUtil;
 import com.liferay.pushnotifications.service.PushNotificationsDeviceServiceUtil;
@@ -23,6 +24,8 @@ public class ClpMessageListener extends BaseMessageListener {
         if (command.equals("undeploy") &&
                 servletContextName.equals(getServletContextName())) {
             ApplicationLocalServiceUtil.clearService();
+
+            ApplicationPreferencesLocalServiceUtil.clearService();
 
             AppVersionLocalServiceUtil.clearService();
 

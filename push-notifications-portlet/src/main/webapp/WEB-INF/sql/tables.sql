@@ -2,6 +2,7 @@ create table AppVersion (
 	appVersionId LONG not null primary key,
 	appVersionKey VARCHAR(75) null,
 	structure VARCHAR(75) null,
+	sandbox BOOLEAN,
 	createdDate DATE null,
 	modifiedDate DATE null,
 	userId LONG,
@@ -14,6 +15,21 @@ create table Application (
 	createdDate DATE null,
 	modificatedDate DATE null,
 	userId LONG
+);
+
+create table ApplicationPreferences (
+	applicationPreferenceId LONG not null,
+	applicationId LONG not null,
+	androidApiKey VARCHAR(75) null,
+	androidRetries LONG,
+	iosPasswordCertificated VARCHAR(75) null,
+	iosPasswordSandBoxCertificated VARCHAR(75) null,
+	iosSandBoxCert LONG,
+	iosProdCert LONG,
+	createdDate DATE null,
+	modificatedDate DATE null,
+	userId LONG,
+	primary key (applicationPreferenceId, applicationId)
 );
 
 create table Applications_AppVersions (

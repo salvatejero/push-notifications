@@ -8,10 +8,24 @@
 		<field name="modificatedDate" type="Date" />
 		<field name="userId" type="long" />
 	</model>
+	<model name="com.liferay.pushnotifications.model.ApplicationPreferences">
+		<field name="applicationPreferenceId" type="long" />
+		<field name="applicationId" type="long" />
+		<field name="androidApiKey" type="String" />
+		<field name="androidRetries" type="long" />
+		<field name="iosPasswordCertificated" type="String" />
+		<field name="iosPasswordSandBoxCertificated" type="String" />
+		<field name="iosSandBoxCert" type="long" />
+		<field name="iosProdCert" type="long" />
+		<field name="createdDate" type="Date" />
+		<field name="modificatedDate" type="Date" />
+		<field name="userId" type="long" />
+	</model>
 	<model name="com.liferay.pushnotifications.model.AppVersion">
 		<field name="appVersionId" type="long" />
 		<field name="appVersionKey" type="String" />
 		<field name="structure" type="String" />
+		<field name="sandbox" type="boolean" />
 		<field name="createdDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="userId" type="long" />
