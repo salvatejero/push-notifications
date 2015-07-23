@@ -22,6 +22,8 @@ public class ActionKeys
 
 	public static final String MANAGE_DEVICES = "MANAGE_DEVICES";
 	
+	public static final String DELETE_DEVICES = "DELETE_DEVICES";
+	
 	public static final String MANAGE_APPS = "MANAGE_APPS";
 	
 	public static final String DELETE_APPS = "DELETE_APPS";

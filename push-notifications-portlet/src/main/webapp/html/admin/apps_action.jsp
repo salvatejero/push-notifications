@@ -26,7 +26,7 @@ editAppUrl.setParameter("type", "app");
 editAppUrl.setWindowState(LiferayWindowState.POP_UP);
 
 
-String method = "editApp('"+editAppUrl.toString() +"')";
+String method = "editApp('"+editAppUrl.toString() +"', '"+app.getApplicationName()+"')";
 %>
 
 <liferay-ui:icon-menu>

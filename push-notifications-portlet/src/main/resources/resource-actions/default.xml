@@ -22,6 +22,7 @@
 		<permissions>
 			<supports>
 				<action-key>MANAGE_DEVICES</action-key>
+				<action-key>DELETE_DEVICES</action-key>
 				<action-key>SEND_PUSH_NOTIFICATION</action-key>
 			</supports>
 			<site-member-defaults />

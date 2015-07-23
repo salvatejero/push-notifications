@@ -1,5 +1,7 @@
+<%@page import="com.liferay.pushnotifications.service.permission.PushNotificationsPermission"%>
+<%@page import="com.liferay.pushnotifications.util.ActionKeys"%>
+<%@page import="com.liferay.pushnotifications.service.permission.PushAppsNotificationsPermission"%>
 <%@page import="com.liferay.pushnotifications.model.PushNotificationsDevice"%>
-<%@page import="com.liferay.portal.security.permission.ActionKeys"%>
 <%@page import="com.liferay.portal.service.permission.UserPermissionUtil"%>
 <%@page import="com.liferay.portal.model.User"%>
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
@@ -16,7 +18,7 @@ long userId = pushObject.getUserId();
 
 <liferay-ui:icon-menu>
 
-	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.DELETE) %>">
+	<c:if test="<%= PushNotificationsPermission.contains(permissionChecker, ActionKeys.DELETE_DEVICES) %>">
 
 		<liferay-portlet:actionURL name="deleteDevice" var="deleteDeviceUrl">
 			<portlet:param name="pushId" value="<%= String.valueOf(pushid) %>" />

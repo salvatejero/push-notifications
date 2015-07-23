@@ -68,22 +68,26 @@ boolean viewPreferences = PushAppsNotificationsPermission.contains(permissionChe
 		<aui:column columnWidth="50">
 			<aui:fieldset label="ios">
 				<div class="control-group control-group-inline lfr-input-text-container">
-					<label><%=LanguageUtil.get(locale, "apple-certificate-sandbox-path") %> <span id="preDoc"></span>
-						<span class="taglib-icon-help"><img tabindex="0" src="/html/themes/control_panel/images/portlet/help.png" onmouseover="Liferay.Portal.ToolTip.show(this);" onfocus="Liferay.Portal.ToolTip.show(this);" onblur="Liferay.Portal.ToolTip.hide();" aria-labelledby="xgqg" alt=""><span id="xgqg" class="hide-accessible tooltip-text">adasdasddfadsfdsafasdfasd2.</span></span>
+					<label><liferay-ui:message key="apple-certificate-sandbox-path" /></span>
+						<aui:input type="hidden" id="appleCertificateSandBoxFile" name="appleCertificateSandBoxFile" value='<%= (appPreferences != null)?appPreferences.getIosSandBoxCert(): "0" %>'/>
+						<span class="taglib-icon-help"><img tabindex="0" src="/html/themes/control_panel/images/portlet/help.png" onmouseover="Liferay.Portal.ToolTip.show(this);" onfocus="Liferay.Portal.ToolTip.show(this);" onblur="Liferay.Portal.ToolTip.hide();" aria-labelledby="xgqg" alt="">
+							<span id="xgqg" class="hide-accessible tooltip-text"><liferay-ui:message key="apple-certificate-sandbox-path-help" /></span>
+						</span>:&nbsp;&nbsp;<span id="preDoc">
 					</label>
-					<aui:button name="openFolderSelectorButton" disabled="<%=!editablePreferences %>" value="select" />
+					<aui:button name="openFolderSelectorSandBoxButton" disabled="<%=!editablePreferences %>" value="select" />
 				</div>
 				<aui:input helpMessage="apple-certificate-password-help" disabled="<%=!editablePreferences %>" label="apple-sandbox-certificate-password" name="appleCertificateSandBoxPassword" type="password" value='<%= (appPreferences != null)?appPreferences.getIosPasswordSandBoxCertificated():"" %>' wrapperCssClass="lfr-input-text-container" />
 				<div class="control-group control-group-inline lfr-input-text-container">
-					<label><%=LanguageUtil.get(locale, "apple-certificate-sandbox-path") %> <span id="preDoc"></span></label>
-					<aui:button name="openFolderSelectorButton" disabled="<%=!editablePreferences %>" value="select" />
+					<label><liferay-ui:message key="apple-certificate-pro-path" />
+						<aui:input type="hidden" id="appleCertificateFile" name="appleCertificateFile" value='<%= (appPreferences != null)?appPreferences.getIosProdCert(): "0" %>'/>
+						<span class="taglib-icon-help"><img tabindex="0" src="/html/themes/control_panel/images/portlet/help.png" onmouseover="Liferay.Portal.ToolTip.show(this);" onfocus="Liferay.Portal.ToolTip.show(this);" onblur="Liferay.Portal.ToolTip.hide();" aria-labelledby="xgqg" alt="">
+							<span id="xgqg" class="hide-accessible tooltip-text"><liferay-ui:message key="apple-certificate-pro-path-help" /></span>
+						</span>:&nbsp;&nbsp;<span id="proDoc"></span>
+					</label>
+					<aui:button name="openFolderSelectorProButton" disabled="<%=!editablePreferences %>" value="select" />
 				</div>
 				
-				apple-certificate-pro-path
-				<aui:input helpMessage="apple-certificate-path-help" label="apple-certificate-path" name="appleCertificateFile" type="number" value='<%= (appPreferences != null)?appPreferences.getIosProdCert() : 0%>' wrapperCssClass="lfr-input-text-container" />
-		
 				<aui:input helpMessage="apple-certificate-password-help" disabled="<%=!editablePreferences %>" label="apple-certificate-password" name="appleCertificatePassword" type="password" value='<%= (appPreferences != null)?appPreferences.getIosPasswordCertificated():"" %>' wrapperCssClass="lfr-input-text-container" />
-				<aui:input helpMessage="apple-certificate-password-help" disabled="<%=!editablePreferences %>" label="apple-sandbox-certificate-password" name="appleCertificateSandBoxPassword" type="password" value='<%= (appPreferences != null)?appPreferences.getIosPasswordCertificated():"" %>' wrapperCssClass="lfr-input-text-container" />
 		
 			</aui:fieldset>
 		</aui:column>
@@ -158,11 +162,19 @@ String portletId = PortletKeys.DOCUMENT_LIBRARY;
 <liferay-portlet:renderURL portletName="<%= portletId %>" var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value='/document_library/select_file_entry' />
 	<portlet:param name="folderId" value='0' />
+	<portlet:param name="eventName" value='<%=renderResponse.getNamespace() + "selectFileEntryPre" %>' />
+	<portlet:param name="groupId" value='<%=""+themeDisplay.getScopeGroupId() %>' />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL portletName="<%= portletId %>" var="selectFileEntryPROURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value='/document_library/select_file_entry' />
+	<portlet:param name="folderId" value='0' />
+	<portlet:param name="eventName" value='<%=renderResponse.getNamespace()+"selectFileEntryPro" %>' />
 	<portlet:param name="groupId" value='<%=""+themeDisplay.getScopeGroupId() %>' />
 </liferay-portlet:renderURL>
 <aui:script use="aui-base">
 
-A.one('#<portlet:namespace />openFolderSelectorButton').on(
+A.one('#<portlet:namespace />openFolderSelectorSandBoxButton').on(
 	'click',
 	function(event) {
 		Liferay.Util.selectEntity(
@@ -172,24 +184,62 @@ A.one('#<portlet:namespace />openFolderSelectorButton').on(
 					modal: true,
 					width: 600
 				},
-				id: '_<%= HtmlUtil.escapeJS(portletResource) %>_select_file_entry',
+				id: '_<%= HtmlUtil.escapeJS(renderResponse.getNamespace()) %>selectFileEntryPre',
 				title: '<liferay-ui:message arguments="entry" key="select-x" />',
 				uri: '<%= selectFileEntryURL.toString() %>'
 			},
 			function(event) {
-				console.log(event);
-				var folderFileData = {
-					idString: 'rootFolderId',
-					idValue: event.folderid,
-					nameString: 'rootFolderName',
-					nameValue: event.foldername
-				};
-
-				Liferay.Util.selectEntity(folderFileData, '<portlet:namespace />');
+				
+				
 			}
 		);
 	}
 );
+
+Liferay.on('<%=renderResponse.getNamespace()%>selectFileEntryPre', function(event){
+	console.log(A.one('#preDoc'));
+	var obj = A.one('#preDoc');
+	obj.html(event.entryname);
+	A.one('#<portlet:namespace />appleCertificateSandBoxFile').set('value',event.entryid);
+});
+
+Liferay.on('<%=renderResponse.getNamespace()%>selectFileEntryPro', function(event){
+	A.one('#proDoc').html(event.entryname);
+	A.one('#<portlet:namespace />appleCertificateFile').set('value',event.entryid);
+});
+
+A.one('#<portlet:namespace />openFolderSelectorProButton').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 600
+					},
+					id: '_<%= HtmlUtil.escapeJS(renderResponse.getNamespace()) %>selectFileEntryPro',
+					title: '<liferay-ui:message arguments="entry" key="select-x" />',
+					uri: '<%= selectFileEntryPROURL.toString() %>'
+				},
+				function(event) {
+					
+					alert(event.entryid);
+					alert( event.entryname);
+					alert(event);
+					console.log(event);
+					var folderFileData = {
+						idString: 'rootFolderId',
+						idValue: event.folderid,
+						nameString: 'rootFolderName',
+						nameValue: event.foldername
+					};
+					console.log(folderFileData);
+					Liferay.Util.selectEntity(folderFileData, '<portlet:namespace />');
+				}
+			);
+		}
+	);
 
 var form = A.one('#<portlet:namespace />fm');
 

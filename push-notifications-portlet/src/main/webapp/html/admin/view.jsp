@@ -13,6 +13,7 @@
  * details.
  */
 --%>
+<%@page import="com.liferay.pushnotifications.service.permission.PushNotificationsPermission"%>
 <%@page import="com.liferay.pushnotifications.util.ActionKeys"%>
 <%@page import="com.liferay.pushnotifications.service.permission.PushAppsNotificationsPermission"%>
 <%@ include file="../../init.jsp" %>
@@ -94,9 +95,11 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 				<liferay-ui:search-container-column-text
 					name="token"
 					value="<%= device.getToken() %>"/>
+					<c:if test="<%= PushNotificationsPermission.contains(permissionChecker, ActionKeys.DELETE_DEVICES) %>">
 				<liferay-ui:search-container-column-jsp
 					align="right" cssClass="actionColumn" 
 					path="/html/admin/devices_action.jsp" />
+					</c:if>
 				</liferay-ui:search-container-row>
 	
 			<liferay-ui:search-iterator />
@@ -274,7 +277,7 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 			);
 		});
 	
-		Liferay.provide(window, 'editApp', function(url) {
+		Liferay.provide(window, 'editApp', function(url, appName) {
 
 			Liferay.Util.openWindow(
 				{
@@ -282,8 +285,8 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 						height: 600,
 						width: 1070
 					},
-					id: '<portlet:namespace />addAppDialog',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "edit-app") %>',
+					id: '<portlet:namespace />editAppDialog',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "edit-app") %> '+appName,
 					uri: url
 				}
 			);
@@ -294,5 +297,4 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 	        var curPortlet = '#p_p_id<portlet:namespace/>';
 	        	Liferay.Portlet.refresh(curPortlet, data);
 	    	}, ['aui-dialog','aui-dialog-iframe'] );
-		
 </aui:script>
