@@ -1225,6 +1225,165 @@ public class PushNotificationsDeviceUtil {
     }
 
     /**
+    * Returns all the push notifications devices where appId = &#63;.
+    *
+    * @param appId the app ID
+    * @return the matching push notifications devices
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> findByAppId(
+        long appId) throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByAppId(appId);
+    }
+
+    /**
+    * Returns a range of all the push notifications devices where appId = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.pushnotifications.model.impl.PushNotificationsDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param appId the app ID
+    * @param start the lower bound of the range of push notifications devices
+    * @param end the upper bound of the range of push notifications devices (not inclusive)
+    * @return the range of matching push notifications devices
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> findByAppId(
+        long appId, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByAppId(appId, start, end);
+    }
+
+    /**
+    * Returns an ordered range of all the push notifications devices where appId = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.pushnotifications.model.impl.PushNotificationsDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param appId the app ID
+    * @param start the lower bound of the range of push notifications devices
+    * @param end the upper bound of the range of push notifications devices (not inclusive)
+    * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+    * @return the ordered range of matching push notifications devices
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> findByAppId(
+        long appId, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByAppId(appId, start, end, orderByComparator);
+    }
+
+    /**
+    * Returns the first push notifications device in the ordered set where appId = &#63;.
+    *
+    * @param appId the app ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching push notifications device
+    * @throws com.liferay.pushnotifications.NoSuchDeviceException if a matching push notifications device could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static com.liferay.pushnotifications.model.PushNotificationsDevice findByAppId_First(
+        long appId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            com.liferay.pushnotifications.NoSuchDeviceException {
+        return getPersistence().findByAppId_First(appId, orderByComparator);
+    }
+
+    /**
+    * Returns the first push notifications device in the ordered set where appId = &#63;.
+    *
+    * @param appId the app ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static com.liferay.pushnotifications.model.PushNotificationsDevice fetchByAppId_First(
+        long appId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByAppId_First(appId, orderByComparator);
+    }
+
+    /**
+    * Returns the last push notifications device in the ordered set where appId = &#63;.
+    *
+    * @param appId the app ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching push notifications device
+    * @throws com.liferay.pushnotifications.NoSuchDeviceException if a matching push notifications device could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static com.liferay.pushnotifications.model.PushNotificationsDevice findByAppId_Last(
+        long appId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            com.liferay.pushnotifications.NoSuchDeviceException {
+        return getPersistence().findByAppId_Last(appId, orderByComparator);
+    }
+
+    /**
+    * Returns the last push notifications device in the ordered set where appId = &#63;.
+    *
+    * @param appId the app ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static com.liferay.pushnotifications.model.PushNotificationsDevice fetchByAppId_Last(
+        long appId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByAppId_Last(appId, orderByComparator);
+    }
+
+    /**
+    * Returns the push notifications devices before and after the current push notifications device in the ordered set where appId = &#63;.
+    *
+    * @param pushNotificationsDeviceId the primary key of the current push notifications device
+    * @param appId the app ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the previous, current, and next push notifications device
+    * @throws com.liferay.pushnotifications.NoSuchDeviceException if a push notifications device with the primary key could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static com.liferay.pushnotifications.model.PushNotificationsDevice[] findByAppId_PrevAndNext(
+        long pushNotificationsDeviceId, long appId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            com.liferay.pushnotifications.NoSuchDeviceException {
+        return getPersistence()
+                   .findByAppId_PrevAndNext(pushNotificationsDeviceId, appId,
+            orderByComparator);
+    }
+
+    /**
+    * Removes all the push notifications devices where appId = &#63; from the database.
+    *
+    * @param appId the app ID
+    * @throws SystemException if a system exception occurred
+    */
+    public static void removeByAppId(long appId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        getPersistence().removeByAppId(appId);
+    }
+
+    /**
+    * Returns the number of push notifications devices where appId = &#63;.
+    *
+    * @param appId the app ID
+    * @return the number of matching push notifications devices
+    * @throws SystemException if a system exception occurred
+    */
+    public static int countByAppId(long appId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().countByAppId(appId);
+    }
+
+    /**
     * Returns all the push notifications devices where platform = &#63; and OSVersion = &#63;.
     *
     * @param platform the platform

@@ -45,6 +45,9 @@
 		<finder name="Platform" return-type="Collection">
 			<finder-column name="platform"/>
 		</finder>
+		<finder name="AppId" return-type="Collection">
+			<finder-column name="appId"/>
+		</finder>
 		<finder name="P_OSV" return-type="Collection">
 			<finder-column name="platform"/>
 			<finder-column name="OSVersion" />

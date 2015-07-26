@@ -79,11 +79,12 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
                 "value.object.column.bitmask.enabled.com.liferay.pushnotifications.model.PushNotificationsDevice"),
             true);
     public static long OSVERSION_COLUMN_BITMASK = 1L;
-    public static long APPVERSION_COLUMN_BITMASK = 2L;
-    public static long PLATFORM_COLUMN_BITMASK = 4L;
-    public static long TOKEN_COLUMN_BITMASK = 8L;
-    public static long USERID_COLUMN_BITMASK = 16L;
-    public static long PUSHNOTIFICATIONSDEVICEID_COLUMN_BITMASK = 32L;
+    public static long APPID_COLUMN_BITMASK = 2L;
+    public static long APPVERSION_COLUMN_BITMASK = 4L;
+    public static long PLATFORM_COLUMN_BITMASK = 8L;
+    public static long TOKEN_COLUMN_BITMASK = 16L;
+    public static long USERID_COLUMN_BITMASK = 32L;
+    public static long PUSHNOTIFICATIONSDEVICEID_COLUMN_BITMASK = 64L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.com.liferay.pushnotifications.model.PushNotificationsDevice"));
     private static ClassLoader _classLoader = PushNotificationsDevice.class.getClassLoader();
@@ -104,6 +105,8 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
     private String _OSVersion;
     private String _originalOSVersion;
     private long _appId;
+    private long _originalAppId;
+    private boolean _setOriginalAppId;
     private String _appVersion;
     private String _originalAppVersion;
     private long _columnBitmask;
@@ -419,7 +422,19 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
 
     @Override
     public void setAppId(long appId) {
+        _columnBitmask |= APPID_COLUMN_BITMASK;
+
+        if (!_setOriginalAppId) {
+            _setOriginalAppId = true;
+
+            _originalAppId = _appId;
+        }
+
         _appId = appId;
+    }
+
+    public long getOriginalAppId() {
+        return _originalAppId;
     }
 
     @JSON
@@ -545,6 +560,10 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
         pushNotificationsDeviceModelImpl._originalToken = pushNotificationsDeviceModelImpl._token;
 
         pushNotificationsDeviceModelImpl._originalOSVersion = pushNotificationsDeviceModelImpl._OSVersion;
+
+        pushNotificationsDeviceModelImpl._originalAppId = pushNotificationsDeviceModelImpl._appId;
+
+        pushNotificationsDeviceModelImpl._setOriginalAppId = false;
 
         pushNotificationsDeviceModelImpl._originalAppVersion = pushNotificationsDeviceModelImpl._appVersion;
 

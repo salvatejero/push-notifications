@@ -51,6 +51,7 @@ if(versionId != null && versionId > 0){
 
 		<aui:button-row>
 			<aui:button type="submit" value="<%=buttonLabel %>" />
+			<aui:button type="button" onClick="history.back(-1);" value="cancel" />
 		</aui:button-row>
 
 	</aui:fieldset>

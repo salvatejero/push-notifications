@@ -294,6 +294,14 @@ public class PushNotificationsDeviceLocalServiceWrapper
     }
 
     @Override
+    public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDeviceByAppIdByComparator(
+        long appId, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return _pushNotificationsDeviceLocalService.getPushNotificationsDeviceByAppIdByComparator(appId,
+            start, end, orderByComparator);
+    }
+
+    @Override
     public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getUserDevices(
         long userId, int start, int end) {
         return _pushNotificationsDeviceLocalService.getUserDevices(userId,
@@ -303,6 +311,11 @@ public class PushNotificationsDeviceLocalServiceWrapper
     @Override
     public int getUserDevicesCount(long userId) {
         return _pushNotificationsDeviceLocalService.getUserDevicesCount(userId);
+    }
+
+    @Override
+    public int getAppDevicesCount(long appId) {
+        return _pushNotificationsDeviceLocalService.getAppDevicesCount(appId);
     }
 
     @Override

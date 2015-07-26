@@ -281,6 +281,14 @@ public class PushNotificationsDeviceLocalServiceUtil {
             orderByComparator);
     }
 
+    public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDeviceByAppIdByComparator(
+        long appId, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return getService()
+                   .getPushNotificationsDeviceByAppIdByComparator(appId, start,
+            end, orderByComparator);
+    }
+
     public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getUserDevices(
         long userId, int start, int end) {
         return getService().getUserDevices(userId, start, end);
@@ -288,6 +296,10 @@ public class PushNotificationsDeviceLocalServiceUtil {
 
     public static int getUserDevicesCount(long userId) {
         return getService().getUserDevicesCount(userId);
+    }
+
+    public static int getAppDevicesCount(long appId) {
+        return getService().getAppDevicesCount(appId);
     }
 
     public static com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(

@@ -250,11 +250,19 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDeviceByAppIdByComparator(
+        long appId, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getUserDevices(
         long userId, int start, int end);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public int getUserDevicesCount(long userId);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getAppDevicesCount(long appId);
 
     public com.liferay.pushnotifications.model.PushNotificationsDevice addPushNotificationsDevice(
         long userId, java.lang.String platform, java.lang.String token,

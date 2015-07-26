@@ -81,6 +81,24 @@ public class PushNotificationsDeviceLocalServiceImpl
 	}
 	
 	@Override
+	public List<PushNotificationsDevice> getPushNotificationsDeviceByAppIdByComparator(long appId, int start, int end, OrderByComparator orderByComparator){
+		
+		try {
+			if(appId == 0){
+				return pushNotificationsDevicePersistence.findAll(start, end, orderByComparator);
+			}else{
+			
+				return pushNotificationsDevicePersistence.findByAppId(appId, start, end, orderByComparator);
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return new ArrayList<PushNotificationsDevice>();
+	}
+	
+	
+	@Override
 	public List<PushNotificationsDevice> getUserDevices(long userId, int start, int end){
 		
 		try {
@@ -98,6 +116,23 @@ public class PushNotificationsDeviceLocalServiceImpl
 		
 		try {
 			return pushNotificationsDevicePersistence.countByU(userId);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public int getAppDevicesCount(long appId){
+		
+		try {
+			if ( appId > 0){
+				return pushNotificationsDevicePersistence.countByAppId(appId);
+			}else{
+				return pushNotificationsDevicePersistence.countAll();
+			}
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

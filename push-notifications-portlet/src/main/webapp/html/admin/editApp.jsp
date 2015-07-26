@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portlet.documentlibrary.model.DLFileEntry"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@page import="com.liferay.pushnotifications.ValidationApplicationPreferencesException"%>
 <%@page import="com.liferay.pushnotifications.IOSValidationApplicationPreferencesException"%>
@@ -25,6 +26,20 @@ if(appId != null && appId > 0){
 }
 
 ApplicationPreferences appPreferences = ApplicationPreferencesLocalServiceUtil.findApplicationPreferenceByApplicationId(appId);
+
+
+long idFileCertSandBox = (appPreferences != null)? appPreferences.getIosSandBoxCert():0;
+long idFileProd = (appPreferences != null)? appPreferences.getIosProdCert():0;
+
+DLFileEntry certSandBox = null;
+if(idFileCertSandBox > 0){
+	certSandBox = DLFileEntryLocalServiceUtil.getDLFileEntry(idFileCertSandBox);
+}
+
+DLFileEntry certProd = null;
+if(idFileProd > 0){
+	certProd = DLFileEntryLocalServiceUtil.getDLFileEntry(idFileProd);
+}
 
 boolean appleSandbox = false;
 boolean editable = PushAppsNotificationsPermission.contains(permissionChecker, ActionKeys.MANAGE_APPS);
@@ -68,11 +83,11 @@ boolean viewPreferences = PushAppsNotificationsPermission.contains(permissionChe
 		<aui:column columnWidth="50">
 			<aui:fieldset label="ios">
 				<div class="control-group control-group-inline lfr-input-text-container">
-					<label><liferay-ui:message key="apple-certificate-sandbox-path" /></span>
+					<label><liferay-ui:message key="apple-certificate-sandbox-path" />
 						<aui:input type="hidden" id="appleCertificateSandBoxFile" name="appleCertificateSandBoxFile" value='<%= (appPreferences != null)?appPreferences.getIosSandBoxCert(): "0" %>'/>
 						<span class="taglib-icon-help"><img tabindex="0" src="/html/themes/control_panel/images/portlet/help.png" onmouseover="Liferay.Portal.ToolTip.show(this);" onfocus="Liferay.Portal.ToolTip.show(this);" onblur="Liferay.Portal.ToolTip.hide();" aria-labelledby="xgqg" alt="">
 							<span id="xgqg" class="hide-accessible tooltip-text"><liferay-ui:message key="apple-certificate-sandbox-path-help" /></span>
-						</span>:&nbsp;&nbsp;<span id="preDoc">
+						</span>:&nbsp;&nbsp;<span id="preDoc"><%= (certSandBox != null)?certSandBox.getTitle():"" %></span>
 					</label>
 					<aui:button name="openFolderSelectorSandBoxButton" disabled="<%=!editablePreferences %>" value="select" />
 				</div>
@@ -82,7 +97,7 @@ boolean viewPreferences = PushAppsNotificationsPermission.contains(permissionChe
 						<aui:input type="hidden" id="appleCertificateFile" name="appleCertificateFile" value='<%= (appPreferences != null)?appPreferences.getIosProdCert(): "0" %>'/>
 						<span class="taglib-icon-help"><img tabindex="0" src="/html/themes/control_panel/images/portlet/help.png" onmouseover="Liferay.Portal.ToolTip.show(this);" onfocus="Liferay.Portal.ToolTip.show(this);" onblur="Liferay.Portal.ToolTip.hide();" aria-labelledby="xgqg" alt="">
 							<span id="xgqg" class="hide-accessible tooltip-text"><liferay-ui:message key="apple-certificate-pro-path-help" /></span>
-						</span>:&nbsp;&nbsp;<span id="proDoc"></span>
+						</span>:&nbsp;&nbsp;<span id="proDoc"><%= (certProd != null)?certProd.getTitle():"" %></span>
 					</label>
 					<aui:button name="openFolderSelectorProButton" disabled="<%=!editablePreferences %>" value="select" />
 				</div>
@@ -101,11 +116,15 @@ boolean viewPreferences = PushAppsNotificationsPermission.contains(permissionChe
 	}
 	
 	%>
+<aui:button-row>	
 <%if(editable || editablePreferences){ %>
-	<aui:button-row>
+	
 		<aui:button type="submit" value="<%=buttonLabel %>" />
-	</aui:button-row>
+		
+	
 <%} %>
+<aui:button id="closeDialogButton" type="button" onClick="window.close();" value="close" />
+</aui:button-row>
 	<%
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
@@ -141,17 +160,19 @@ boolean viewPreferences = PushAppsNotificationsPermission.contains(permissionChe
 				modelVar="appVerion">
 				
 				<liferay-ui:search-container-column-text
-					name="key"
+					name="key" cssClass="appVersionkey"
 					value='<%=appVerion.getAppVersionKey() %>'/>
 				<liferay-ui:search-container-column-text
-					name="structure"
+					name="structure" cssClass="appVersionStructure"
 					value='<%=appVerion.getStructure()%>'/>
 				
+				<%if(PushAppsNotificationsPermission.contains(permissionChecker, ActionKeys.MANAGE_APPS_VERSIONS)){%>
 				<liferay-ui:search-container-column-jsp
 					align="right"
 					path="/html/admin/appVersion_action.jsp" />
+				<%} %>
 				</liferay-ui:search-container-row>
-	
+				
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 
@@ -241,6 +262,12 @@ A.one('#<portlet:namespace />openFolderSelectorProButton').on(
 		}
 	);
 
+
+A.one('#closeDialogButton').on(
+		'click',
+		function(event) {
+			setTimeout(	Liferay.Util.getOpener().<portlet:namespace/>closePopup('', '<portlet:namespace/>editAppDialog'), 200);
+		});
 var form = A.one('#<portlet:namespace />fm');
 
 if(form){

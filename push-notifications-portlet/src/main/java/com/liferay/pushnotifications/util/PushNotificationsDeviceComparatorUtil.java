@@ -1,6 +1,7 @@
 package com.liferay.pushnotifications.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.pushnotifications.comparators.AppNameComparator;
 import com.liferay.pushnotifications.comparators.AppVersionComparator;
 import com.liferay.pushnotifications.comparators.ModelComparator;
 import com.liferay.pushnotifications.comparators.OSVersionComparator;
@@ -26,6 +27,8 @@ public class PushNotificationsDeviceComparatorUtil {
         	orderByComparator = new ModelComparator(orderByAsc);
         }else if("appVersion".equals(orderByCol)){
         	orderByComparator = new AppVersionComparator(orderByAsc);
+        }else if("applicationName".equals(orderByCol)){
+        	orderByComparator = new AppNameComparator(orderByAsc);
         }
         
 		return orderByComparator;

@@ -13,6 +13,10 @@
  * details.
  */
 --%>
+<%@page import="com.liferay.portal.kernel.dao.orm.QueryUtil"%>
+<%@page import="com.liferay.portal.kernel.util.WebKeys"%>
+<%@page import="com.liferay.portal.kernel.dao.search.SearchContainer"%>
+<%@page import="com.liferay.pushnotifications.model.Application"%>
 <%@page import="com.liferay.pushnotifications.service.permission.PushNotificationsPermission"%>
 <%@page import="com.liferay.pushnotifications.util.ActionKeys"%>
 <%@page import="com.liferay.pushnotifications.service.permission.PushAppsNotificationsPermission"%>
@@ -35,26 +39,47 @@ PortletURL portletURL = renderResponse.createRenderURL();
 String orderByCol = ParamUtil.getString(request, "orderByCol", "platform");
 String orderByType = ParamUtil.getString(request, "orderByType","ASC");
 
+Long appIdSelected = ParamUtil.getLong(request, "appSelected", 0);
 
 String tabSelected = (String)ParamUtil.getString(request, "tabSelected", "");
 OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getPushNotificationOrderByComparator(orderByCol, orderByType);
+List<Application> listApps = ApplicationLocalServiceUtil.getApplications(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+//names="devices,configuration,applications,test"
 %>
 <liferay-ui:tabs
-	names="devices,configuration,applications,test"
+	names="devices,applications"
 	refresh="<%= false %>"
 	value="<%=tabSelected %>">
 
 	<liferay-ui:section>
 	
 		<liferay-ui:success key="success" message="device-delete-successfull"/>	
+		<aui:nav-bar >
+			<aui:nav>
+				<aui:select name="appSelected" label="select-app" onChange="" inlineLabel="true" cssClass="appSelected">
+				
+					<aui:option value='0' selected="<%=(appIdSelected == 0) %>"><liferay-ui:message key="all"/> </aui:option>
+					<% 
+					for(Application appFor:listApps){%>
+					
+					<aui:option value='<%= appFor.getApplicationId()%>' selected="<%=(appIdSelected == appFor.getApplicationId()) %>"><%= appFor.getApplicationName()%></aui:option>
+					<%
+					}
+					%>
+				</aui:select>
+	
+			</aui:nav>
+
+		</aui:nav-bar>
+		
 		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" delta="10"
 			iteratorURL="<%= portletURL %>"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			total="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount() %>">
+			total="<%=PushNotificationsDeviceLocalServiceUtil.getAppDevicesCount(appIdSelected)%>">
 			<liferay-ui:search-container-results
-				results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDeviceByComparator(searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
+				results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDeviceByAppIdByComparator(appIdSelected, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
 			/>
 	
 			<liferay-ui:search-container-row
@@ -88,6 +113,21 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 					orderable="<%= true %>"
       				orderableProperty="OSVersion"
 					value="<%= device.getOSVersion() %>"/>
+					
+					
+				<%
+				Application app = null;
+				Long idApp = device.getAppId();
+				if(idApp != 0){
+					ApplicationLocalServiceUtil.getApplication(idApp);
+				}
+				
+				%>	
+				<liferay-ui:search-container-column-text
+					name="applicationName" 
+					orderable="<%= true %>"
+      				orderableProperty="applicationName"
+					value='<%= (app != null)? app.getApplicationName():"" %>'/>	
 				<liferay-ui:search-container-column-text
 					name="appversion" orderable="<%= true %>"
       				orderableProperty="appVersion"
@@ -105,34 +145,7 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>	
 	</liferay-ui:section>
-	<liferay-ui:section>
-		<aui:form action="<%= updatePortletPreferencesURL %>" method="post" name="configurationFm">
-			<aui:fieldset label="android">
-				<aui:input helpMessage="android-api-key-help" label="android-api-key" name="androidApiKey" type="text" value="<%= androidApiKey %>" wrapperCssClass="lfr-input-text-container" />
-
-				<aui:input helpMessage="android-retries-help" label="android-retries" name="androidRetries" type="text" value="<%= androidRetries %>" wrapperCssClass="lfr-input-text-container">
-					<aui:validator name="digits" />
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
-			</aui:fieldset>
-
-			<aui:fieldset label="ios">
-				<aui:input helpMessage="apple-certificate-path-help" label="apple-certificate-path" name="appleCertificatePath" type="text" value="<%= appleCertificatePath %>" wrapperCssClass="lfr-input-text-container" />
-
-				<aui:input helpMessage="apple-certificate-password-help" label="apple-certificate-password" name="appleCertificatePassword" type="password" value="<%= appleCertificatePassword %>" wrapperCssClass="lfr-input-text-container" />
-
-				<aui:fieldset>
-					<aui:input helpMessage="apple-sandbox-help" label="apple-sandbox"  name="appleSandbox" type="checkbox" value="<%= appleSandbox %>" />
-				</aui:fieldset>
-			</aui:fieldset>
-
-			<aui:button-row>
-				<aui:button type="submit" />
-			</aui:button-row>
-		</aui:form>
-	</liferay-ui:section>
-<%
-%>
+	
 	<liferay-ui:section>
 	
 		<liferay-ui:success key="success-app-version" message="app-delete-successfull"/>	
@@ -184,26 +197,6 @@ OrderByComparator orderByComparator = PushNotificationsDeviceComparatorUtil.getP
 		</liferay-ui:search-container>
 	</liferay-ui:section>
 
-	<liferay-ui:section>
-		<aui:form name="fm">
-			<aui:input label="message" name="message" rows="6" type="textarea" />
-
-			<aui:button type="submit" value="send" />
-
-			<aui:button type="reset" value="reset" />
-		</aui:form>
-
-		<br />
-
-		<div class="alert alert-success hide" id="<portlet:namespace />success">
-			<p><liferay-ui:message key="the-push-notification-was-sent-successfully" /></p>
-		</div>
-
-		<div class="alert alert-danger hide" id="<portlet:namespace />error">
-			<p></p>
-		</div>
-	</liferay-ui:section>
-	
 </liferay-ui:tabs>
 
 <%
@@ -218,49 +211,6 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 
 %>
 <aui:script use="aui-base,aui-dialog">
-	var form = A.one('#<portlet:namespace />fm');
-
-	form.on(
-		'submit',
-		function(event) {
-			event.halt();
-
-			var message = form.one('textarea[name="<portlet:namespace />message"]').val();
-
-			Liferay.Service(
-				'/push-notifications-portlet.pushnotificationsdevice/send-push-notification',
-				{
-					payload: A.JSON.stringify(
-						{
-							body: message
-						}
-					),
-					toUserIds: []
-				},
-				<portlet:namespace />onSendPushNotification
-			);
-		}
-	);
-
-	function <portlet:namespace />onSendPushNotification(result) {
-		var success = A.one('#<portlet:namespace />success');
-
-		success.hide();
-
-		var error = A.one('#<portlet:namespace />error');
-
-		error.hide();
-
-		if (A.Object.hasKey(result, 'exception')) {
-			error.one('p').text(result);
-
-			error.show();
-		}
-		else {
-			success.show();
-		}
-	}
-	
 	
 		Liferay.provide(window, 'addApp', function() {
 
@@ -270,7 +220,7 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 						height: 600,
 						width: 1070
 					},
-					id: '<portlet:namespace />addAppDialog',
+					id: '<portlet:namespace />editAppDialog',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "new-app") %>',
 					uri: '<%= addAppUrl.toString() %>'
 				}
@@ -292,6 +242,15 @@ addAppUrl.setWindowState(LiferayWindowState.POP_UP);
 			);
 		});
 		
+		
+		Liferay.provide( window, '<portlet:namespace />closePopup',
+				        function(data, popupIdToClose) {
+			            var dialog = Liferay.Util.getWindow(popupIdToClose);
+				            dialog.destroy(); // You can try toggle/hide whatever You want
+				        },
+				        ['aui-base','aui-dialog','aui-dialog-iframe']
+				    );
+				       
 		
 		Liferay.provide(window, 'refreshPortlet', function(data) {
 	        var curPortlet = '#p_p_id<portlet:namespace/>';
