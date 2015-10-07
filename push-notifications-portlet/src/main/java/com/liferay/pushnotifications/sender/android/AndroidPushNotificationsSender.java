@@ -14,10 +14,12 @@
 
 package com.liferay.pushnotifications.sender.android;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Message.Builder;
 import com.google.android.gcm.server.Sender;
-
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,9 +27,6 @@ import com.liferay.pushnotifications.PushNotificationsException;
 import com.liferay.pushnotifications.sender.PushNotificationsSender;
 import com.liferay.pushnotifications.util.PortletPropsKeys;
 import com.liferay.pushnotifications.util.PortletPropsValues;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Silvio Santos
@@ -60,6 +59,26 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 		sender.send(message, tokens, retries);
 	}
 
+	//@Override
+	public void send(
+			long appId, String platform, List<String> tokens, JSONObject jsonObject)
+		throws Exception {
+
+		Sender sender = getSender();
+
+		if (sender == null) {
+			return;
+		}
+
+		Message message = buildMessage(jsonObject);
+
+		int retries = PrefsPropsUtil.getInteger(
+			PortletPropsKeys.ANDROID_RETRIES,
+			PortletPropsValues.ANDROID_RETRIES);
+
+		sender.send(message, tokens, retries);
+	}
+	
 	protected Message buildMessage(JSONObject payloadJSONObject) {
 		Builder builder = new Builder();
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -90,6 +91,38 @@ public class AppVersionPersistenceImpl extends BasePersistenceImpl<AppVersion>
             FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByApplicationId",
             new String[] { Long.class.getName() });
     private static final String _FINDER_COLUMN_APPLICATIONID_APPLICATIONID_2 = "appVersion.applicationId = ?";
+    public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION =
+        new FinderPath(AppVersionModelImpl.ENTITY_CACHE_ENABLED,
+            AppVersionModelImpl.FINDER_CACHE_ENABLED, AppVersionImpl.class,
+            FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+            "findByApplicationIdAndVersion",
+            new String[] {
+                Long.class.getName(), String.class.getName(),
+                
+            Integer.class.getName(), Integer.class.getName(),
+                OrderByComparator.class.getName()
+            });
+    public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION =
+        new FinderPath(AppVersionModelImpl.ENTITY_CACHE_ENABLED,
+            AppVersionModelImpl.FINDER_CACHE_ENABLED, AppVersionImpl.class,
+            FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+            "findByApplicationIdAndVersion",
+            new String[] { Long.class.getName(), String.class.getName() },
+            AppVersionModelImpl.APPLICATIONID_COLUMN_BITMASK |
+            AppVersionModelImpl.APPVERSIONKEY_COLUMN_BITMASK);
+    public static final FinderPath FINDER_PATH_COUNT_BY_APPLICATIONIDANDVERSION = new FinderPath(AppVersionModelImpl.ENTITY_CACHE_ENABLED,
+            AppVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+            FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+            "countByApplicationIdAndVersion",
+            new String[] { Long.class.getName(), String.class.getName() });
+    private static final String _FINDER_COLUMN_APPLICATIONIDANDVERSION_APPLICATIONID_2 =
+        "appVersion.applicationId = ? AND ";
+    private static final String _FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_1 =
+        "appVersion.appVersionKey IS NULL";
+    private static final String _FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_2 =
+        "appVersion.appVersionKey = ?";
+    private static final String _FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_3 =
+        "(appVersion.appVersionKey IS NULL OR appVersion.appVersionKey = '')";
     private static final String _SQL_SELECT_APPVERSION = "SELECT appVersion FROM AppVersion appVersion";
     private static final String _SQL_SELECT_APPVERSION_WHERE = "SELECT appVersion FROM AppVersion appVersion WHERE ";
     private static final String _SQL_COUNT_APPVERSION = "SELECT COUNT(appVersion) FROM AppVersion appVersion";
@@ -581,6 +614,538 @@ public class AppVersionPersistenceImpl extends BasePersistenceImpl<AppVersion>
     }
 
     /**
+     * Returns all the app versions where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @return the matching app versions
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<AppVersion> findByApplicationIdAndVersion(long applicationId,
+        String appVersionKey) throws SystemException {
+        return findByApplicationIdAndVersion(applicationId, appVersionKey,
+            QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+    }
+
+    /**
+     * Returns a range of all the app versions where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.pushnotifications.model.impl.AppVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param start the lower bound of the range of app versions
+     * @param end the upper bound of the range of app versions (not inclusive)
+     * @return the range of matching app versions
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<AppVersion> findByApplicationIdAndVersion(long applicationId,
+        String appVersionKey, int start, int end) throws SystemException {
+        return findByApplicationIdAndVersion(applicationId, appVersionKey,
+            start, end, null);
+    }
+
+    /**
+     * Returns an ordered range of all the app versions where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.pushnotifications.model.impl.AppVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param start the lower bound of the range of app versions
+     * @param end the upper bound of the range of app versions (not inclusive)
+     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+     * @return the ordered range of matching app versions
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<AppVersion> findByApplicationIdAndVersion(long applicationId,
+        String appVersionKey, int start, int end,
+        OrderByComparator orderByComparator) throws SystemException {
+        boolean pagination = true;
+        FinderPath finderPath = null;
+        Object[] finderArgs = null;
+
+        if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+                (orderByComparator == null)) {
+            pagination = false;
+            finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION;
+            finderArgs = new Object[] { applicationId, appVersionKey };
+        } else {
+            finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION;
+            finderArgs = new Object[] {
+                    applicationId, appVersionKey,
+                    
+                    start, end, orderByComparator
+                };
+        }
+
+        List<AppVersion> list = (List<AppVersion>) FinderCacheUtil.getResult(finderPath,
+                finderArgs, this);
+
+        if ((list != null) && !list.isEmpty()) {
+            for (AppVersion appVersion : list) {
+                if ((applicationId != appVersion.getApplicationId()) ||
+                        !Validator.equals(appVersionKey,
+                            appVersion.getAppVersionKey())) {
+                    list = null;
+
+                    break;
+                }
+            }
+        }
+
+        if (list == null) {
+            StringBundler query = null;
+
+            if (orderByComparator != null) {
+                query = new StringBundler(4 +
+                        (orderByComparator.getOrderByFields().length * 3));
+            } else {
+                query = new StringBundler(4);
+            }
+
+            query.append(_SQL_SELECT_APPVERSION_WHERE);
+
+            query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPLICATIONID_2);
+
+            boolean bindAppVersionKey = false;
+
+            if (appVersionKey == null) {
+                query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_1);
+            } else if (appVersionKey.equals(StringPool.BLANK)) {
+                query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_3);
+            } else {
+                bindAppVersionKey = true;
+
+                query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_2);
+            }
+
+            if (orderByComparator != null) {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+                    orderByComparator);
+            } else
+             if (pagination) {
+                query.append(AppVersionModelImpl.ORDER_BY_JPQL);
+            }
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(applicationId);
+
+                if (bindAppVersionKey) {
+                    qPos.add(appVersionKey);
+                }
+
+                if (!pagination) {
+                    list = (List<AppVersion>) QueryUtil.list(q, getDialect(),
+                            start, end, false);
+
+                    Collections.sort(list);
+
+                    list = new UnmodifiableList<AppVersion>(list);
+                } else {
+                    list = (List<AppVersion>) QueryUtil.list(q, getDialect(),
+                            start, end);
+                }
+
+                cacheResult(list);
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, list);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Returns the first app version in the ordered set where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the first matching app version
+     * @throws com.liferay.pushnotifications.NoSuchAppVersionException if a matching app version could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public AppVersion findByApplicationIdAndVersion_First(long applicationId,
+        String appVersionKey, OrderByComparator orderByComparator)
+        throws NoSuchAppVersionException, SystemException {
+        AppVersion appVersion = fetchByApplicationIdAndVersion_First(applicationId,
+                appVersionKey, orderByComparator);
+
+        if (appVersion != null) {
+            return appVersion;
+        }
+
+        StringBundler msg = new StringBundler(6);
+
+        msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+        msg.append("applicationId=");
+        msg.append(applicationId);
+
+        msg.append(", appVersionKey=");
+        msg.append(appVersionKey);
+
+        msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+        throw new NoSuchAppVersionException(msg.toString());
+    }
+
+    /**
+     * Returns the first app version in the ordered set where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the first matching app version, or <code>null</code> if a matching app version could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public AppVersion fetchByApplicationIdAndVersion_First(long applicationId,
+        String appVersionKey, OrderByComparator orderByComparator)
+        throws SystemException {
+        List<AppVersion> list = findByApplicationIdAndVersion(applicationId,
+                appVersionKey, 0, 1, orderByComparator);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the last app version in the ordered set where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the last matching app version
+     * @throws com.liferay.pushnotifications.NoSuchAppVersionException if a matching app version could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public AppVersion findByApplicationIdAndVersion_Last(long applicationId,
+        String appVersionKey, OrderByComparator orderByComparator)
+        throws NoSuchAppVersionException, SystemException {
+        AppVersion appVersion = fetchByApplicationIdAndVersion_Last(applicationId,
+                appVersionKey, orderByComparator);
+
+        if (appVersion != null) {
+            return appVersion;
+        }
+
+        StringBundler msg = new StringBundler(6);
+
+        msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+        msg.append("applicationId=");
+        msg.append(applicationId);
+
+        msg.append(", appVersionKey=");
+        msg.append(appVersionKey);
+
+        msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+        throw new NoSuchAppVersionException(msg.toString());
+    }
+
+    /**
+     * Returns the last app version in the ordered set where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the last matching app version, or <code>null</code> if a matching app version could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public AppVersion fetchByApplicationIdAndVersion_Last(long applicationId,
+        String appVersionKey, OrderByComparator orderByComparator)
+        throws SystemException {
+        int count = countByApplicationIdAndVersion(applicationId, appVersionKey);
+
+        if (count == 0) {
+            return null;
+        }
+
+        List<AppVersion> list = findByApplicationIdAndVersion(applicationId,
+                appVersionKey, count - 1, count, orderByComparator);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the app versions before and after the current app version in the ordered set where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param appVersionId the primary key of the current app version
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the previous, current, and next app version
+     * @throws com.liferay.pushnotifications.NoSuchAppVersionException if a app version with the primary key could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public AppVersion[] findByApplicationIdAndVersion_PrevAndNext(
+        long appVersionId, long applicationId, String appVersionKey,
+        OrderByComparator orderByComparator)
+        throws NoSuchAppVersionException, SystemException {
+        AppVersion appVersion = findByPrimaryKey(appVersionId);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            AppVersion[] array = new AppVersionImpl[3];
+
+            array[0] = getByApplicationIdAndVersion_PrevAndNext(session,
+                    appVersion, applicationId, appVersionKey,
+                    orderByComparator, true);
+
+            array[1] = appVersion;
+
+            array[2] = getByApplicationIdAndVersion_PrevAndNext(session,
+                    appVersion, applicationId, appVersionKey,
+                    orderByComparator, false);
+
+            return array;
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    protected AppVersion getByApplicationIdAndVersion_PrevAndNext(
+        Session session, AppVersion appVersion, long applicationId,
+        String appVersionKey, OrderByComparator orderByComparator,
+        boolean previous) {
+        StringBundler query = null;
+
+        if (orderByComparator != null) {
+            query = new StringBundler(6 +
+                    (orderByComparator.getOrderByFields().length * 6));
+        } else {
+            query = new StringBundler(3);
+        }
+
+        query.append(_SQL_SELECT_APPVERSION_WHERE);
+
+        query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPLICATIONID_2);
+
+        boolean bindAppVersionKey = false;
+
+        if (appVersionKey == null) {
+            query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_1);
+        } else if (appVersionKey.equals(StringPool.BLANK)) {
+            query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_3);
+        } else {
+            bindAppVersionKey = true;
+
+            query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_2);
+        }
+
+        if (orderByComparator != null) {
+            String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+            if (orderByConditionFields.length > 0) {
+                query.append(WHERE_AND);
+            }
+
+            for (int i = 0; i < orderByConditionFields.length; i++) {
+                query.append(_ORDER_BY_ENTITY_ALIAS);
+                query.append(orderByConditionFields[i]);
+
+                if ((i + 1) < orderByConditionFields.length) {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(WHERE_GREATER_THAN_HAS_NEXT);
+                    } else {
+                        query.append(WHERE_LESSER_THAN_HAS_NEXT);
+                    }
+                } else {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(WHERE_GREATER_THAN);
+                    } else {
+                        query.append(WHERE_LESSER_THAN);
+                    }
+                }
+            }
+
+            query.append(ORDER_BY_CLAUSE);
+
+            String[] orderByFields = orderByComparator.getOrderByFields();
+
+            for (int i = 0; i < orderByFields.length; i++) {
+                query.append(_ORDER_BY_ENTITY_ALIAS);
+                query.append(orderByFields[i]);
+
+                if ((i + 1) < orderByFields.length) {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(ORDER_BY_ASC_HAS_NEXT);
+                    } else {
+                        query.append(ORDER_BY_DESC_HAS_NEXT);
+                    }
+                } else {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(ORDER_BY_ASC);
+                    } else {
+                        query.append(ORDER_BY_DESC);
+                    }
+                }
+            }
+        } else {
+            query.append(AppVersionModelImpl.ORDER_BY_JPQL);
+        }
+
+        String sql = query.toString();
+
+        Query q = session.createQuery(sql);
+
+        q.setFirstResult(0);
+        q.setMaxResults(2);
+
+        QueryPos qPos = QueryPos.getInstance(q);
+
+        qPos.add(applicationId);
+
+        if (bindAppVersionKey) {
+            qPos.add(appVersionKey);
+        }
+
+        if (orderByComparator != null) {
+            Object[] values = orderByComparator.getOrderByConditionValues(appVersion);
+
+            for (Object value : values) {
+                qPos.add(value);
+            }
+        }
+
+        List<AppVersion> list = q.list();
+
+        if (list.size() == 2) {
+            return list.get(1);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Removes all the app versions where applicationId = &#63; and appVersionKey = &#63; from the database.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public void removeByApplicationIdAndVersion(long applicationId,
+        String appVersionKey) throws SystemException {
+        for (AppVersion appVersion : findByApplicationIdAndVersion(
+                applicationId, appVersionKey, QueryUtil.ALL_POS,
+                QueryUtil.ALL_POS, null)) {
+            remove(appVersion);
+        }
+    }
+
+    /**
+     * Returns the number of app versions where applicationId = &#63; and appVersionKey = &#63;.
+     *
+     * @param applicationId the application ID
+     * @param appVersionKey the app version key
+     * @return the number of matching app versions
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int countByApplicationIdAndVersion(long applicationId,
+        String appVersionKey) throws SystemException {
+        FinderPath finderPath = FINDER_PATH_COUNT_BY_APPLICATIONIDANDVERSION;
+
+        Object[] finderArgs = new Object[] { applicationId, appVersionKey };
+
+        Long count = (Long) FinderCacheUtil.getResult(finderPath, finderArgs,
+                this);
+
+        if (count == null) {
+            StringBundler query = new StringBundler(3);
+
+            query.append(_SQL_COUNT_APPVERSION_WHERE);
+
+            query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPLICATIONID_2);
+
+            boolean bindAppVersionKey = false;
+
+            if (appVersionKey == null) {
+                query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_1);
+            } else if (appVersionKey.equals(StringPool.BLANK)) {
+                query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_3);
+            } else {
+                bindAppVersionKey = true;
+
+                query.append(_FINDER_COLUMN_APPLICATIONIDANDVERSION_APPVERSIONKEY_2);
+            }
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(applicationId);
+
+                if (bindAppVersionKey) {
+                    qPos.add(appVersionKey);
+                }
+
+                count = (Long) q.uniqueResult();
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, count);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return count.intValue();
+    }
+
+    /**
      * Caches the app version in the entity cache if it is enabled.
      *
      * @param appVersion the app version
@@ -807,6 +1372,29 @@ public class AppVersionPersistenceImpl extends BasePersistenceImpl<AppVersion>
                 FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_APPLICATIONID,
                     args);
                 FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICATIONID,
+                    args);
+            }
+
+            if ((appVersionModelImpl.getColumnBitmask() &
+                    FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION.getColumnBitmask()) != 0) {
+                Object[] args = new Object[] {
+                        appVersionModelImpl.getOriginalApplicationId(),
+                        appVersionModelImpl.getOriginalAppVersionKey()
+                    };
+
+                FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_APPLICATIONIDANDVERSION,
+                    args);
+                FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION,
+                    args);
+
+                args = new Object[] {
+                        appVersionModelImpl.getApplicationId(),
+                        appVersionModelImpl.getAppVersionKey()
+                    };
+
+                FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_APPLICATIONIDANDVERSION,
+                    args);
+                FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICATIONIDANDVERSION,
                     args);
             }
         }

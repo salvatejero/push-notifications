@@ -4,7 +4,7 @@
 <service-builder package-path="com.liferay.pushnotifications" auto-namespace-tables="false">
 	<author>Bruno Farache</author>
 	<namespace>PushNotifications</namespace>
-	<entity name="PushNotificationsDevice" local-service="true" remote-service="true">
+	<entity name="PushNotificationsDevice" local-service="true" remote-service="true" cache-enabled="true">
 
 		<!-- PK fields -->
 
@@ -55,7 +55,7 @@
 		
 	</entity>
 	
-	<entity name="AppVersion" local-service="true" remote-service="false">
+	<entity name="AppVersion" local-service="true" remote-service="false" cache-enabled="true">
 
 		<!-- PK fields -->
 		<column name="appVersionId" type="long" primary="true" />
@@ -75,9 +75,14 @@
 			<finder-column name="applicationId" />
 		</finder>
 		
+		<finder name="ApplicationIdAndVersion" return-type="Collection">
+			<finder-column name="applicationId" />
+			<finder-column name="appVersionKey" />
+		</finder>
+		
 	</entity>
 	
-	<entity name="Application" local-service="true" remote-service="false">
+	<entity name="Application" local-service="true" remote-service="false" cache-enabled="true">
 
 		<!-- PK fields -->
 

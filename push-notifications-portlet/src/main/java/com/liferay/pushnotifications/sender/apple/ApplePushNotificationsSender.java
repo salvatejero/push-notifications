@@ -14,6 +14,9 @@
 
 package com.liferay.pushnotifications.sender.apple;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,14 +25,10 @@ import com.liferay.pushnotifications.sender.PushNotificationsSender;
 import com.liferay.pushnotifications.util.PortletPropsKeys;
 import com.liferay.pushnotifications.util.PortletPropsValues;
 import com.liferay.pushnotifications.util.PushNotificationsConstants;
-
 import com.notnoop.apns.APNS;
 import com.notnoop.apns.ApnsService;
 import com.notnoop.apns.ApnsServiceBuilder;
 import com.notnoop.apns.PayloadBuilder;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Silvio Santos

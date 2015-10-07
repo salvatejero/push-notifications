@@ -14,9 +14,9 @@
 
 package com.liferay.pushnotifications.sender;
 
-import com.liferay.portal.kernel.json.JSONObject;
-
 import java.util.List;
+
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Bruno Farache
@@ -25,8 +25,7 @@ public interface PushNotificationsSender {
 
 	public void reset();
 
-	public void send(
-			String platform, List<String> tokens, JSONObject payloadJSONObject)
+	public void send(String platform, List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception;
 
 }

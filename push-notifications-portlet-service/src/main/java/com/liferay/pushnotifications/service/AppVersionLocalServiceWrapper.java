@@ -296,6 +296,20 @@ public class AppVersionLocalServiceWrapper implements AppVersionLocalService,
             user, appId);
     }
 
+    @Override
+    public com.liferay.pushnotifications.model.AppVersion findAppVerionByAppIdAndVersion(
+        long applicationId, java.lang.String appVersionKey) {
+        return _appVersionLocalService.findAppVerionByAppIdAndVersion(applicationId,
+            appVersionKey);
+    }
+
+    @Override
+    public java.util.List<com.liferay.pushnotifications.model.AppVersion> findAppVerionByAppIdAndVersion(
+        long applicationId, java.lang.String appVersionKey, int start, int end) {
+        return _appVersionLocalService.findAppVerionByAppIdAndVersion(applicationId,
+            appVersionKey, start, end);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

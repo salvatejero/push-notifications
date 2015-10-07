@@ -1,20 +1,24 @@
 package com.liferay.pushnotifications.service.impl;
 
+import com.liferay.pushnotifications.service.AppVersionLocalServiceUtil;
 import com.liferay.pushnotifications.service.base.PushNotificationsDeviceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.pushnotifications.PushNotificationsException;
+import com.liferay.pushnotifications.model.AppVersion;
 import com.liferay.pushnotifications.model.PushNotificationsDevice;
 import com.liferay.pushnotifications.sender.PushNotificationsSender;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 /**
@@ -213,7 +217,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 		throws PortalException {
 
 		for (String platform : _pushNotificationsSenders.keySet()) {
-			List<String> tokens = new ArrayList<String>();
+			List<PushNotificationsDevice> tokens = new ArrayList<PushNotificationsDevice>();
 
 			List<PushNotificationsDevice> pushNotificationsDevices = null;
 			try {
@@ -227,17 +231,75 @@ public class PushNotificationsDeviceLocalServiceImpl
 			for (PushNotificationsDevice pushNotificationsDevice :
 					pushNotificationsDevices) {
 
-				tokens.add(pushNotificationsDevice.getToken());
+				tokens.add(pushNotificationsDevice);
 			}
 
 			if (tokens.isEmpty()) {
 				continue;
 			}
 
-			sendPushNotification(platform, tokens, payloadJSONObject);
+			sendPushNotification(null, platform, tokens, payloadJSONObject);
 		}
 	}
 
+	@Override
+	public void sendPushNotification(PushNotificationsSender pushNotificationsSender, String platform,
+			List<PushNotificationsDevice> devices, JSONObject payloadJSONObject) throws PortalException{
+
+		Long appIdAux = 0L;
+		String appVersionKeyAux = "";
+		Long appId = 0L;
+		String appVersionKey = "";
+		JSONObject newPayLoad = JSONFactoryUtil.createJSONObject();
+		List<String> tokens = new ArrayList<String>();
+		List<String> tokensEmpty = new ArrayList<String>();
+		for(int i = 0 ; i< devices.size(); i++){
+			PushNotificationsDevice device = devices.get(i);
+			appId = device.getAppId();
+			appVersionKey = device.getAppVersion();
+			if(i==0){
+				appIdAux = device.getAppId();
+				appVersionKeyAux = device.getAppVersion();
+			}
+			
+			if(appId.longValue() != appIdAux.longValue() || !appVersionKey.equals(appVersionKeyAux)){
+				AppVersion appVersion = AppVersionLocalServiceUtil.findAppVerionByAppIdAndVersion(appId, device.getAppVersion());
+				if(appVersion == null){
+					tokensEmpty.add(device.getToken());
+				}else{
+					appIdAux = appId;
+					appVersionKeyAux = appVersionKey;
+					try {
+						pushNotificationsSender.send(platform, tokens, newPayLoad);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					tokens = new ArrayList<String>();
+					tokens.add(device.getToken());
+					newPayLoad = JSONFactoryUtil.createJSONObject();
+				
+					JSONObject structure = JSONFactoryUtil.createJSONObject(appVersion.getStructure());
+					Iterator<String> it = structure.keys(); 
+					while(it.hasNext()){
+						String key = it.next();
+						newPayLoad.put(key, payloadJSONObject.getString(key));
+						
+					}
+				}
+			}else{
+				tokensEmpty.add(device.getToken());
+			}
+		}
+		if(tokensEmpty.size() >0){
+			try {
+				pushNotificationsSender.send(platform, tokensEmpty, payloadJSONObject);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	@Override
 	public void sendPushNotification(
 			String platform, List<String> tokens, JSONObject payloadJSONObject)
@@ -249,9 +311,17 @@ public class PushNotificationsDeviceLocalServiceImpl
 		if (pushNotificationsSender == null) {
 			return;
 		}
-
+		List<PushNotificationsDevice> devices = new ArrayList<PushNotificationsDevice>();
+		for(String token:tokens){
+			try {
+				devices.add(pushNotificationsDevicePersistence.findByToken(token));
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		try {
-			pushNotificationsSender.send(platform, tokens, payloadJSONObject);
+			sendPushNotification(pushNotificationsSender, platform, devices, payloadJSONObject);
 		}
 		catch (PushNotificationsException pne) {
 			if (_log.isWarnEnabled()) {

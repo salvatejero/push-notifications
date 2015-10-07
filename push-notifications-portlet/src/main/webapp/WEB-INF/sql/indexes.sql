@@ -1,4 +1,6 @@
 create index IX_5EC0953E on AppVersion (applicationId);
+create index IX_9D8D124 on AppVersion (applicationId, appVersionId);
+create index IX_315F211A on AppVersion (applicationId, appVersionKey);
 
 create index IX_699B9D54 on ApplicationPreferences (appVersionId);
 create index IX_468BFD4D on ApplicationPreferences (applicationId);

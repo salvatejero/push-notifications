@@ -78,4 +78,29 @@ public class AppVersionLocalServiceImpl extends AppVersionLocalServiceBaseImpl {
 		return appVersion;
 	}
 	
+	public AppVersion findAppVerionByAppIdAndVersion(long applicationId, String appVersionKey){
+		try {
+			
+			List<AppVersion> appVersions = appVersionPersistence.findByApplicationIdAndVersion(applicationId, appVersionKey);
+			if(appVersions.size() > 0){
+				return appVersions.get(0);
+			}
+			return null;
+					
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<AppVersion> findAppVerionByAppIdAndVersion(long applicationId, String appVersionKey, int start, int end){
+		try {
+			return appVersionPersistence.findByApplicationIdAndVersion(applicationId, appVersionKey, start, end);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<AppVersion>();
+	}
 }

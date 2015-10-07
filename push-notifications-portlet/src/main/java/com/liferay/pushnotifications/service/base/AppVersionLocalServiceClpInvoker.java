@@ -51,6 +51,10 @@ public class AppVersionLocalServiceClpInvoker {
     private String[] _methodParameterTypes53;
     private String _methodName54;
     private String[] _methodParameterTypes54;
+    private String _methodName55;
+    private String[] _methodParameterTypes55;
+    private String _methodName56;
+    private String[] _methodParameterTypes56;
 
     public AppVersionLocalServiceClpInvoker() {
         _methodName0 = "addAppVersion";
@@ -156,6 +160,16 @@ public class AppVersionLocalServiceClpInvoker {
         _methodParameterTypes54 = new String[] {
                 "java.lang.String", "java.lang.String",
                 "com.liferay.portal.model.User", "java.lang.Long"
+            };
+
+        _methodName55 = "findAppVerionByAppIdAndVersion";
+
+        _methodParameterTypes55 = new String[] { "long", "java.lang.String" };
+
+        _methodName56 = "findAppVerionByAppIdAndVersion";
+
+        _methodParameterTypes56 = new String[] {
+                "long", "java.lang.String", "int", "int"
             };
     }
 
@@ -278,6 +292,20 @@ public class AppVersionLocalServiceClpInvoker {
                 (java.lang.String) arguments[1],
                 (com.liferay.portal.model.User) arguments[2],
                 (java.lang.Long) arguments[3]);
+        }
+
+        if (_methodName55.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+            return AppVersionLocalServiceUtil.findAppVerionByAppIdAndVersion(((Long) arguments[0]).longValue(),
+                (java.lang.String) arguments[1]);
+        }
+
+        if (_methodName56.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+            return AppVersionLocalServiceUtil.findAppVerionByAppIdAndVersion(((Long) arguments[0]).longValue(),
+                (java.lang.String) arguments[1],
+                ((Integer) arguments[2]).intValue(),
+                ((Integer) arguments[3]).intValue());
         }
 
         throw new UnsupportedOperationException();

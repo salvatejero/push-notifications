@@ -72,8 +72,9 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
     public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.column.bitmask.enabled.com.liferay.pushnotifications.model.AppVersion"),
             true);
-    public static long APPLICATIONID_COLUMN_BITMASK = 1L;
-    public static long APPVERSIONID_COLUMN_BITMASK = 2L;
+    public static long APPVERSIONKEY_COLUMN_BITMASK = 1L;
+    public static long APPLICATIONID_COLUMN_BITMASK = 2L;
+    public static long APPVERSIONID_COLUMN_BITMASK = 4L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.com.liferay.pushnotifications.model.AppVersion"));
     private static ClassLoader _classLoader = AppVersion.class.getClassLoader();
@@ -82,6 +83,7 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
         };
     private long _appVersionId;
     private String _appVersionKey;
+    private String _originalAppVersionKey;
     private String _structure;
     private boolean _sandbox;
     private Date _createdDate;
@@ -215,7 +217,17 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
 
     @Override
     public void setAppVersionKey(String appVersionKey) {
+        _columnBitmask |= APPVERSIONKEY_COLUMN_BITMASK;
+
+        if (_originalAppVersionKey == null) {
+            _originalAppVersionKey = _appVersionKey;
+        }
+
         _appVersionKey = appVersionKey;
+    }
+
+    public String getOriginalAppVersionKey() {
+        return GetterUtil.getString(_originalAppVersionKey);
     }
 
     @Override
@@ -396,6 +408,8 @@ public class AppVersionModelImpl extends BaseModelImpl<AppVersion>
     @Override
     public void resetOriginalValues() {
         AppVersionModelImpl appVersionModelImpl = this;
+
+        appVersionModelImpl._originalAppVersionKey = appVersionModelImpl._appVersionKey;
 
         appVersionModelImpl._originalApplicationId = appVersionModelImpl._applicationId;
 

@@ -50,6 +50,10 @@ public class AppVersionLocalServiceClp implements AppVersionLocalService {
     private String[] _methodParameterTypes20;
     private String _methodName21;
     private String[] _methodParameterTypes21;
+    private String _methodName22;
+    private String[] _methodParameterTypes22;
+    private String _methodName23;
+    private String[] _methodParameterTypes23;
 
     public AppVersionLocalServiceClp(
         InvokableLocalService invokableLocalService) {
@@ -158,6 +162,16 @@ public class AppVersionLocalServiceClp implements AppVersionLocalService {
         _methodParameterTypes21 = new String[] {
                 "java.lang.String", "java.lang.String",
                 "com.liferay.portal.model.User", "java.lang.Long"
+            };
+
+        _methodName22 = "findAppVerionByAppIdAndVersion";
+
+        _methodParameterTypes22 = new String[] { "long", "java.lang.String" };
+
+        _methodName23 = "findAppVerionByAppIdAndVersion";
+
+        _methodParameterTypes23 = new String[] {
+                "long", "java.lang.String", "int", "int"
             };
     }
 
@@ -750,5 +764,63 @@ public class AppVersionLocalServiceClp implements AppVersionLocalService {
         }
 
         return (com.liferay.pushnotifications.model.AppVersion) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public com.liferay.pushnotifications.model.AppVersion findAppVerionByAppIdAndVersion(
+        long applicationId, java.lang.String appVersionKey) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName22,
+                    _methodParameterTypes22,
+                    new Object[] {
+                        applicationId,
+                        
+                    ClpSerializer.translateInput(appVersionKey)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (com.liferay.pushnotifications.model.AppVersion) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<com.liferay.pushnotifications.model.AppVersion> findAppVerionByAppIdAndVersion(
+        long applicationId, java.lang.String appVersionKey, int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName23,
+                    _methodParameterTypes23,
+                    new Object[] {
+                        applicationId,
+                        
+                    ClpSerializer.translateInput(appVersionKey),
+                        
+                    start,
+                        
+                    end
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<com.liferay.pushnotifications.model.AppVersion>) ClpSerializer.translateOutput(returnObj);
     }
 }

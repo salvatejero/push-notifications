@@ -14,17 +14,17 @@
 
 package com.liferay.pushnotifications.sender.liferay;
 
+import java.util.List;
+
+import jodd.http.HttpRequest;
+import jodd.http.HttpResponse;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.pushnotifications.PushNotificationsException;
 import com.liferay.pushnotifications.sender.PushNotificationsSender;
 import com.liferay.pushnotifications.util.PortletPropsValues;
-
-import java.util.List;
-
-import jodd.http.HttpRequest;
-import jodd.http.HttpResponse;
 
 /**
  * @author Bruno Farache
